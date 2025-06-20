@@ -1,0 +1,251 @@
+{
+  "nav": {
+    "docs": "Documentation",
+    "api": "API Reference",
+    "guides": "Guides",
+    "payment": "Payment"
+  },
+  "toc": {
+    "title": "Table of Contents"
+  },
+  "footer": {
+    "description": "Onerway Payment Gateway - Secure, fast, and reliable payment solutions for businesses worldwide.",
+    "copyright": "© 2024 Onerway. All rights reserved.",
+    "rights": "All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  },
+  "home": {
+    "hero": {
+      "title": "Onerway Documentation",
+      "description": "Explore our guides and examples to integrate Onerway.",
+      "badge": "Now Available",
+      "getStarted": "Get started with payments",
+      "exploreProducts": "Explore Products"
+    },
+    "features": {
+      "title": "Complete Payment Integration Solutions",
+      "description": "From quick platform integrations to hosted checkout pages and comprehensive developer tools, Onerway provides end-to-end payment integration support.",
+      "items": [
+        {
+          "title": "All-in-one Integration",
+          "description": "Quick access to mainstream website building platforms with unified merchant management portal and comprehensive settlement reporting.",
+          "icon": "i-heroicons-building-storefront",
+          "links": [
+            {
+              "label": "Platform Plugins",
+              "to": "/plugins"
+            },
+            {
+              "label": "Merchant Dashboard",
+              "to": "/merchant-portal"
+            },
+            {
+              "label": "Settlement Reports",
+              "to": "/reporting"
+            }
+          ]
+        },
+        {
+          "title": "Onerway-hosted Solutions",
+          "description": "Fully hosted checkout pages and embeddable payment forms to streamline your integration process.",
+          "icon": "i-heroicons-credit-card",
+          "links": [
+            {
+              "label": "Hosted Checkout Page",
+              "to": "/checkout"
+            },
+            {
+              "label": "Embedded Payment Form",
+              "to": "/embedded-form"
+            }
+          ]
+        },
+        {
+          "title": "Developer Tools",
+          "description": "Complete API reference documentation, response codes guide, and rich sample projects for rapid development.",
+          "icon": "i-heroicons-code-bracket",
+          "links": [
+            {
+              "label": "API Reference",
+              "to": "/api"
+            },
+            {
+              "label": "Response Codes",
+              "to": "/response-codes"
+            },
+            {
+              "label": "Sample Projects",
+              "to": "/samples"
+            }
+          ]
+        }
+      ]
+    },
+    "cta": {
+      "title": "Ready to get started?",
+      "description": "Join thousands of businesses using Onerway for their payment needs.",
+      "start": "Start Building"
+    },
+    "products": {
+      "browse": {
+        "title": "Browse by product",
+        "items": [
+          {
+            "title": "Payments",
+            "description": "Online payment processing services"
+          }
+        ]
+      },
+      "payments": {
+        "title": "PAYMENTS",
+        "description": "Our payment products and solutions",
+        "items": [
+          {
+            "title": "Payments",
+            "description": "Online payment processing services "
+          },
+          {
+            "title": "Wallet",
+            "description": "Digital wallet payment methods"
+          },
+          {
+            "title": "Fraud alerts",
+            "description": "Fraudulent transaction alert notifications"
+          },
+          {
+            "title": "Radar",
+            "description": "Intelligent risk management system"
+          },
+          {
+            "title": "Identity",
+            "description": "Online identity verification services"
+          }
+        ]
+      },
+      "payout": {
+        "title": "PAYOUT",
+        "description": "Our payout products and solutions",
+        "comingSoon": "Coming Soon",
+        "items": [
+          {
+            "title": "Payout",
+            "description": "Payout services"
+          }
+        ]
+      }
+    },
+    "seo": {
+      "title": "Onerway Documentation - Payment Integration Guides",
+      "description": "Comprehensive guides and API documentation for integrating Onerway payment solutions."
+    },
+    "tryItOut": {
+      "title": "Try it out",
+      "copyToClipboard": "Copy to clipboard",
+      "pause": "Pause",
+      "play": "Play",
+      "signInToEdit": "Sign in to edit real requests",
+      "learnMore": "Learn more",
+      "noContent": "No content available",
+      "carousel": {
+        "startPayment": "Start a payment",
+        "storingPayment": "Storing payment information",
+        "subscriptions": "Subscriptions",
+        "reconciliation": "Transaction reconciliation",
+        "tryItOut": "Try it out",
+        "learnMorePayment": "Learn more about Payment Intent",
+        "learnMoreSaving": "Learn more about Saving a card",
+        "learnMoreSubscriptions": "Learn more about Subscriptions",
+        "learnMoreReconciliation": "Learn more about Transaction Reconciliation"
+      }
+    },
+    "documentation": {
+      "title": "Documentation",
+      "description": "Explore our guides and examples to integrate Onerway."
+    }
+  },
+  "header": {
+    "getStarted": "Get Started",
+    "payments": "Payment Services",
+    "payout": "Payout Services",
+    "acquiring": "Acquiring",
+    "releases": "Releases",
+    "apisAndSdks": "APIs & SDKs",
+    "help": "Help",
+    "support": "Support",
+    "contactUs": "Contact Us"
+  },
+  "recentlyViewed": {
+    "title": "Recently Viewed",
+    "subtitle": "Quick access to your recent pages",
+    "empty": {
+      "title": "No recent pages",
+      "description": "Start exploring our documentation to see your recently viewed pages here."
+    },
+    "categories": {
+      "docs": "Documentation and implementation guides",
+      "api": "API reference and technical documentation",
+      "guides": "Step-by-step integration guides",
+      "payment": "Payment products and solutions",
+      "default": "Onerway documentation page"
+    },
+    "timeAgo": {
+      "justNow": "Just now",
+      "minutesAgo": "{minutes} minute ago | {minutes} minutes ago",
+      "hoursAgo": "{hours} hour ago | {hours} hours ago",
+      "daysAgo": "{days} day ago | {days} days ago"
+    },
+    "footer": {
+      "signInPrompt": "Need API keys?",
+      "signIn": "Sign in",
+      "createAccount": "create an account",
+      "loadKeys": "to load your keys."
+    }
+  },
+  "common": {
+    "or": "or",
+    "loading": "Loading...",
+    "error": "Error",
+    "retry": "Retry",
+    "updated": "Updated",
+    "docs": "docs"
+  },
+  "testCard": {
+    "title": "Test cards",
+    "copySuccess": "Copied to clipboard",
+    "copyDescription": "The test card number has been copied to your clipboard.",
+    "ariaLabel": "Test credit card preview",
+    "viewDocsLabel": "View test cards documentation",
+    "copyCardLabel": "Click to copy test card number to clipboard",
+    "copiedLabel": "Test card number copied to clipboard"
+  },
+  "productCard": {
+    "status": {
+      "new": "New",
+      "beta": "Beta",
+      "updated": "Updated"
+    },
+    "docsCount": "{count} doc | {count} docs"
+  },
+  "tags": {
+    "frontend": "Frontend",
+    "api": "API",
+    "guides": "Guides",
+    "mobile": "Mobile",
+    "sdk": "SDK",
+    "ios": "iOS",
+    "android": "Android",
+    "cloud": "Cloud",
+    "infrastructure": "Infrastructure",
+    "deployment": "Deployment",
+    "analytics": "Analytics",
+    "reporting": "Reporting",
+    "insights": "Insights",
+    "security": "Security",
+    "authentication": "Authentication",
+    "encryption": "Encryption",
+    "development": "Development",
+    "tools": "Tools",
+    "cli": "CLI"
+  }
+}

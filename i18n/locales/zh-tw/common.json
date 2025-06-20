@@ -1,0 +1,260 @@
+{
+  "nav": {
+    "docs": "文件",
+    "api": "API 參考",
+    "guides": "指南",
+    "payment": "支付"
+  },
+  "toc": {
+    "title": "目錄"
+  },
+  "footer": {
+    "product": "產品",
+    "payment": "支付產品",
+    "acquiring": "收單業務",
+    "api": "API 參考",
+    "resources": "資源",
+    "docs": "文檔",
+    "guides": "指南",
+    "changelog": "更新日誌",
+    "support": "支援",
+    "contact": "聯絡我們",
+    "help": "幫助中心",
+    "status": "服務狀態",
+    "rights": "保留所有權利。",
+    "privacy": "隱私政策",
+    "terms": "服務條款",
+    "signInPrompt": "",
+    "signIn": "登入",
+    "createAccount": "建立帳戶",
+    "loadKeys": "以載入您的測試 API 金鑰。"
+  },
+  "home": {
+    "hero": {
+      "title": "Onerway 文件",
+      "description": "探索我們的指南和範例，輕鬆整合 Onerway。",
+      "badge": "現已上線",
+      "getStarted": "開始使用",
+      "viewApi": "查看 API",
+      "exploreProducts": "探索產品"
+    },
+    "features": {
+      "title": "一站式支付整合解決方案",
+      "description": "從快速接入建站平台到託管結帳頁面，再到完整的開發者工具，Onerway 為您提供全方位的支付整合支援。",
+      "items": [
+        {
+          "title": "一站式整合",
+          "description": "快速接入主流建站平台，提供統一的商戶管理門戶和完整的結算報表功能。",
+          "icon": "i-heroicons-building-storefront",
+          "links": [
+            {
+              "label": "建站平台外掛",
+              "to": "/plugins"
+            },
+            {
+              "label": "商戶管理門戶",
+              "to": "/merchant-portal"
+            },
+            {
+              "label": "結算報表",
+              "to": "/reporting"
+            }
+          ]
+        },
+        {
+          "title": "Onerway 託管解決方案",
+          "description": "提供完全託管的結帳頁面和嵌入式支付表單，簡化您的整合流程。",
+          "icon": "i-heroicons-credit-card",
+          "links": [
+            {
+              "label": "託管結帳頁面",
+              "to": "/checkout"
+            },
+            {
+              "label": "內嵌支付表單",
+              "to": "/embedded-form"
+            }
+          ]
+        },
+        {
+          "title": "開發人員工具",
+          "description": "完整的 API 參考文件、應答碼說明和豐富的範例專案，助力快速開發。",
+          "icon": "i-heroicons-code-bracket",
+          "links": [
+            {
+              "label": "API 參考",
+              "to": "/api"
+            },
+            {
+              "label": "應答碼參考",
+              "to": "/response-codes"
+            },
+            {
+              "label": "範例專案",
+              "to": "/samples"
+            }
+          ]
+        }
+      ]
+    },
+    "cta": {
+      "title": "準備開始了嗎？",
+      "description": "加入數千家使用 Onerway 滿足支付需求的企業。",
+      "start": "開始建置"
+    },
+    "products": {
+      "browse": {
+        "title": "支付產品"
+      },
+      "payments": {
+        "title": "支付服務",
+        "description": "我們的支付產品和解決方案",
+        "items": [
+          {
+            "title": "線上付款",
+            "description": "在線支付處理服務"
+          },
+          {
+            "title": "錢包支付",
+            "description": "數位錢包支付方式"
+          },
+          {
+            "title": "代理預警",
+            "description": "欺詐交易提醒通知"
+          },
+          {
+            "title": "欺詐和風險管理",
+            "description": "智慧風控系統"
+          },
+          {
+            "title": "線上身份驗證",
+            "description": "在線身份認證服務"
+          }
+        ]
+      },
+      "payout": {
+        "title": "提現服務",
+        "description": "我們的提現產品和解決方案",
+        "comingSoon": "即將推出",
+        "items": [
+          {
+            "title": "提現服務",
+            "description": "提現服務"
+          }
+        ]
+      }
+    },
+    "seo": {
+      "title": "Onerway 文件 - 支付整合指南",
+      "description": "Onerway 支付解決方案整合的全面指南和 API 文件。"
+    },
+    "tryItOut": {
+      "title": "試一試",
+      "copyToClipboard": "複製到剪貼簿",
+      "pause": "暫停",
+      "play": "播放",
+      "signInToEdit": "登入以編輯真實請求",
+      "learnMore": "了解更多",
+      "noContent": "暫無內容",
+      "carousel": {
+        "startPayment": "發起支付",
+        "storingPayment": "儲存支付資訊",
+        "subscriptions": "訂閱服務",
+        "reconciliation": "交易對帳",
+        "tryItOut": "試一試",
+        "learnMorePayment": "了解更多支付意圖",
+        "learnMoreSaving": "了解更多儲存卡片",
+        "learnMoreSubscriptions": "了解更多訂閱服務",
+        "learnMoreReconciliation": "了解更多交易對帳"
+      }
+    },
+    "documentation": {
+      "title": "Onerway 文件",
+      "description": "探索我們的指南和範例，輕鬆整合 Onerway。"
+    }
+  },
+  "header": {
+    "getStarted": "快速開始",
+    "payments": "支付",
+    "payout": "提現",
+    "acquiring": "收單業務",
+    "releases": "版本發佈",
+    "apisAndSdks": "APIs & SDKs",
+    "help": "幫助",
+    "support": "技術支援",
+    "contactUs": "聯絡我們"
+  },
+  "recentlyViewed": {
+    "title": "最近瀏覽",
+    "subtitle": "快速存取您最近查看的頁面",
+    "empty": {
+      "title": "暫無瀏覽記錄",
+      "description": "開始探索我們的文件，您最近查看的頁面將顯示在這裡。"
+    },
+    "timeAgo": {
+      "justNow": "剛剛",
+      "minutesAgo": "{minutes} 分鐘前",
+      "hoursAgo": "{hours} 小時前",
+      "daysAgo": "{days} 天前"
+    },
+    "categories": {
+      "docs": "文件和實施指南",
+      "api": "API 參考和技術文件",
+      "guides": "分步整合指南",
+      "payment": "支付產品和解決方案",
+      "default": "Onerway 文件頁面"
+    },
+    "footer": {
+      "signInPrompt": "需要 API 金鑰？",
+      "signIn": "登入",
+      "createAccount": "建立帳戶",
+      "loadKeys": "以自動載入您的金鑰。"
+    }
+  },
+  "common": {
+    "or": "或",
+    "loading": "載入中...",
+    "error": "錯誤",
+    "retry": "重試",
+    "updated": "更新",
+    "docs": "文件"
+  },
+  "testCard": {
+    "title": "測試卡",
+    "copySuccess": "已複製到剪貼簿",
+    "copyDescription": "測試卡號已複製到您的剪貼簿。",
+    "ariaLabel": "測試信用卡預覽",
+    "viewDocsLabel": "查看測試卡文件",
+    "copyCardLabel": "點擊複製測試卡號到剪貼簿",
+    "copiedLabel": "測試卡號已複製到剪貼簿"
+  },
+  "productCard": {
+    "status": {
+      "new": "新功能",
+      "beta": "測試版",
+      "updated": "已更新"
+    },
+    "docsCount": "{count} 個文件"
+  },
+  "tags": {
+    "frontend": "前端",
+    "api": "API",
+    "guides": "指南",
+    "mobile": "行動端",
+    "sdk": "SDK",
+    "ios": "iOS",
+    "android": "Android",
+    "cloud": "雲端服務",
+    "infrastructure": "基礎設施",
+    "deployment": "部署",
+    "analytics": "數據分析",
+    "reporting": "報表",
+    "insights": "洞察",
+    "security": "安全",
+    "authentication": "身份驗證",
+    "encryption": "加密",
+    "development": "開發",
+    "tools": "工具",
+    "cli": "命令列"
+  }
+}
