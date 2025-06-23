@@ -21,9 +21,10 @@ console.log("🔍 路由解析:", {
 
 // 配置常量
 const VALID_DOMAINS = [
-  "get_started",
+  "get_started", // get-started
   "payments",
   "payouts",
+  "changelog",
 ] as const;
 type ValidDomain = (typeof VALID_DOMAINS)[number];
 

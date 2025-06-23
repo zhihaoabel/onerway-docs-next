@@ -27,7 +27,7 @@ const suggestedPages = computed(() => [
   {
     title: t("404.suggestions.api.title"),
     description: t("404.suggestions.api.description"),
-    to: "/api",
+    to: "/payments",
     icon: "i-heroicons-code-bracket",
   },
 ]);
@@ -40,7 +40,7 @@ useSeoMeta({
 });
 
 // 设置404状态码
-setResponseStatus(404);
+// setResponseStatus(404);
 
 // 搜索功能
 const searchQuery = ref("");

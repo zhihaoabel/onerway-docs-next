@@ -16,17 +16,17 @@ const links = [
   {
     label: "Docs",
     icon: "i-lucide-book",
-    to: "/docs/getting-started",
+    to: "/getting-started",
   },
   {
     label: "Payments",
     icon: "i-lucide-box",
-    to: "/docs/payment",
+    to: "/payment",
   },
   {
     label: "Payout",
     icon: "i-lucide-chart-no-axes-gantt",
-    to: "/docs/payout",
+    to: "/payout",
   },
 ];
 

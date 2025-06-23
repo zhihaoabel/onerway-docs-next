@@ -13,22 +13,22 @@ const quickLinks = computed(() => [
     children: [
       {
         label: "footer.payment",
-        to: "/payment",
+        to: "/payments",
         icon: "i-heroicons-credit-card",
       },
       {
         label: "footer.acquiring",
-        to: "/acquiring",
+        to: "/payments", // 重定向到payments，因为acquiring内容不存在
         icon: "i-heroicons-building-storefront",
       },
       {
         label: "footer.api",
-        to: "/api",
+        to: "/payments", // 重定向到payments，因为api内容不存在
         icon: "i-heroicons-code-bracket",
       },
       {
         label: "footer.webhooks",
-        to: "/webhooks",
+        to: "/payments", // 重定向到payments，因为webhooks内容不存在
         icon: "i-heroicons-arrow-path",
       },
     ],
@@ -38,12 +38,12 @@ const quickLinks = computed(() => [
     children: [
       {
         label: "footer.docs",
-        to: "/docs",
+        to: "/get-started",
         icon: "i-heroicons-document-text",
       },
       {
         label: "footer.guides",
-        to: "/guides",
+        to: "/get-started",
         icon: "i-heroicons-academic-cap",
       },
       {
@@ -53,7 +53,7 @@ const quickLinks = computed(() => [
       },
       {
         label: "footer.samples",
-        to: "/samples",
+        to: "/get-started", // 重定向到get-started，因为samples内容不存在
         icon: "i-heroicons-code-bracket-square",
       },
     ],
@@ -63,22 +63,22 @@ const quickLinks = computed(() => [
     children: [
       {
         label: "footer.apiReference",
-        to: "/api-reference",
+        to: "/payments", // 重定向到payments，因为api-reference内容不存在
         icon: "i-heroicons-book-open",
       },
       {
         label: "footer.sdks",
-        to: "/sdks",
+        to: "/get-started", // 重定向到get-started，因为sdks内容不存在
         icon: "i-heroicons-cube",
       },
       {
         label: "footer.testing",
-        to: "/testing",
+        to: "/get-started", // 重定向到get-started，因为testing内容不存在
         icon: "i-heroicons-beaker",
       },
       {
         label: "footer.tools",
-        to: "/tools",
+        to: "/get-started", // 重定向到get-started，因为tools内容不存在
         icon: "i-heroicons-wrench-screwdriver",
       },
     ],
@@ -88,12 +88,12 @@ const quickLinks = computed(() => [
     children: [
       {
         label: "footer.contact",
-        to: "/contact",
+        to: "mailto:support@onerway.com", // 改为邮件链接
         icon: "i-heroicons-envelope",
       },
       {
         label: "footer.help",
-        to: "/help",
+        to: "/get-started", // 重定向到get-started
         icon: "i-heroicons-question-mark-circle",
       },
       {
@@ -104,7 +104,8 @@ const quickLinks = computed(() => [
       },
       {
         label: "footer.community",
-        to: "/community",
+        to: "https://github.com/onerway", // 改为GitHub链接
+        target: "_blank",
         icon: "i-heroicons-user-group",
       },
     ],
