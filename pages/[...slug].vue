@@ -129,14 +129,34 @@ if (domain && !isValidDomain(domain)) {
 const { data: page } = await useAsyncData(
   route.path,
   async () => {
-    // 获取页面内容
-    const pageData = await queryCollection(
-      getCollectionName(domain, locale.value)
-    )
-      .path(contentPath)
-      .first();
+    // 如果没有有效的domain，返回null（用于首页或无效路径）
+    if (!domain) {
+      console.log("📄 无域名，跳过内容查询");
+      return null;
+    }
 
-    return pageData;
+    try {
+      // 获取页面内容
+      const collectionName = getCollectionName(
+        domain,
+        locale.value
+      );
+      console.log(
+        "🔍 查询集合:",
+        collectionName,
+        "路径:",
+        contentPath
+      );
+
+      const pageData = await queryCollection(collectionName)
+        .path(contentPath)
+        .first();
+
+      return pageData;
+    } catch (error) {
+      console.error("❌ 查询页面内容失败:", error);
+      return null;
+    }
   }
 );
 
@@ -162,25 +182,33 @@ useSeoMeta({
 
 // 简单的导航数据获取
 const { data: navigation } = await useAsyncData(
-  `navigation-${domain}-${currentLang}`,
+  `navigation-${domain || "none"}-${currentLang}`,
   async () => {
     if (!domain || domain === "changelog") {
       console.log("📋 跳过导航加载（首页或 changelog）");
       return [];
     }
 
-    const collectionName = getCollectionName(
-      domain,
-      locale.value
-    );
-
-    // 只为页面集合加载导航
-    if (!isPageCollection(collectionName)) {
-      console.log(`📋 跳过数据集合导航: ${collectionName}`);
+    // 验证域名有效性
+    if (!isValidDomain(domain)) {
+      console.log("📋 跳过导航加载（无效域名）");
       return [];
     }
 
     try {
+      const collectionName = getCollectionName(
+        domain,
+        locale.value
+      );
+
+      // 只为页面集合加载导航
+      if (!isPageCollection(collectionName)) {
+        console.log(
+          `📋 跳过数据集合导航: ${collectionName}`
+        );
+        return [];
+      }
+
       console.log(`📋 加载导航: ${collectionName}`);
       const nav =
         await queryCollectionNavigation(collectionName);
@@ -192,10 +220,7 @@ const { data: navigation } = await useAsyncData(
       );
       return nav || [];
     } catch (error) {
-      console.error(
-        `❌ 导航加载失败 ${collectionName}:`,
-        error
-      );
+      console.error(`❌ 导航加载失败:`, error);
       return [];
     }
   }
