@@ -1,15 +1,18 @@
 ---
-title: 'Get Started'
-description: 'Welcome to our documentation! This guide will help you get started quickly.'
-version: 'v1'
-category: 'overview'
-lastUpdated: '2024-01-15'
+title: "Get Started"
+description:
+  "Welcome to our documentation! This guide will help you
+  get started quickly."
+version: "v1"
+category: "overview"
+lastUpdated: "2024-01-15"
 order: 1
 ---
 
 # Get Started
 
-Welcome to our documentation! This guide will help you get started quickly.
+Welcome to our documentation! This guide will help you get
+started quickly.
 
 ## Quick Start
 
@@ -19,5 +22,5 @@ Welcome to our documentation! This guide will help you get started quickly.
 
 ## Next Steps
 
-* [Installation Guide](./installation)
-* [Basic Concepts](./concepts)
+- [Installation Guide](./installation)
+- [Basic Concepts](./concepts)

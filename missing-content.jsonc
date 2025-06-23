@@ -8,7 +8,7 @@
     "version": "v1",
     "file": "index.md",
     "relativePath": "get-started/v1/index.md",
-    "_path": "/zh-cn/get-started/v1/index"
+    "_path": "/zh-cn/get-started/v1/index",
   },
   {
     "lang": "zh-tw",
@@ -16,6 +16,6 @@
     "version": "v1",
     "file": "index.md",
     "relativePath": "get-started/v1/index.md",
-    "_path": "/zh-tw/get-started/v1/index"
-  }
+    "_path": "/zh-tw/get-started/v1/index",
+  },
 ]

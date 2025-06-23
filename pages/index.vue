@@ -133,21 +133,21 @@ const features = computed(() => {
       links: [
         {
           label: t("home.features.items.0.links.0.label"),
-          to: "/plugins",
+          to: "/payments",
           class:
             "text-primary font-medium hover:text-muted transition-colors duration-200 flex items-center gap-1",
           trailingIcon: "i-heroicons-arrow-right",
         },
         {
           label: t("home.features.items.0.links.1.label"),
-          to: "/merchant-portal",
+          to: "https://sandbox-portal.onerway.com/",
           class:
             "text-primary font-medium hover:text-muted transition-colors duration-200 flex items-center gap-1",
           trailingIcon: "i-heroicons-arrow-right",
         },
         {
           label: t("home.features.items.0.links.2.label"),
-          to: "/reporting",
+          to: "https://docs.onerway.com/apis/zh/v0.6/settlement-file",
           class:
             "text-primary font-medium hover:text-muted transition-colors duration-200 flex items-center gap-1",
           trailingIcon: "i-heroicons-arrow-right",
@@ -161,14 +161,14 @@ const features = computed(() => {
       links: [
         {
           label: t("home.features.items.1.links.0.label"),
-          to: "/checkout",
+          to: "https://postman.onerway.com/",
           class:
             "text-primary font-medium hover:text-muted transition-colors duration-200 flex items-center gap-1",
           trailingIcon: "i-heroicons-arrow-right",
         },
         {
           label: t("home.features.items.1.links.1.label"),
-          to: "/embedded-form",
+          to: "/payments",
           class:
             "text-primary font-medium hover:text-muted transition-colors duration-200 flex items-center gap-1",
           trailingIcon: "i-heroicons-arrow-right",
@@ -182,21 +182,21 @@ const features = computed(() => {
       links: [
         {
           label: t("home.features.items.2.links.0.label"),
-          to: "/api",
+          to: "/payments",
           class:
             "text-primary font-medium hover:text-muted transition-colors duration-200 flex items-center gap-1",
           trailingIcon: "i-heroicons-arrow-right",
         },
         {
           label: t("home.features.items.2.links.1.label"),
-          to: "/response-codes",
+          to: "/payments",
           class:
             "text-primary font-medium hover:text-muted transition-colors duration-200 flex items-center gap-1",
           trailingIcon: "i-heroicons-arrow-right",
         },
         {
           label: t("home.features.items.2.links.2.label"),
-          to: "/samples",
+          to: "/payments",
           class:
             "text-primary font-medium hover:text-muted transition-colors duration-200 flex items-center gap-1",
           trailingIcon: "i-heroicons-arrow-right",

@@ -106,15 +106,15 @@
           "links": [
             {
               "label": "建站平台外掛",
-              "to": "/plugins"
+              "to": "/payments"
             },
             {
               "label": "商戶管理門戶",
-              "to": "/merchant-portal"
+              "to": "https://sandbox-portal.onerway.com/"
             },
             {
               "label": "結算報表",
-              "to": "/reporting"
+              "to": "https://docs.onerway.com/apis/zh/v0.6/settlement-file"
             }
           ]
         },
@@ -125,11 +125,11 @@
           "links": [
             {
               "label": "託管結帳頁面",
-              "to": "/checkout"
+              "to": "https://postman.onerway.com/"
             },
             {
               "label": "內嵌支付表單",
-              "to": "/embedded-form"
+              "to": "/payments"
             }
           ]
         },
@@ -140,15 +140,15 @@
           "links": [
             {
               "label": "API 參考",
-              "to": "/api"
+              "to": "/payments"
             },
             {
               "label": "應答碼參考",
-              "to": "/response-codes"
+              "to": "/payments"
             },
             {
               "label": "範例專案",
-              "to": "/samples"
+              "to": "/payments"
             }
           ]
         }

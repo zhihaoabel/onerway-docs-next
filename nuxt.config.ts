@@ -115,48 +115,6 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       // 排除无效的路由，避免预渲染错误
-      ignore: [
-        // 排除不存在的域名路由
-        "/acquiring",
-        "/api",
-        "/payout", // 注意：正确的是 /payouts
-        "/plugins",
-        "/merchant-portal",
-        "/reporting",
-        "/checkout",
-        "/embedded-form",
-        "/response-codes",
-        "/samples",
-        "/docs",
-        "/guides",
-        "/api-reference",
-        "/sdks",
-        "/testing",
-        "/tools",
-        "/contact",
-        "/help",
-        "/community",
-        // 排除以这些开头的所有子路径
-        "/acquiring/**",
-        "/api/**",
-        "/payout/**",
-        "/plugins/**",
-        "/merchant-portal/**",
-        "/reporting/**",
-        "/checkout/**",
-        "/embedded-form/**",
-        "/response-codes/**",
-        "/samples/**",
-        "/docs/**",
-        "/guides/**",
-        "/api-reference/**",
-        "/sdks/**",
-        "/testing/**",
-        "/tools/**",
-        "/contact/**",
-        "/help/**",
-        "/community/**",
-      ],
     },
   },
 

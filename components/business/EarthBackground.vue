@@ -1,7 +1,6 @@
 <!-- components/ui/EarthBackground.vue -->
 <script setup lang="ts">
-import * as THREE from 'three';
-import { useI18n } from "vue-i18n";
+import * as THREE from "three";
 
 // 定义组件属性
 interface Props {
@@ -47,7 +46,7 @@ const props = withDefaults(defineProps<Props>(), {
   enableShaders: true,
 });
 
-const { t } = useI18n();
+// const { t } = useI18n();
 
 // 响应式状态
 const earthContainer = ref<HTMLElement>();
@@ -68,7 +67,7 @@ let earth: any = null;
 let clouds: any = null;
 let atmosphere: any = null;
 let stars: any = null;
-let satellites: any[] = [];
+// let satellites: any[] = [];
 let animationId: number = 0;
 let frameCount = 0;
 let lastTime = 0;

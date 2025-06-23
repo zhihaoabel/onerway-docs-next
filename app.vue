@@ -26,7 +26,7 @@ const links = [
   {
     label: "Payout",
     icon: "i-lucide-chart-no-axes-gantt",
-    to: "/payout",
+    to: "/payouts",
   },
 ];
 

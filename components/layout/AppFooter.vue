@@ -353,7 +353,7 @@ const socialLinks = computed(() => [
                   {{ $t("footer.getStarted") }}
                 </UButton>
                 <UButton
-                  to="/api"
+                  to="/payments"
                   variant="outline"
                   size="sm"
                   icon="i-heroicons-code-bracket"

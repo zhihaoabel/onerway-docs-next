@@ -122,8 +122,10 @@ export default withNuxt(
       "@typescript-eslint/no-explicit-any": "warn",
 
       // 控制台相关规则
-      "no-console": "off", // 允许所有 console 方法
-      // "no-console": ["warn", { allow: ["warn", "error", "log"] }], // 允许所有 console 方法
+      "no-console": [
+        "warn",
+        { allow: ["warn", "error", "log"] },
+      ], // 允许所有 console 方法
     },
   },
 

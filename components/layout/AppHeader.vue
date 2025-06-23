@@ -19,8 +19,8 @@ const items = computed<NavigationMenuItem[][]>(() => [
     },
     {
       label: t("header.payout"),
-      to: "/payout",
-      active: route.path.startsWith("/payout"),
+      to: "/payouts",
+      active: route.path.startsWith("/payouts"),
     },
   ],
   [

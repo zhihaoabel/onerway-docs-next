@@ -103,15 +103,15 @@
           "links": [
             {
               "label": "Platform Plugins",
-              "to": "/plugins"
+              "to": "/payments"
             },
             {
               "label": "Merchant Dashboard",
-              "to": "/merchant-portal"
+              "to": "https://sandbox-portal.onerway.com/"
             },
             {
               "label": "Settlement Reports",
-              "to": "/reporting"
+              "to": "https://docs.onerway.com/apis/zh/v0.6/settlement-file"
             }
           ]
         },
@@ -122,11 +122,11 @@
           "links": [
             {
               "label": "Hosted Checkout Page",
-              "to": "/checkout"
+              "to": "/payments"
             },
             {
               "label": "Embedded Payment Form",
-              "to": "/embedded-form"
+              "to": "/payments"
             }
           ]
         },
@@ -137,15 +137,15 @@
           "links": [
             {
               "label": "API Reference",
-              "to": "/api"
+              "to": "/payments"
             },
             {
               "label": "Response Codes",
-              "to": "/response-codes"
+              "to": "/payments"
             },
             {
               "label": "Sample Projects",
-              "to": "/samples"
+              "to": "/payments"
             }
           ]
         }
