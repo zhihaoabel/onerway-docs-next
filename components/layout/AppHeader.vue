@@ -130,10 +130,13 @@ const languageItems = computed(() => [
       </template>
 
       <template #body>
-        <UNavigationMenu
-          :items="items"
-          class="px-4 sm:px-6"
-        />
+        <UDashboardToolbar class="sm:hidden border-none">
+          <UNavigationMenu
+            :items="items"
+            highlight
+            class="flex-1"
+          />
+        </UDashboardToolbar>
       </template>
 
       <template #bottom>

@@ -21,7 +21,7 @@ console.log("🔍 路由解析:", {
 
 // 配置常量
 const VALID_DOMAINS = [
-  "get-started",
+  "get_started",
   "payments",
   "payouts",
 ] as const;
@@ -52,8 +52,10 @@ const getCollectionName = (
   lang: string
 ): keyof Collections => {
   const normalizedLang = normalizeLanguage(lang);
+  // 将域名中的连字符转换为下划线以匹配集合名称
+  const normalizedDomain = domain.replace(/-/g, "_");
   const collectionName =
-    `${domain}-${normalizedLang}` as keyof Collections;
+    `${normalizedDomain}_${normalizedLang}` as keyof Collections;
   console.log("📚 集合名称:", collectionName);
   return collectionName;
 };
@@ -90,7 +92,7 @@ const buildContentPath = (): string => {
   if (pathSegments.length > 0) {
     docPath = `/${pathSegments.join("/")}`;
   } else {
-    docPath = "/index"; // 版本首页
+    docPath = "/"; // 版本首页
   }
 
   const fullPath = `/${lang}/${domain}/${currentVersion}${docPath}`;
@@ -100,36 +102,63 @@ const buildContentPath = (): string => {
 
 // 验证域名
 const isValidDomain = (domain: string): boolean => {
-  return VALID_DOMAINS.includes(domain as ValidDomain);
+  // 将连字符转换为下划线后进行验证
+  const normalizedDomain = domain.replace(/-/g, "_");
+  return VALID_DOMAINS.includes(
+    normalizedDomain as ValidDomain
+  );
 };
-
-// 执行基本验证
-if (
-  domain &&
-  !isValidDomain(domain) &&
-  domain !== "changelog"
-) {
-  console.error("❌ 无效域名:", domain);
-  throw createError({
-    statusCode: 404,
-    statusMessage: `Invalid domain: ${domain}`,
-  });
-}
 
 const contentPath = buildContentPath();
 const currentLang = normalizeLanguage(locale.value);
 
+console.log("当前路径", route.path);
+
+// 执行域名验证 - 使用响应式标志来控制页面渲染
+const isValidPage = ref(true);
+
+if (domain && !isValidDomain(domain)) {
+  console.error("❌ 无效域名:", domain);
+  isValidPage.value = false;
+  await navigateTo(
+    `/404?path=${encodeURIComponent(route.path)}`
+  );
+}
+
 // 获取当前页面内容
 const { data: page } = await useAsyncData(
   route.path,
-  () => {
-    return queryCollection(
+  async () => {
+    // 获取页面内容
+    const pageData = await queryCollection(
       getCollectionName(domain, locale.value)
     )
       .path(contentPath)
       .first();
+
+    return pageData;
   }
 );
+
+// 检查页面是否存在
+if (!page.value) {
+  console.error("❌ 页面未找到:", contentPath);
+  isValidPage.value = false;
+  await navigateTo(
+    `/404?path=${encodeURIComponent(route.path)}`
+  );
+}
+
+useSeoMeta({
+  title:
+    (page.value && "title" in page.value
+      ? page.value.title
+      : "") || "",
+  description:
+    (page.value && "description" in page.value
+      ? page.value.description
+      : "") || "",
+});
 
 // 简单的导航数据获取
 const { data: navigation } = await useAsyncData(
@@ -158,7 +187,8 @@ const { data: navigation } = await useAsyncData(
       console.log(
         "✅ 导航加载成功:",
         nav?.length || 0,
-        "项"
+        "项: ",
+        nav
       );
       return nav || [];
     } catch (error) {
@@ -173,7 +203,7 @@ const { data: navigation } = await useAsyncData(
 
 // 调试信息
 console.log("📊 页面状态:", {
-  page: !!page.value,
+  page: page.value,
   navigation: navigation.value?.length || 0,
 });
 </script>
@@ -268,10 +298,7 @@ console.log("📊 页面状态:", {
             class="text-sm font-semibold text-gray-900 mb-2"
             >导航</h3
           >
-          <UContentNavigation
-            :navigation="navigation"
-            :current-path="page"
-          />
+          <UContentNavigation :navigation="navigation" />
         </div>
 
         <!-- 无导航时的提示 -->

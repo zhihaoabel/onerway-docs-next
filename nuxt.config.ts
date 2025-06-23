@@ -107,6 +107,10 @@ export default defineNuxtConfig({
     ],
   },
 
+  experimental: {
+    payloadExtraction: false,
+  },
+
   // content
   content: {
     experimental: { nativeSqlite: true },
@@ -145,6 +149,9 @@ export default defineNuxtConfig({
 
   // 生产环境优化
   vite: {
+    optimizeDeps: {
+      include: ["three"],
+    },
     build: {
       minify: "terser",
       terserOptions: {
@@ -157,6 +164,16 @@ export default defineNuxtConfig({
         },
       },
       cssMinify: true,
+      rollupOptions: {
+        external: (id) => {
+          // 在服务端渲染时排除 Three.js
+          return (
+            id === "three" &&
+            // eslint-disable-next-line node/prefer-global/process
+            process.env.NODE_ENV === "production"
+          );
+        },
+      },
     },
     css: {
       postcss: {

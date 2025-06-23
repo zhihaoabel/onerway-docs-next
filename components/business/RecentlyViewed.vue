@@ -1,223 +1,166 @@
 <script setup lang="ts">
 const { t } = useI18n();
-const { recentThreePages, initialize } = useRecentPages();
+const {
+  recentThreePages,
+  initialize,
+  formatTimeI18n,
+  getPageIcon,
+  getPageIconColor,
+  getTimeColor,
+  getPageTitle,
+  getPageDescription,
+  removeRecentPage,
+  clearRecentPages,
+} = useRecentPagesWithI18n();
 
-// 在组件中处理国际化的格式化时间
-const formatTime = (timestamp: number): string => {
-  const now = Date.now();
-  const diff = now - timestamp;
-  const minutes = Math.floor(diff / (1000 * 60));
-  const hours = Math.floor(diff / (1000 * 60 * 60));
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+// 性能优化：避免重复计算
+const displayData = computed(() => {
+  return recentThreePages.value.map((page) => ({
+    ...page,
+    displayTitle: getPageTitle(page.path),
+    displayDescription: getPageDescription(page.path),
+    icon: getPageIcon(page.path),
+    iconColor: getPageIconColor(page.path),
+    timeColor: getTimeColor(page.timestamp),
+    formattedTime: formatTimeI18n(page.timestamp),
+  }));
+});
 
-  if (minutes < 1)
-    return t("recentlyViewed.timeAgo.justNow");
-  if (minutes < 60)
-    return t("recentlyViewed.timeAgo.minutesAgo", {
-      minutes,
-    });
-  if (hours < 24)
-    return t("recentlyViewed.timeAgo.hoursAgo", { hours });
-  return t("recentlyViewed.timeAgo.daysAgo", { days });
+// 事件处理
+const handleRemovePage = (path: string) => {
+  removeRecentPage(path);
 };
 
-// 在组件中处理国际化的页面标题
-const getLocalizedTitle = (page: RecentPage): string => {
-  // 现在 composable 已经提供了真实的页面标题，我们应该直接使用它
-  // 只有在标题是通用分类名称时才进行本地化处理
-  const title = page.title || "Unknown Page";
-
-  // 如果标题就是简单的分类名称，进行本地化
-  if (title === "Documentation" || title === "Docs")
-    return t("nav.docs");
-  if (title === "API Reference" || title === "API")
-    return t("nav.api");
-  if (title === "Guides" || title === "Guide")
-    return t("nav.guides");
-  if (title === "Payment") return t("nav.payment");
-
-  // 否则直接返回真实的页面标题
-  return title;
+const handleClearAll = () => {
+  clearRecentPages();
 };
 
-// 在组件中处理国际化的页面描述
-const getLocalizedDescription = (
-  page: RecentPage
-): string => {
-  // 如果 composable 已经提供了高质量的描述，直接使用
-  if (
-    page.description &&
-    page.description.length > 30 && // 提高质量门槛
-    !page.description.startsWith(
-      "Documentation and guides"
-    ) && // 排除旧的简单描述
-    !page.description.startsWith(
-      "API reference documentation"
-    ) &&
-    !page.description.startsWith("Integration guides") &&
-    !page.description.startsWith("Payment products")
-  ) {
-    return page.description;
-  }
-
-  // 只在必要时提供国际化回退（针对分类页面或质量不佳的描述）
-  const path = page.path;
-  if (path.startsWith("/docs"))
-    return t("recentlyViewed.categories.docs");
-  if (path.startsWith("/api"))
-    return t("recentlyViewed.categories.api");
-  if (path.startsWith("/guides"))
-    return t("recentlyViewed.categories.guides");
-  if (path.startsWith("/payment"))
-    return t("recentlyViewed.categories.payment");
-
-  // 最终回退
-  return (
-    page.description ||
-    t("recentlyViewed.categories.default")
-  );
-};
-
-// 获取页面类型对应的彩色图标
-const getPageIcon = (page: RecentPage): string => {
-  const path = page.path;
-  if (path.startsWith("/docs"))
-    return "i-heroicons-document-text";
-  if (path.startsWith("/api"))
-    return "i-heroicons-code-bracket";
-  if (path.startsWith("/guides"))
-    return "i-heroicons-academic-cap";
-  if (path.startsWith("/payment"))
-    return "i-heroicons-credit-card";
-  return page.icon || "i-heroicons-document";
-};
-
-// 获取页面类型对应的图标颜色
-const getPageIconColor = (page: RecentPage): string => {
-  const path = page.path;
-  if (path.startsWith("/docs")) return "text-blue-500";
-  if (path.startsWith("/api")) return "text-green-500";
-  if (path.startsWith("/guides")) return "text-purple-500";
-  if (path.startsWith("/payment")) return "text-orange-500";
-  return "text-primary";
-};
-
-// 获取时间显示的颜色编码
-const getTimeColor = (timestamp: number): string => {
-  const now = Date.now();
-  const diff = now - timestamp;
-  const hours = Math.floor(diff / (1000 * 60 * 60));
-
-  if (hours < 1) return "text-green-500"; // 1小时内 - 绿色
-  if (hours < 24) return "text-blue-500"; // 24小时内 - 蓝色
-  if (hours < 168) return "text-yellow-500"; // 1周内 - 黄色
-  return "text-gray-400"; // 超过1周 - 灰色
-};
-
-// 确保组件挂载时初始化
+// 初始化
 onMounted(() => {
   initialize();
 });
 </script>
 
 <template>
-  <!-- 最近浏览的页面列表 -->
+  <!-- 有浏览记录时显示 -->
   <UCard
+    v-if="recentThreePages.length > 0"
     class="overflow-hidden transform-gpu"
     role="region"
-    aria-label="Recently viewed pages"
+    :aria-label="t('recentlyViewed.title')"
     :ui="{
       root: 'divide-none',
+      header: 'p-4 sm:px-6 sm:pb-0',
+      body: 'p-4 sm:p-6 sm:pb-0',
+      footer: 'p-4 sm:px-6 sm:pt-0',
     }"
   >
     <!-- 标题 -->
-    <template
-      #header
-      v-if="recentThreePages.length > 0"
-    >
-      <div>
+    <template #header>
+      <div class="flex items-center justify-between">
         <h3
           id="recent-pages-title"
-          class="text-lg font-semibold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+          class="text-md font-semibold bg-clip-text text-default"
         >
           {{ t("recentlyViewed.title") }}
         </h3>
-        <p class="text-sm text-muted">
-          {{ t("recentlyViewed.subtitle") }}
-        </p>
+        <!-- 清除所有按钮 -->
+        <UButton
+          variant="ghost"
+          size="xs"
+          icon="i-heroicons-x-mark"
+          :aria-label="t('recentlyViewed.clearAll')"
+          :title="t('recentlyViewed.clearAll')"
+          class="opacity-60 hover:opacity-100 transition-opacity"
+          @click="handleClearAll"
+        />
       </div>
     </template>
 
     <!-- 最近浏览的页面内容 -->
-    <template
-      #default
-      v-if="recentThreePages.length > 0"
-    >
-      <UPageMarquee
-        class="divide-y divide-white/10 dark:divide-gray-700/30 w-full max-h-56"
-        aria-labelledby="recent-pages-title"
-        :ui="{
-          content: 'items-stretch w-full',
-        }"
-        role="navigation"
-        :pause-on-hover="true"
-        orientation="vertical"
-        :repeat="3"
-      >
-        <NuxtLink
-          v-for="(page, index) in recentThreePages"
-          :key="page.path"
-          :to="page.path"
-          class="block hover:bg-muted dark:hover:bg-muted/50 hover:scale-[1.02] transition-all duration-200 motion-reduce:transform-none transform-gpu focus:bg-white/10"
-          :class="{ 'border-t-0': index === 0 }"
-          :aria-label="`Visit ${getLocalizedTitle(page)} - ${getLocalizedDescription(page)}`"
-          tabindex="0"
+    <template #default>
+      <div class="space-y-1">
+        <div
+          v-for="item in displayData"
+          :key="item.path"
+          class="group relative"
         >
-          <div class="flex items-start space-x-3">
-            <!-- 图标 -->
-            <div class="flex-shrink-0">
-              <UIcon
-                :name="getPageIcon(page)"
-                class="w-5 h-5"
-                :class="getPageIconColor(page)"
-                aria-hidden="true"
-              />
+          <NuxtLink
+            :to="item.path"
+            :aria-label="`${t('recentlyViewed.visitPage')}: ${item.displayTitle} - ${item.displayDescription}`"
+            tabindex="0"
+            class="flex items-start space-x-3 p-2 -mx-2 rounded-lg transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-800/50 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:bg-gray-50 dark:focus:bg-gray-800/50"
+          >
+            <!-- 图标容器 -->
+            <div class="flex-shrink-0 mt-0.5">
+              <div class="relative">
+                <UIcon
+                  :name="item.icon"
+                  class="size-4 transition-all duration-200 group-hover:scale-110"
+                  :class="item.iconColor"
+                  aria-hidden="true"
+                />
+                <!-- 图标背景光晕效果 -->
+                <div
+                  class="absolute inset-0 rounded-full opacity-0 group-hover:opacity-20 transition-opacity duration-200 blur-sm -z-10"
+                  :class="
+                    item.iconColor.replace('text-', 'bg-')
+                  "
+                />
+              </div>
             </div>
 
-            <!-- 内容 -->
-            <div class="flex-1 min-w-0 max-w-sm">
-              <h4 class="text-sm font-medium truncate">
-                {{ getLocalizedTitle(page) }}
+            <!-- 内容区域 -->
+            <div class="flex-1 min-w-0">
+              <h4
+                class="text-sm font-medium text-primary/90 group-hover:text-highlighted transition-colors duration-200 truncate"
+              >
+                {{ item.displayTitle }}
               </h4>
               <p
-                class="text-xs mt-1 line-clamp-2 text-muted"
+                class="text-xs mt-1 font-medium transition-colors duration-200 group-hover:opacity-80"
+                :class="item.timeColor"
+                :aria-label="`${t('recentlyViewed.lastVisited')}: ${item.formattedTime}`"
               >
-                {{ getLocalizedDescription(page) }}
+                {{ item.formattedTime }}
               </p>
+              <!-- 页面描述 -->
               <p
-                class="text-xs mt-2"
-                :class="getTimeColor(page.timestamp)"
-                :aria-label="`Last visited ${formatTime(page.timestamp)}`"
+                class="text-xs text-gray-500 dark:text-gray-400 mt-0.5 truncate opacity-0 group-hover:opacity-100 transition-opacity duration-200"
               >
-                {{ formatTime(page.timestamp) }}
+                {{ item.displayDescription }}
               </p>
             </div>
 
-            <!-- 箭头图标 -->
-            <div class="flex-shrink-0">
+            <!-- 右侧箭头指示器 -->
+            <div
+              class="flex-shrink-0 self-center opacity-0 group-hover:opacity-100 transition-all duration-200 transform translate-x-1 group-hover:translate-x-0"
+            >
               <UIcon
                 name="i-heroicons-chevron-right"
-                class="w-4 h-4 text-muted"
+                class="size-3 text-gray-400 dark:text-gray-500"
                 aria-hidden="true"
               />
             </div>
-          </div>
-        </NuxtLink>
-      </UPageMarquee>
+          </NuxtLink>
+
+          <!-- 移除按钮 -->
+          <UButton
+            variant="ghost"
+            size="xs"
+            icon="i-heroicons-x-mark"
+            :aria-label="`${t('recentlyViewed.remove')}: ${item.displayTitle}`"
+            class="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity size-6 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+            :title="t('recentlyViewed.remove')"
+            @click.stop="handleRemovePage(item.path)"
+          />
+        </div>
+      </div>
     </template>
 
+    <!-- 底部信息 -->
     <template #footer>
-      <div class="py-2">
+      <div class="pt-4">
         <p class="text-xs text-muted">
           {{ t("recentlyViewed.footer.signInPrompt") }}
           <UButton
@@ -225,8 +168,78 @@ onMounted(() => {
             target="_blank"
             variant="link"
             size="xs"
-            class="text-xs p-0 h-auto font-semibold"
-            aria-label="Sign in to Onerway sandbox portal"
+            class="text-xs p-0 h-auto font-semibold hover:text-gray-900"
+            :aria-label="t('recentlyViewed.footer.signIn')"
+          >
+            {{ t("recentlyViewed.footer.signIn") }}
+          </UButton>
+          {{ t("recentlyViewed.footer.loadKeys") }}
+        </p>
+      </div>
+    </template>
+  </UCard>
+
+  <!-- 无浏览记录时显示空状态 -->
+  <UCard
+    v-else
+    class="overflow-hidden"
+    role="region"
+    :aria-label="t('recentlyViewed.empty.title')"
+    :ui="{
+      root: 'divide-none',
+      header: 'p-4 sm:px-6 sm:pb-0',
+      body: 'p-4 sm:p-6',
+    }"
+  >
+    <!-- 标题 -->
+    <template #header>
+      <div class="flex items-center justify-between">
+        <h3
+          id="recent-pages-title"
+          class="text-md font-semibold bg-clip-text text-default"
+        >
+          {{ t("recentlyViewed.title") }}
+        </h3>
+      </div>
+    </template>
+
+    <!-- 空状态内容 -->
+    <template #default>
+      <div class="text-center py-6">
+        <div
+          class="mx-auto flex items-center justify-center w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-full mb-4"
+        >
+          <UIcon
+            name="i-heroicons-clock"
+            class="w-6 h-6 text-gray-400 dark:text-gray-500"
+            aria-hidden="true"
+          />
+        </div>
+        <h4
+          class="text-sm font-medium text-gray-900 dark:text-gray-100 mb-2"
+        >
+          {{ t("recentlyViewed.empty.title") }}
+        </h4>
+        <p
+          class="text-sm text-gray-500 dark:text-gray-400 max-w-sm mx-auto"
+        >
+          {{ t("recentlyViewed.empty.description") }}
+        </p>
+      </div>
+    </template>
+
+    <!-- 底部信息 -->
+    <template #footer>
+      <div>
+        <p class="text-xs text-muted">
+          {{ t("recentlyViewed.footer.signInPrompt") }}
+          <UButton
+            to="https://sandbox-portal.onerway.com/user/login"
+            target="_blank"
+            variant="link"
+            size="xs"
+            class="text-xs p-0 h-auto font-semibold hover:text-gray-900"
+            :aria-label="t('recentlyViewed.footer.signIn')"
           >
             {{ t("recentlyViewed.footer.signIn") }}
           </UButton>
@@ -236,3 +249,20 @@ onMounted(() => {
     </template>
   </UCard>
 </template>
+
+<style scoped>
+/* 添加一些自定义样式以提升用户体验 */
+.group:hover .size-6 {
+  transform: scale(1.05);
+}
+
+/* 确保移除按钮不会干扰链接点击 */
+.group .absolute {
+  pointer-events: auto;
+}
+
+/* 平滑的变换效果 */
+.transform-gpu {
+  transform: translateZ(0);
+}
+</style>

@@ -10,13 +10,13 @@ const { t } = useI18n();
 // SEO 头部信息
 useSeoMeta({
   title: t("home.seo.title"),
-  description: t("home.seo.description"),
 });
 
 const links = computed<LinkProps[]>(() => [
   {
     label: t("home.hero.getStarted"),
     to: "/get-started",
+    color: "primary",
     size: "xl",
     icon: "i-lucide-square-play",
   },
@@ -213,162 +213,195 @@ const onProductClick = (product: EnhancedProduct) => {
 </script>
 
 <template>
-  <UContainer>
-    <!-- Hero Section -->
-    <UPageHero
-      :description="$t('home.documentation.description')"
-      orientation="horizontal"
-      :links="links"
-      :ui="{
-        container: 'py-8 sm:py-12 lg:py-16',
-        title: 'text-3xl sm:text-4xl font-bold',
-      }"
-    >
-      <template #title>
-        {{ $t("home.documentation.title") }}
-      </template>
+  <div>
+    <UContainer>
+      <img
+        class="absolute top-0 left-0 w-full dark:hidden max-h-7/12"
+        src="https://b.stripecdn.com/docs-statics-srv/assets/52d6e32f24e1d2872960ba1d0cb8aac5.webp"
+        alt=""
+      />
 
-      <!-- 最近浏览的页面和测试卡 -->
-      <ClientOnly>
-        <div class="relative sm:max-w-lg max-sm:hidden">
-          <!-- 最近浏览组件 -->
-          <div class="relative z-10">
-            <RecentlyViewed
-              class="backdrop-blur-lg bg-white/10 dark:bg-gray-900/20 border border-white/20 dark:border-gray-700/30 shadow-2xl shadow-black/10 rounded-xl"
-            />
-          </div>
-
-          <!-- 测试卡预览 - 桌面端重叠效果，移动端隐藏 -->
-          <div
-            class="hidden lg:block absolute z-0 pointer-events-none"
-          >
-            <TestCardPreview
-              class="transform -rotate-6 translate-x-2/3 -translate-y-1/4 hover:-rotate-3 hover:scale-105 transition-transform duration-500 ease-out pointer-events-auto"
-            />
-          </div>
-        </div>
-      </ClientOnly>
-    </UPageHero>
-
-    <!-- Features Section -->
-    <UPageSection
-      :ui="{
-        container: 'py-16 sm:py-24 lg:py-32',
-      }"
-    >
-      <template #features>
-        <UPageFeature
-          v-for="feature in features"
-          :key="feature.title"
-          :title="feature.title"
-          :description="feature.description"
+      <div
+        class="absolute left-0 light:w-full light:h-7/12 max-sm:hidden dot-background"
+      >
+      </div>
+      <!-- Hero Section -->
+      <UContainer>
+        <UPageHero
+          :description="
+            $t('home.documentation.description')
+          "
+          orientation="horizontal"
+          :links="links"
           :ui="{
-            root: 'group relative overflow-hidden rounded-xl p-8 hover:shadow-lg transition-all duration-300 hover:scale-102',
-            title: 'text-xl font-bold mb-3',
-            description: 'mb-6',
+            container: 'py-8 sm:py-12 lg:py-16 ',
+            title: 'text-3xl sm:text-4xl font-bold',
           }"
         >
-          <template #leading>
-            <div
-              class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 dark:bg-primary/20"
-            >
-              <UIcon
-                :name="feature.icon"
-                class="h-6 w-6 text-primary"
-              />
-            </div>
-          </template>
           <template #title>
-            <h3 class="text-xl font-bold mb-3">
-              {{ feature.title }}
-            </h3>
+            {{ $t("home.documentation.title") }}
           </template>
-          <template #description>
-            <p class="mb-6">
-              {{ feature.description }}
-            </p>
-            <div class="space-y-2">
-              <UPageLinks
-                :links="feature.links"
-                class="text-primary"
-                :ui="{
-                  item: 'group/link',
-                  link: 'relative',
-                }"
+
+          <!-- 最近浏览的页面和测试卡 -->
+          <ClientOnly>
+            <div class="relative sm:max-w-xs max-sm:hidden">
+              <!-- 最近浏览组件 -->
+              <div class="relative z-10">
+                <RecentlyViewed
+                  class="backdrop-blur-xs bg-white/10 dark:bg-gray-900/50 border border-white/20 dark:border-gray-700/30 shadow-2xl shadow-black/10 rounded-xl"
+                />
+              </div>
+
+              <!-- 测试卡预览 - 桌面端重叠效果，移动端隐藏 -->
+              <div
+                class="hidden lg:block absolute z-0 pointer-events-none"
               >
-                <template #link-trailing="{ link }">
-                  <UIcon
-                    :name="link.trailingIcon"
-                    class="size-4 text-muted opacity-0 group-hover/link:opacity-100 transition-opacity duration-200"
-                  />
-                </template>
-              </UPageLinks>
+                <TestCardPreview
+                  class="transform -rotate-12 translate-x-1/2 -translate-y-2/5 hover:-rotate-6 hover:scale-105 transition-transform duration-500 ease-out pointer-events-auto"
+                />
+              </div>
             </div>
-          </template>
-        </UPageFeature>
-      </template>
-    </UPageSection>
+          </ClientOnly>
+        </UPageHero>
+      </UContainer>
 
-    <!-- Try It Out Section -->
-    <UContainer>
-      <ProseH2 id="try-it-out">
-        {{ $t("home.tryItOut.title") }}
-      </ProseH2>
-      <TerminalCarousel />
-    </UContainer>
+      <!-- Features Section -->
+      <UPageSection
+        :ui="{
+          container: 'py-8 sm:py-0 lg:py-0 my-8',
+        }"
+      >
+        <template #features>
+          <UPageFeature
+            v-for="feature in features"
+            :key="feature.title"
+            :title="feature.title"
+            :description="feature.description"
+            :ui="{
+              root: 'group relative overflow-hidden rounded-xl p-8 hover:shadow-lg transition-all duration-300 hover:scale-102',
+              title: 'text-xl font-bold mb-3',
+              description: 'mb-6',
+            }"
+          >
+            <template #leading>
+              <div
+                class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 dark:bg-primary/20"
+              >
+                <UIcon
+                  :name="feature.icon"
+                  class="h-6 w-6 text-primary"
+                />
+              </div>
+            </template>
+            <template #title>
+              <h3 class="text-xl font-bold mb-3">
+                {{ feature.title }}
+              </h3>
+            </template>
+            <template #description>
+              <div class="space-y-2">
+                <UPageLinks
+                  :links="feature.links"
+                  class="text-primary"
+                  :ui="{
+                    item: 'group/link',
+                    link: 'relative',
+                  }"
+                >
+                  <template #link-trailing="{ link }">
+                    <UIcon
+                      :name="link.trailingIcon"
+                      class="size-4 text-muted opacity-0 group-hover/link:opacity-100 transition-opacity duration-200"
+                    />
+                  </template>
+                </UPageLinks>
+              </div>
+            </template>
+          </UPageFeature>
+        </template>
+      </UPageSection>
 
-    <!-- Products section -->
-    <UContainer>
-      <div class="mb-16">
-        <ProseH2 id="products">
-          {{ $t("home.products.browse.title") }}
+      <!-- Try It Out Section -->
+      <UContainer>
+        <ProseH2 id="try-it-out">
+          {{ $t("home.tryItOut.title") }}
         </ProseH2>
+        <TerminalCarousel class="max-lg:hidden" />
+      </UContainer>
+
+      <!-- Products section -->
+      <UContainer>
+        <div class="mb-16">
+          <ProseH2 id="products">
+            {{ $t("home.products.browse.title") }}
+          </ProseH2>
+
+          <ProseH3
+            id="payments"
+            class="text-muted"
+          >
+            {{ $t("home.products.payments.title") }}
+          </ProseH3>
+
+          <UPageGrid class="mb-12">
+            <ProductCard
+              v-for="(product, index) in additionalProducts"
+              :key="index"
+              :product="product"
+              :clickable="true"
+              class="group hover:scale-[1.02] hover:bg-default transition-transform duration-300"
+              @click="onProductClick"
+            />
+          </UPageGrid>
+        </div>
 
         <ProseH3
-          id="payments"
+          id="payout"
           class="text-muted"
         >
-          {{ $t("home.products.payments.title") }}
+          {{ $t("home.products.payout.title") }}
+          <UBadge
+            class="font-bold rounded-lg ml-2 -translate-y-1"
+            trailing-icon="i-heroicons-clock"
+            >{{ $t("home.products.payout.comingSoon") }}
+          </UBadge>
         </ProseH3>
+      </UContainer>
 
-        <UPageGrid class="mb-12">
-          <ProductCard
-            v-for="(product, index) in additionalProducts"
-            :key="index"
-            :product="product"
-            :clickable="true"
-            class="group hover:scale-[1.02] hover:bg-default transition-transform duration-300"
-            @click="onProductClick"
-          />
-        </UPageGrid>
-      </div>
-
-      <ProseH3
-        id="payout"
-        class="text-muted"
-      >
-        {{ $t("home.products.payout.title") }}
-        <UBadge
-          class="font-bold rounded-lg ml-2 -translate-y-1"
-          trailing-icon="i-heroicons-clock"
-          >{{ $t("home.products.payout.comingSoon") }}
-        </UBadge>
-      </ProseH3>
+      <!-- CTA Section -->
+      <UPageSection>
+        <UPageCTA
+          :title="$t('home.cta.title')"
+          :description="$t('home.cta.description')"
+          :links="[
+            {
+              label: $t('home.cta.start'),
+              to: '/get_started',
+              size: 'lg',
+            },
+          ]"
+        />
+      </UPageSection>
     </UContainer>
-
-    <!-- CTA Section -->
-    <UPageSection>
-      <UPageCTA
-        :title="$t('home.cta.title')"
-        :description="$t('home.cta.description')"
-        :links="[
-          {
-            label: $t('home.cta.start'),
-            to: '/get-started',
-            size: 'lg',
-          },
-        ]"
-      />
-    </UPageSection>
-  </UContainer>
+  </div>
 </template>
+
+<style scoped>
+.dot-background {
+  background-image: radial-gradient(
+    rgba(0, 0, 0, 0) 1.5px,
+    #fff 1px
+  );
+  background-size: 14px 14px;
+}
+
+.dark .dot-background {
+  animation: pulse 2.5s infinite;
+  background-image: radial-gradient(
+    circle,
+    rgba(238, 9, 223, 0.1) 20%,
+    rgba(238, 9, 223, 0.06) 60%
+  );
+  background-size: contain;
+}
+</style>

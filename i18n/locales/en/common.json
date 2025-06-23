@@ -9,11 +9,80 @@
     "title": "Table of Contents"
   },
   "footer": {
+    "product": "Product",
+    "payment": "Payment",
+    "acquiring": "Acquiring",
+    "api": "API",
+    "webhooks": "Webhooks",
+    "resources": "Resources",
+    "docs": "Documentation",
+    "guides": "Guides",
+    "changelog": "Changelog",
+    "samples": "Code Samples",
+    "developers": "Developers",
+    "apiReference": "API Reference",
+    "sdks": "SDKs",
+    "testing": "Testing",
+    "tools": "Tools",
+    "support": "Support",
+    "contact": "Contact",
+    "help": "Help Center",
+    "status": "Status",
+    "community": "Community",
+    "brandDescription": "Modern payment infrastructure for developers. Making payment integration simple and reliable.",
+    "allSystemsOperational": "All systems operational",
+    "followUs": "Follow us",
+    "stayUpdated": "Stay updated",
+    "newsletterDescription": "Subscribe to our developer newsletter for the latest API updates, new features, and best practices.",
+    "emailPlaceholder": "Enter your email",
+    "subscribe": "Subscribe",
+    "subscribeNote": "Monthly updates, unsubscribe anytime. We respect your privacy.",
+    "quickAccess": "Quick access",
+    "getStarted": "Get Started",
+    "apiDocs": "API Docs",
+    "security": "Security",
+    "compliance": "Compliance",
     "description": "Onerway Payment Gateway - Secure, fast, and reliable payment solutions for businesses worldwide.",
     "copyright": "© 2024 Onerway. All rights reserved.",
     "rights": "All rights reserved.",
     "privacy": "Privacy Policy",
     "terms": "Terms of Service"
+  },
+  "404": {
+    "title": "Page Not Found",
+    "description": "Sorry, the page you are looking for doesn't exist. It may have been moved, deleted, or you entered the wrong URL.",
+    "attemptedPath": "Attempted path",
+    "searchPlaceholder": "Search documentation...",
+    "search": "Search",
+    "backHome": "Back to Home",
+    "goBack": "Go Back",
+    "suggestionsTitle": "You might be looking for",
+    "suggestions": {
+      "getStarted": {
+        "title": "Get Started",
+        "description": "Learn how to integrate Onerway payment services"
+      },
+      "payments": {
+        "title": "Payment Docs",
+        "description": "View payment-related API documentation and guides"
+      },
+      "api": {
+        "title": "API Reference",
+        "description": "Complete API interface documentation"
+      }
+    },
+    "seo": {
+      "title": "Page Not Found - Onerway Docs",
+      "description": "The page you are looking for doesn't exist. Please return to the homepage or search for related content."
+    }
+  },
+  "error": {
+    "title": "An Error Occurred",
+    "description": "Sorry, the system encountered some issues. Please try again later or contact our support team.",
+    "seo": {
+      "title": "System Error - Onerway Docs",
+      "description": "The system encountered an error, we are working to resolve it."
+    }
   },
   "home": {
     "hero": {
@@ -156,7 +225,46 @@
         "learnMorePayment": "Learn more about Payment Intent",
         "learnMoreSaving": "Learn more about Saving a card",
         "learnMoreSubscriptions": "Learn more about Subscriptions",
-        "learnMoreReconciliation": "Learn more about Transaction Reconciliation"
+        "learnMoreReconciliation": "Learn more about Transaction Reconciliation",
+        "ariaLabel": "Interactive code carousel",
+        "navigation": {
+          "title": "API Examples",
+          "subtitle": "Explore different payment scenarios",
+          "selectItem": "Select example"
+        },
+        "controls": {
+          "play": "Start auto-play",
+          "pause": "Pause auto-play"
+        },
+        "status": {
+          "autoPlay": "Auto-play",
+          "active": "Active",
+          "paused": "Paused"
+        },
+        "actions": {
+          "copy": "Copy code to clipboard",
+          "expand": "Show full example",
+          "collapse": "Show compact example"
+        },
+        "content": {
+          "noContent": "No code example available",
+          "loading": "Loading example...",
+          "fullView": "Full Example",
+          "compactView": "Compact View"
+        },
+        "feedback": {
+          "copySuccess": "Code copied!",
+          "copySuccessDesc": "The code has been copied to your clipboard",
+          "copyError": "Copy failed",
+          "copyErrorDesc": "Failed to copy code to clipboard"
+        },
+        "footer": {
+          "signInPrompt": "Ready to test with real data?",
+          "learnMore": "Learn more"
+        },
+        "indicators": {
+          "goToSlide": "Go to slide"
+        }
       }
     },
     "documentation": {
@@ -178,6 +286,10 @@
   "recentlyViewed": {
     "title": "Recently Viewed",
     "subtitle": "Quick access to your recent pages",
+    "clearAll": "Clear all recent pages",
+    "remove": "Remove from recent pages",
+    "visitPage": "Visit page",
+    "lastVisited": "Last visited",
     "empty": {
       "title": "No recent pages",
       "description": "Start exploring our documentation to see your recently viewed pages here."

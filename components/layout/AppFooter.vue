@@ -1,127 +1,389 @@
 <script setup lang="ts">
-// 页脚组件不需要额外的逻辑
+import { computed } from "vue";
+
+// 获取当前年份
+const currentYear = computed(() =>
+  new Date().getFullYear()
+);
+
+// 快速链接数据
+const quickLinks = computed(() => [
+  {
+    label: "footer.product",
+    children: [
+      {
+        label: "footer.payment",
+        to: "/payment",
+        icon: "i-heroicons-credit-card",
+      },
+      {
+        label: "footer.acquiring",
+        to: "/acquiring",
+        icon: "i-heroicons-building-storefront",
+      },
+      {
+        label: "footer.api",
+        to: "/api",
+        icon: "i-heroicons-code-bracket",
+      },
+      {
+        label: "footer.webhooks",
+        to: "/webhooks",
+        icon: "i-heroicons-arrow-path",
+      },
+    ],
+  },
+  {
+    label: "footer.resources",
+    children: [
+      {
+        label: "footer.docs",
+        to: "/docs",
+        icon: "i-heroicons-document-text",
+      },
+      {
+        label: "footer.guides",
+        to: "/guides",
+        icon: "i-heroicons-academic-cap",
+      },
+      {
+        label: "footer.changelog",
+        to: "/changelog",
+        icon: "i-heroicons-clock",
+      },
+      {
+        label: "footer.samples",
+        to: "/samples",
+        icon: "i-heroicons-code-bracket-square",
+      },
+    ],
+  },
+  {
+    label: "footer.developers",
+    children: [
+      {
+        label: "footer.apiReference",
+        to: "/api-reference",
+        icon: "i-heroicons-book-open",
+      },
+      {
+        label: "footer.sdks",
+        to: "/sdks",
+        icon: "i-heroicons-cube",
+      },
+      {
+        label: "footer.testing",
+        to: "/testing",
+        icon: "i-heroicons-beaker",
+      },
+      {
+        label: "footer.tools",
+        to: "/tools",
+        icon: "i-heroicons-wrench-screwdriver",
+      },
+    ],
+  },
+  {
+    label: "footer.support",
+    children: [
+      {
+        label: "footer.contact",
+        to: "/contact",
+        icon: "i-heroicons-envelope",
+      },
+      {
+        label: "footer.help",
+        to: "/help",
+        icon: "i-heroicons-question-mark-circle",
+      },
+      {
+        label: "footer.status",
+        to: "https://status.onerway.com",
+        target: "_blank",
+        icon: "i-heroicons-signal",
+      },
+      {
+        label: "footer.community",
+        to: "/community",
+        icon: "i-heroicons-user-group",
+      },
+    ],
+  },
+]);
+
+// 社交媒体链接
+const socialLinks = computed(() => [
+  {
+    name: "GitHub",
+    icon: "i-simple-icons-github",
+    href: "https://github.com/onerway",
+    color: "gray",
+    hoverColor: "hover:text-gray-900 dark:hover:text-white",
+  },
+  {
+    name: "Twitter",
+    icon: "i-simple-icons-twitter",
+    href: "https://twitter.com/onerway",
+    color: "blue",
+    hoverColor: "hover:text-blue-500",
+  },
+  {
+    name: "Discord",
+    icon: "i-simple-icons-discord",
+    href: "https://discord.gg/onerway",
+    color: "indigo",
+    hoverColor: "hover:text-indigo-500",
+  },
+  {
+    name: "LinkedIn",
+    icon: "i-simple-icons-linkedin",
+    href: "https://linkedin.com/company/onerway",
+    color: "blue",
+    hoverColor: "hover:text-blue-600",
+  },
+]);
+
+// 法律链接
+// const legalLinks = computed(() => [
+//   {
+//     label: "footer.privacy",
+//     to: "/privacy",
+//   },
+//   {
+//     label: "footer.terms",
+//     to: "/terms",
+//   },
+//   {
+//     label: "footer.security",
+//     to: "/security",
+//   },
+//   {
+//     label: "footer.compliance",
+//     to: "/compliance",
+//   },
+// ]);
 </script>
 
 <template>
-  <UFooter>
-    <template #left>
-      <div class="flex items-center gap-2">
-        <UIcon
-          name="i-heroicons-credit-card"
-          class="h-5 w-5"
-        />
-        <span class="font-semibold">Onerway</span>
-      </div>
-    </template>
+  <footer
+    class="bg-gradient-to-b from-gray-50 to-white border-t border-gray-200 dark:from-gray-900 dark:to-slate-900 dark:border-gray-700"
+  >
+    <!-- 主要内容区域 -->
+    <div
+      v-show="false"
+      class="py-12 pb-8"
+    >
+      <UContainer>
+        <div
+          class="grid grid-cols-1 lg:grid-cols-[1fr_2fr_1fr] gap-8 lg:gap-12 items-start"
+        >
+          <!-- 品牌区域 -->
+          <div class="max-w-80">
+            <!-- Logo 和品牌名 -->
+            <div class="flex items-center mb-4">
+              <div class="flex items-center gap-2">
+                <UIcon
+                  name="i-heroicons-credit-card"
+                  class="h-7 w-7 text-blue-500"
+                />
+                <span
+                  class="text-2xl font-bold text-primary"
+                  >Onerway</span
+                >
+              </div>
+              <UBadge
+                variant="subtle"
+                color="primary"
+                size="xs"
+                class="ml-2"
+              >
+                Docs
+              </UBadge>
+            </div>
 
-    <template #center>
-      <UFooterColumns
-        :links="[
-          {
-            label: $t('footer.product'),
-            children: [
-              {
-                label: $t('footer.payment'),
-                to: '/payment',
-              },
-              {
-                label: $t('footer.acquiring'),
-                to: '/acquiring',
-              },
-              {
-                label: $t('footer.api'),
-                to: '/api',
-              },
-            ],
-          },
-          {
-            label: $t('footer.resources'),
-            children: [
-              {
-                label: $t('footer.docs'),
-                to: '/docs',
-              },
-              {
-                label: $t('footer.guides'),
-                to: '/guides',
-              },
-              {
-                label: $t('footer.changelog'),
-                to: '/changelog',
-              },
-            ],
-          },
-          {
-            label: $t('footer.support'),
-            children: [
-              {
-                label: $t('footer.contact'),
-                to: '/contact',
-              },
-              {
-                label: $t('footer.help'),
-                to: '/help',
-              },
-              {
-                label: $t('footer.status'),
-                to: 'https://status.onerway.com',
-                target: '_blank',
-              },
-            ],
-          },
-        ]"
-      />
-    </template>
+            <!-- 品牌描述 -->
+            <p
+              class="text-gray-600 dark:text-gray-400 leading-relaxed mb-6"
+            >
+              {{ $t("footer.brandDescription") }}
+            </p>
 
-    <template #right>
-      <div class="flex items-center gap-4">
-        <!-- 社交媒体链接 -->
-        <div class="flex items-center gap-2">
-          <UButton
-            to="https://github.com/onerway"
-            target="_blank"
-            icon="i-simple-icons-github"
-            variant="ghost"
-            color="primary"
-            size="sm"
-            aria-label="GitHub"
-          />
-          <UButton
-            to="https://twitter.com/onerway"
-            target="_blank"
-            icon="i-simple-icons-twitter"
-            variant="ghost"
-            color="primary"
-            size="sm"
-            aria-label="Twitter"
-          />
+            <!-- 快速状态指示器 -->
+            <div
+              class="flex items-center gap-2 mb-6 p-2 px-3 bg-green-50 border border-green-200 rounded-lg dark:bg-green-900/10 dark:border-green-800/20"
+            >
+              <div
+                class="w-2 h-2 bg-green-500 rounded-full animate-pulse"
+              ></div>
+              <span
+                class="text-sm text-green-700 dark:text-green-400 font-medium"
+                >{{
+                  $t("footer.allSystemsOperational")
+                }}</span
+              >
+            </div>
+
+            <!-- 社交媒体链接 -->
+            <div class="mt-6">
+              <span
+                class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-3 block"
+                >{{ $t("footer.followUs") }}</span
+              >
+              <div class="flex gap-2">
+                <UButton
+                  v-for="social in socialLinks"
+                  :key="social.name"
+                  :to="social.href"
+                  target="_blank"
+                  :icon="social.icon"
+                  variant="ghost"
+                  size="sm"
+                  :class="social.hoverColor"
+                  :aria-label="social.name"
+                  class="transition-all duration-200 hover:-translate-y-0.5"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- 链接列 -->
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-8"
+          >
+            <div
+              v-for="section in quickLinks"
+              :key="section.label"
+              class="min-w-0"
+            >
+              <h3
+                class="text-sm font-semibold text-gray-900 dark:text-white mb-4 uppercase tracking-wide"
+              >
+                {{ $t(section.label) }}
+              </h3>
+              <ul class="list-none p-0 m-0 space-y-2">
+                <li
+                  v-for="link in section.children"
+                  :key="link.label"
+                  class="mb-2"
+                >
+                  <NuxtLink
+                    :to="link.to"
+                    :target="link.target"
+                    class="flex items-center gap-2 py-1 text-gray-600 dark:text-gray-400 text-sm transition-all duration-200 hover:text-blue-600 hover:translate-x-0.5 dark:hover:text-blue-400 no-underline"
+                  >
+                    <UIcon
+                      :name="link.icon"
+                      class="h-4 w-4 opacity-70"
+                    />
+                    {{ $t(link.label) }}
+                    <UIcon
+                      v-if="link.target === '_blank'"
+                      name="i-heroicons-arrow-top-right-on-square"
+                      class="h-3 w-3 opacity-50 ml-auto"
+                    />
+                  </NuxtLink>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- 订阅区域 -->
+          <div class="max-w-80">
+            <h3
+              class="text-sm font-semibold text-gray-900 dark:text-white mb-4 uppercase tracking-wide"
+            >
+              {{ $t("footer.stayUpdated") }}
+            </h3>
+            <p
+              class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-6"
+            >
+              {{ $t("footer.newsletterDescription") }}
+            </p>
+
+            <!-- 邮件订阅表单 -->
+            <form
+              class="mb-4"
+              @submit.prevent
+            >
+              <div class="flex flex-col gap-3">
+                <UInput
+                  type="email"
+                  :placeholder="
+                    $t('footer.emailPlaceholder')
+                  "
+                  icon="i-heroicons-envelope"
+                  size="md"
+                  class="flex-1"
+                />
+                <UButton
+                  type="submit"
+                  color="primary"
+                  size="md"
+                  icon="i-heroicons-paper-airplane"
+                  class="w-full"
+                >
+                  {{ $t("footer.subscribe") }}
+                </UButton>
+              </div>
+            </form>
+
+            <!-- 订阅说明 -->
+            <p
+              class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed mb-6"
+            >
+              {{ $t("footer.subscribeNote") }}
+            </p>
+
+            <!-- 快速访问 -->
+            <div
+              class="pt-6 border-t border-gray-200 dark:border-gray-700"
+            >
+              <h4
+                class="text-sm font-semibold text-gray-900 dark:text-white mb-3"
+                >{{ $t("footer.quickAccess") }}</h4
+              >
+              <div class="flex flex-col gap-2">
+                <UButton
+                  to="/get-started"
+                  variant="outline"
+                  size="sm"
+                  icon="i-heroicons-rocket-launch"
+                >
+                  {{ $t("footer.getStarted") }}
+                </UButton>
+                <UButton
+                  to="/api"
+                  variant="outline"
+                  size="sm"
+                  icon="i-heroicons-code-bracket"
+                >
+                  {{ $t("footer.apiDocs") }}
+                </UButton>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </template>
+      </UContainer>
+    </div>
 
-    <template #bottom>
-      <div
-        class="flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-500 dark:text-gray-400"
-      >
-        <div>
-          © {{ new Date().getFullYear() }} Onerway.
+    <!-- 底部区域 -->
+    <div
+      class="bg-gray-50 dark:bg-slate-900 border-t border-gray-200 dark:border-gray-700 py-6 flex items-center"
+    >
+      <!-- 版权信息 -->
+      <div class="flex items-center gap-3 mx-auto">
+        <span
+          class="text-sm text-gray-600 dark:text-gray-400"
+        >
+          © {{ currentYear }} Onerway.
           {{ $t("footer.rights") }}
-        </div>
-        <div class="flex items-center gap-4">
-          <NuxtLink
-            to="/privacy"
-            class="hover:text-gray-700 dark:hover:text-gray-200"
-          >
-            {{ $t("footer.privacy") }}
-          </NuxtLink>
-          <NuxtLink
-            to="/terms"
-            class="hover:text-gray-700 dark:hover:text-gray-200"
-          >
-            {{ $t("footer.terms") }}
-          </NuxtLink>
-        </div>
+        </span>
+        <UBadge
+          variant="subtle"
+          size="xs"
+          >Docs</UBadge
+        >
       </div>
-    </template>
-  </UFooter>
+    </div>
+  </footer>
 </template>

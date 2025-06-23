@@ -13,6 +13,13 @@
     "payment": "支付產品",
     "acquiring": "收單業務",
     "api": "API 參考",
+    "webhooks": "Webhooks",
+    "samples": "程式碼範例",
+    "developers": "開發者",
+    "apiReference": "API 參考",
+    "sdks": "SDK",
+    "testing": "測試工具",
+    "tools": "開發工具",
     "resources": "資源",
     "docs": "文檔",
     "guides": "指南",
@@ -21,13 +28,63 @@
     "contact": "聯絡我們",
     "help": "幫助中心",
     "status": "服務狀態",
+    "community": "開發者社群",
+    "brandDescription": "為開發者打造的現代支付基礎設施，讓支付整合變得簡單可靠。",
+    "allSystemsOperational": "所有系統運行正常",
+    "followUs": "關注我們",
+    "stayUpdated": "保持更新",
+    "newsletterDescription": "訂閱我們的開發者通訊，獲取最新的 API 更新、新功能和最佳實踐。",
+    "emailPlaceholder": "輸入您的信箱",
+    "subscribe": "訂閱",
+    "subscribeNote": "每月一次，隨時可取消訂閱。我們尊重您的隱私。",
+    "quickAccess": "快速存取",
+    "getStarted": "快速開始",
+    "apiDocs": "API 文件",
     "rights": "保留所有權利。",
     "privacy": "隱私政策",
     "terms": "服務條款",
+    "security": "安全政策",
+    "compliance": "合規資訊",
     "signInPrompt": "",
     "signIn": "登入",
     "createAccount": "建立帳戶",
     "loadKeys": "以載入您的測試 API 金鑰。"
+  },
+  "404": {
+    "title": "頁面未找到",
+    "description": "抱歉，您訪問的頁面不存在。可能已被移動、刪除或您輸入了錯誤的網址。",
+    "attemptedPath": "嘗試訪問的路徑",
+    "searchPlaceholder": "搜索文檔內容...",
+    "search": "搜索",
+    "backHome": "返回首頁",
+    "goBack": "返回上一頁",
+    "suggestionsTitle": "您可能在尋找",
+    "suggestions": {
+      "getStarted": {
+        "title": "快速開始",
+        "description": "了解如何集成 Onerway 支付服務"
+      },
+      "payments": {
+        "title": "支付文檔",
+        "description": "查看支付相關的 API 文檔和指南"
+      },
+      "api": {
+        "title": "API 參考",
+        "description": "完整的 API 接口文檔"
+      }
+    },
+    "seo": {
+      "title": "頁面未找到 - Onerway 文檔",
+      "description": "您訪問的頁面不存在，請返回首頁或搜索相關內容。"
+    }
+  },
+  "error": {
+    "title": "出現錯誤",
+    "description": "抱歉，系統遇到了一些問題。請稍後重試或聯繫我們的支持團隊。",
+    "seo": {
+      "title": "系統錯誤 - Onerway 文檔",
+      "description": "系統遇到錯誤，我們正在努力解決。"
+    }
   },
   "home": {
     "hero": {
@@ -165,7 +222,46 @@
         "learnMorePayment": "了解更多支付意圖",
         "learnMoreSaving": "了解更多儲存卡片",
         "learnMoreSubscriptions": "了解更多訂閱服務",
-        "learnMoreReconciliation": "了解更多交易對帳"
+        "learnMoreReconciliation": "了解更多交易對帳",
+        "ariaLabel": "互動式程式碼輪播",
+        "navigation": {
+          "title": "API 範例",
+          "subtitle": "探索不同的支付場景",
+          "selectItem": "選擇範例"
+        },
+        "controls": {
+          "play": "開始自動播放",
+          "pause": "暫停自動播放"
+        },
+        "status": {
+          "autoPlay": "自動播放",
+          "active": "運行中",
+          "paused": "已暫停"
+        },
+        "actions": {
+          "copy": "複製程式碼到剪貼簿",
+          "expand": "顯示完整範例",
+          "collapse": "顯示簡化範例"
+        },
+        "content": {
+          "noContent": "暫無程式碼範例",
+          "loading": "載入範例中...",
+          "fullView": "完整範例",
+          "compactView": "簡化視圖"
+        },
+        "feedback": {
+          "copySuccess": "程式碼已複製！",
+          "copySuccessDesc": "程式碼已成功複製到剪貼簿",
+          "copyError": "複製失敗",
+          "copyErrorDesc": "無法複製程式碼到剪貼簿"
+        },
+        "footer": {
+          "signInPrompt": "準備使用真實資料測試？",
+          "learnMore": "了解更多"
+        },
+        "indicators": {
+          "goToSlide": "轉到投影片"
+        }
       }
     },
     "documentation": {
@@ -187,6 +283,10 @@
   "recentlyViewed": {
     "title": "最近瀏覽",
     "subtitle": "快速存取您最近查看的頁面",
+    "clearAll": "清除所有瀏覽記錄",
+    "remove": "從瀏覽記錄中移除",
+    "visitPage": "訪問頁面",
+    "lastVisited": "最後訪問",
     "empty": {
       "title": "暫無瀏覽記錄",
       "description": "開始探索我們的文件，您最近查看的頁面將顯示在這裡。"
