@@ -1,0 +1,1 @@
+import{r as o}from"./DuqvSifA.js";import s from"./BIYToZDM.js";import{y as r,G as t,d as a,w as i,S as m}from"./B2pn1HOE.js";import"./CxGQRu1d.js";import"./ByhBrUBg.js";const n={__name:"Caution",setup(n){const e=r();return(r,n)=>(a(),t(s,{color:"error",icon:m(e).ui.icons.caution},{default:i((()=>[o(r.$slots,"default",{mdcUnwrap:"p"})])),_:3},8,["icon"]))}};export{n as default};
