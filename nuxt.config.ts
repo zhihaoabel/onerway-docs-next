@@ -199,7 +199,7 @@ export default defineNuxtConfig({
       minify: "terser",
       terserOptions: {
         compress: {
-          drop_console: false, // 保留 console，只去除注释
+          drop_console: ["log", "info"], // 去除 console，去除注释
           drop_debugger: true,
         },
         format: {
