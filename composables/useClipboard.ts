@@ -71,7 +71,7 @@ export const useClipboard = (): ClipboardResult => {
       errorDesc,
       transform,
       duration = 3000,
-      resetDelay = 2000,
+      resetDelay = 2000
     } = options;
 
     // Check browser support
@@ -86,7 +86,7 @@ export const useClipboard = (): ClipboardResult => {
             errorDesc || "Clipboard not supported",
           color: "error",
           icon: "i-heroicons-exclamation-triangle",
-          duration,
+          duration
         });
       }
 
@@ -111,7 +111,7 @@ export const useClipboard = (): ClipboardResult => {
             successDesc || "Text copied to clipboard",
           color: "success",
           icon: "i-heroicons-check-circle",
-          duration,
+          duration
         });
       }
 
@@ -132,7 +132,7 @@ export const useClipboard = (): ClipboardResult => {
             errorDesc || "Failed to copy to clipboard",
           color: "error",
           icon: "i-heroicons-x-circle",
-          duration,
+          duration
         });
       }
 
@@ -143,7 +143,7 @@ export const useClipboard = (): ClipboardResult => {
   return {
     copy,
     copied: readonly(copied),
-    isSupported: readonly(isSupported),
+    isSupported: readonly(isSupported)
   };
 };
 

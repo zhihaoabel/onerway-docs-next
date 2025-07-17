@@ -21,7 +21,7 @@ const { t } = useI18n();
 
 // SEO configuration
 useSeoMeta({
-  title: t("home.seo.title"),
+  title: t("home.seo.title")
 });
 
 const links = computed(() => [
@@ -30,7 +30,7 @@ const links = computed(() => [
     to: "/get-started",
     color: "primary" as const,
     size: "xl" as const,
-    icon: "i-lucide-square-play",
+    icon: "i-lucide-square-play"
   },
   {
     label: t("home.hero.exploreProducts"),
@@ -38,8 +38,8 @@ const links = computed(() => [
     color: "neutral" as const,
     variant: "link" as const,
     size: "lg" as const,
-    trailingIcon: "lucide:chevron-right",
-  },
+    trailingIcon: "lucide:chevron-right"
+  }
 ]);
 
 // Enhanced product data with i18n support
@@ -58,9 +58,9 @@ const additionalProducts = computed<EnhancedProduct[]>(
       tags: [
         t("tags.frontend"),
         t("tags.api"),
-        t("tags.guides"),
+        t("tags.guides")
       ],
-      status: "updated",
+      status: "updated"
     },
     {
       id: "2",
@@ -76,8 +76,8 @@ const additionalProducts = computed<EnhancedProduct[]>(
         t("tags.mobile"),
         t("tags.sdk"),
         t("tags.ios"),
-        t("tags.android"),
-      ],
+        t("tags.android")
+      ]
     },
     {
       id: "3",
@@ -92,9 +92,9 @@ const additionalProducts = computed<EnhancedProduct[]>(
       tags: [
         t("tags.cloud"),
         t("tags.infrastructure"),
-        t("tags.deployment"),
+        t("tags.deployment")
       ],
-      status: "new",
+      status: "new"
     },
     {
       id: "4",
@@ -109,8 +109,8 @@ const additionalProducts = computed<EnhancedProduct[]>(
       tags: [
         t("tags.analytics"),
         t("tags.reporting"),
-        t("tags.insights"),
-      ],
+        t("tags.insights")
+      ]
     },
     {
       id: "5",
@@ -125,10 +125,10 @@ const additionalProducts = computed<EnhancedProduct[]>(
       tags: [
         t("tags.security"),
         t("tags.authentication"),
-        t("tags.encryption"),
+        t("tags.encryption")
       ],
-      status: "beta",
-    },
+      status: "beta"
+    }
   ]
 );
 
@@ -146,21 +146,21 @@ const features = computed<Feature[]>(() => [
         label: t("home.features.items.0.links.0.label"),
         to: "/payments",
         class: linkBaseClass,
-        trailingIcon: "i-heroicons-arrow-right",
+        trailingIcon: "i-heroicons-arrow-right"
       },
       {
         label: t("home.features.items.0.links.1.label"),
         to: "https://sandbox-portal.onerway.com/",
         class: linkBaseClass,
-        trailingIcon: "i-heroicons-arrow-right",
+        trailingIcon: "i-heroicons-arrow-right"
       },
       {
         label: t("home.features.items.0.links.2.label"),
         to: "https://docs.onerway.com/apis/zh/v0.6/settlement-file",
         class: linkBaseClass,
-        trailingIcon: "i-heroicons-arrow-right",
-      },
-    ],
+        trailingIcon: "i-heroicons-arrow-right"
+      }
+    ]
   },
   {
     title: t("home.features.items.1.title"),
@@ -171,15 +171,15 @@ const features = computed<Feature[]>(() => [
         label: t("home.features.items.1.links.0.label"),
         to: "https://postman.onerway.com/",
         class: linkBaseClass,
-        trailingIcon: "i-heroicons-arrow-right",
+        trailingIcon: "i-heroicons-arrow-right"
       },
       {
         label: t("home.features.items.1.links.1.label"),
         to: "/payments",
         class: linkBaseClass,
-        trailingIcon: "i-heroicons-arrow-right",
-      },
-    ],
+        trailingIcon: "i-heroicons-arrow-right"
+      }
+    ]
   },
   {
     title: t("home.features.items.2.title"),
@@ -190,22 +190,22 @@ const features = computed<Feature[]>(() => [
         label: t("home.features.items.2.links.0.label"),
         to: "/payments",
         class: linkBaseClass,
-        trailingIcon: "i-heroicons-arrow-right",
+        trailingIcon: "i-heroicons-arrow-right"
       },
       {
         label: t("home.features.items.2.links.1.label"),
         to: "/payments",
         class: linkBaseClass,
-        trailingIcon: "i-heroicons-arrow-right",
+        trailingIcon: "i-heroicons-arrow-right"
       },
       {
         label: t("home.features.items.2.links.2.label"),
         to: "/payments",
         class: linkBaseClass,
-        trailingIcon: "i-heroicons-arrow-right",
-      },
-    ],
-  },
+        trailingIcon: "i-heroicons-arrow-right"
+      }
+    ]
+  }
 ]);
 
 const handleProductClick = (product: EnhancedProduct) => {
@@ -242,7 +242,7 @@ const handleProductClick = (product: EnhancedProduct) => {
               :links="links"
               :ui="{
                 container: 'py-8 sm:py-12 lg:py-16',
-                title: 'text-3xl sm:text-4xl font-bold',
+                title: 'text-3xl sm:text-4xl font-bold'
               }">
               <template #title>
                 <h1 id="hero-title">{{
@@ -318,7 +318,7 @@ const handleProductClick = (product: EnhancedProduct) => {
       <section aria-labelledby="features-title">
         <UPageSection
           :ui="{
-            container: 'py-8 sm:py-0 lg:py-0 my-8',
+            container: 'py-8 sm:py-0 lg:py-0 my-8'
           }">
           <h2
             id="features-title"
@@ -336,7 +336,7 @@ const handleProductClick = (product: EnhancedProduct) => {
                 :ui="{
                   root: 'group relative overflow-hidden rounded-xl p-8 hover:shadow-lg transition-all duration-300 hover:scale-102',
                   title: 'text-xl font-bold mb-3',
-                  description: 'mb-6',
+                  description: 'mb-6'
                 }">
                 <template #leading>
                   <div
@@ -360,7 +360,7 @@ const handleProductClick = (product: EnhancedProduct) => {
                       class="text-primary"
                       :ui="{
                         item: 'group/link',
-                        link: 'relative',
+                        link: 'relative'
                       }">
                       <template #link-trailing="{ link }">
                         <UIcon
@@ -454,8 +454,8 @@ const handleProductClick = (product: EnhancedProduct) => {
               {
                 label: $t('home.cta.start'),
                 to: '/get-started',
-                size: 'lg',
-              },
+                size: 'lg'
+              }
             ]" />
         </UPageSection>
       </section>

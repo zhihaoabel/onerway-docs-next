@@ -5,3 +5,5 @@ node_modules
 coverage
 .nyc_output
 *.mdx
+# JSONC files should be handled by ESLint, not Prettier
+*.jsonc

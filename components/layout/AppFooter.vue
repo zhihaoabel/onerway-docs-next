@@ -14,24 +14,24 @@ const quickLinks = computed(() => [
       {
         label: "footer.payment",
         to: "/payments",
-        icon: "i-heroicons-credit-card",
+        icon: "i-heroicons-credit-card"
       },
       {
         label: "footer.acquiring",
         to: "/payments", // 重定向到payments，因为acquiring内容不存在
-        icon: "i-heroicons-building-storefront",
+        icon: "i-heroicons-building-storefront"
       },
       {
         label: "footer.api",
         to: "/payments", // 重定向到payments，因为api内容不存在
-        icon: "i-heroicons-code-bracket",
+        icon: "i-heroicons-code-bracket"
       },
       {
         label: "footer.webhooks",
         to: "/payments", // 重定向到payments，因为webhooks内容不存在
-        icon: "i-heroicons-arrow-path",
-      },
-    ],
+        icon: "i-heroicons-arrow-path"
+      }
+    ]
   },
   {
     label: "footer.resources",
@@ -39,24 +39,24 @@ const quickLinks = computed(() => [
       {
         label: "footer.docs",
         to: "/get-started",
-        icon: "i-heroicons-document-text",
+        icon: "i-heroicons-document-text"
       },
       {
         label: "footer.guides",
         to: "/get-started",
-        icon: "i-heroicons-academic-cap",
+        icon: "i-heroicons-academic-cap"
       },
       {
         label: "footer.changelog",
         to: "/changelog",
-        icon: "i-heroicons-clock",
+        icon: "i-heroicons-clock"
       },
       {
         label: "footer.samples",
         to: "/get-started", // 重定向到get-started，因为samples内容不存在
-        icon: "i-heroicons-code-bracket-square",
-      },
-    ],
+        icon: "i-heroicons-code-bracket-square"
+      }
+    ]
   },
   {
     label: "footer.developers",
@@ -64,24 +64,24 @@ const quickLinks = computed(() => [
       {
         label: "footer.apiReference",
         to: "/payments", // 重定向到payments，因为api-reference内容不存在
-        icon: "i-heroicons-book-open",
+        icon: "i-heroicons-book-open"
       },
       {
         label: "footer.sdks",
         to: "/get-started", // 重定向到get-started，因为sdks内容不存在
-        icon: "i-heroicons-cube",
+        icon: "i-heroicons-cube"
       },
       {
         label: "footer.testing",
         to: "/get-started", // 重定向到get-started，因为testing内容不存在
-        icon: "i-heroicons-beaker",
+        icon: "i-heroicons-beaker"
       },
       {
         label: "footer.tools",
         to: "/get-started", // 重定向到get-started，因为tools内容不存在
-        icon: "i-heroicons-wrench-screwdriver",
-      },
-    ],
+        icon: "i-heroicons-wrench-screwdriver"
+      }
+    ]
   },
   {
     label: "footer.support",
@@ -89,27 +89,27 @@ const quickLinks = computed(() => [
       {
         label: "footer.contact",
         to: "mailto:support@onerway.com", // 改为邮件链接
-        icon: "i-heroicons-envelope",
+        icon: "i-heroicons-envelope"
       },
       {
         label: "footer.help",
         to: "/get-started", // 重定向到get-started
-        icon: "i-heroicons-question-mark-circle",
+        icon: "i-heroicons-question-mark-circle"
       },
       {
         label: "footer.status",
         to: "https://status.onerway.com",
         target: "_blank",
-        icon: "i-heroicons-signal",
+        icon: "i-heroicons-signal"
       },
       {
         label: "footer.community",
         to: "https://github.com/onerway", // 改为GitHub链接
         target: "_blank",
-        icon: "i-heroicons-user-group",
-      },
-    ],
-  },
+        icon: "i-heroicons-user-group"
+      }
+    ]
+  }
 ]);
 
 // 社交媒体链接
@@ -119,29 +119,29 @@ const socialLinks = computed(() => [
     icon: "i-simple-icons-github",
     href: "https://github.com/onerway",
     color: "gray",
-    hoverColor: "hover:text-gray-900 dark:hover:text-white",
+    hoverColor: "hover:text-gray-900 dark:hover:text-white"
   },
   {
     name: "Twitter",
     icon: "i-simple-icons-twitter",
     href: "https://twitter.com/onerway",
     color: "blue",
-    hoverColor: "hover:text-blue-500",
+    hoverColor: "hover:text-blue-500"
   },
   {
     name: "Discord",
     icon: "i-simple-icons-discord",
     href: "https://discord.gg/onerway",
     color: "indigo",
-    hoverColor: "hover:text-indigo-500",
+    hoverColor: "hover:text-indigo-500"
   },
   {
     name: "LinkedIn",
     icon: "i-simple-icons-linkedin",
     href: "https://linkedin.com/company/onerway",
     color: "blue",
-    hoverColor: "hover:text-blue-600",
-  },
+    hoverColor: "hover:text-blue-600"
+  }
 ]);
 
 // 法律链接

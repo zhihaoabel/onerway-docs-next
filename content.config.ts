@@ -2,7 +2,7 @@
 import {
   defineCollection,
   defineContentConfig,
-  z,
+  z
 } from "@nuxt/content";
 
 // Constants for better maintainability
@@ -10,24 +10,24 @@ const LOCALES = ["en", "zh-cn", "zh-tw"] as const;
 const DOMAINS = [
   "get-started",
   "payments",
-  "payouts",
+  "payouts"
 ] as const;
 const HTTP_METHODS = [
   "GET",
   "POST",
   "PUT",
   "DELETE",
-  "PATCH",
+  "PATCH"
 ] as const;
 const CHANGELOG_TYPES = [
   "major",
   "minor",
-  "patch",
+  "patch"
 ] as const;
 const VERSION_STATUS = [
   "current",
   "deprecated",
-  "legacy",
+  "legacy"
 ] as const;
 
 // Shared schema definitions
@@ -43,13 +43,13 @@ const createBasePageSchema = () =>
     draft: z.boolean().optional().default(false),
     showToc: z.boolean().optional().default(true),
     showNavigation: z.boolean().optional().default(true),
-    layout: z.string().optional(),
+    layout: z.string().optional()
   });
 
 const createPaymentsSchema = () =>
   createBasePageSchema().extend({
     apiMethod: z.enum(HTTP_METHODS).optional(),
-    apiEndpoint: z.string().optional(),
+    apiEndpoint: z.string().optional()
   });
 
 const createChangelogSchema = () =>
@@ -66,7 +66,7 @@ const createChangelogSchema = () =>
     improvements: z.array(z.string()).optional(),
     showToc: z.boolean().optional().default(true),
     showNavigation: z.boolean().optional().default(true),
-    layout: z.string().optional(),
+    layout: z.string().optional()
   });
 
 const createMetadataSchema = () =>
@@ -77,16 +77,16 @@ const createMetadataSchema = () =>
       z.object({
         version: z.string(),
         status: z.enum(VERSION_STATUS),
-        supportedUntil: z.string().optional(),
+        supportedUntil: z.string().optional()
       })
     ),
     languages: z.array(
       z.object({
         code: z.string(),
         name: z.string(),
-        completeness: z.number().min(0).max(100),
+        completeness: z.number().min(0).max(100)
       })
-    ),
+    )
   });
 
 // Collection factory functions
@@ -108,9 +108,9 @@ const createDomainCollection = (
     type: "page",
     source: {
       include: `${localeDir}/${domain}/**/*.{md,yml}`,
-      exclude: [`${localeDir}/${domain}/changelog/**`],
+      exclude: [`${localeDir}/${domain}/changelog/**`]
     },
-    schema,
+    schema
   });
 };
 
@@ -125,7 +125,7 @@ const createChangelogCollection = (locale: string) => {
   return defineCollection({
     type: "page",
     source: `${localeDir}/**/changelog/*.md`,
-    schema: createChangelogSchema(),
+    schema: createChangelogSchema()
   });
 };
 
@@ -163,12 +163,12 @@ const generateCollections = () => {
   collections.metadata = defineCollection({
     type: "data",
     source: "metadata/*.yml",
-    schema: createMetadataSchema(),
+    schema: createMetadataSchema()
   });
 
   return collections;
 };
 
 export default defineContentConfig({
-  collections: generateCollections(),
+  collections: generateCollections()
 });

@@ -10,7 +10,7 @@ const props = withDefaults(defineProps<Props>(), {
   testCardNumber: "4242 4242 4242 4242",
   testCardsUrl:
     "https://docs.onerway.com/apis/zh/v0.6/test",
-  width: "w-80",
+  width: "w-80"
 });
 
 const { t } = useI18n();
@@ -25,7 +25,7 @@ const handleCopyCardNumber = async () => {
     errorDesc: t("testCard.copyDescription"),
     transform: (text) => text.replace(/\s/g, ""), // Remove spaces from card number
     duration: 3000,
-    resetDelay: 2000,
+    resetDelay: 2000
   });
 };
 
@@ -44,9 +44,9 @@ const themeClasses = computed(() => ({
     "shadow-xl shadow-blue-500/25 dark:shadow-blue-500/10",
   text: {
     primary: "text-white",
-    hover: "hover:text-blue-100 dark:hover:text-blue-200",
+    hover: "hover:text-blue-100 dark:hover:text-blue-200"
   },
-  border: "border-white/20 dark:border-gray-700/30",
+  border: "border-white/20 dark:border-gray-700/30"
 }));
 </script>
 
@@ -57,7 +57,7 @@ const themeClasses = computed(() => ({
       width,
       themeClasses.card,
       themeClasses.shadow,
-      themeClasses.border,
+      themeClasses.border
     ]"
     role="article"
     :aria-label="t('testCard.ariaLabel')">
@@ -78,7 +78,7 @@ const themeClasses = computed(() => ({
           :to="testCardsUrl"
           :class="[
             themeClasses.text.primary,
-            themeClasses.text.hover,
+            themeClasses.text.hover
           ]"
           :aria-label="t('testCard.viewDocsLabel')">
           <span class="font-medium text-xs">{{
@@ -97,7 +97,7 @@ const themeClasses = computed(() => ({
         class="w-full cursor-pointer flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-white/50 rounded-md"
         :class="[
           themeClasses.text.primary,
-          themeClasses.text.hover,
+          themeClasses.text.hover
         ]"
         :trailing-icon="
           copied

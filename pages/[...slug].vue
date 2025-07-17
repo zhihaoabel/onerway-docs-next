@@ -36,7 +36,7 @@ const getCollectionName = (
   const domainMap = {
     "get-started": `get_started_${langSuffix}`,
     payments: `payments_${langSuffix}`,
-    payouts: `payouts_${langSuffix}`,
+    payouts: `payouts_${langSuffix}`
   } as const;
 
   return (
@@ -55,7 +55,7 @@ const mapSimplifiedPath = (
   const localeMap = {
     "zh-CN": "zh-cn",
     "zh-TW": "zh-tw",
-    en: "en",
+    en: "en"
   } as const;
 
   const contentLocale =
@@ -199,7 +199,7 @@ const transformNavigationPaths = (
 
   return items.map((item) => {
     const transformedItem = {
-      ...item,
+      ...item
     } as ContentNavigationItem;
 
     // 转换当前项的路径
@@ -289,12 +289,12 @@ const { data: page, error: pageError } = await useAsyncData(
       throw createError({
         statusCode: 404,
         statusMessage: "Page Not Found",
-        fatal: true,
+        fatal: true
       });
     }
   },
   {
-    watch: [locale],
+    watch: [locale]
   }
 );
 
@@ -399,13 +399,13 @@ const { data: navigation } = await useAsyncData(
             processed.push({
               ...child,
               // Use the more specific path
-              path: child.path || item.path,
+              path: child.path || item.path
             });
           } else {
             // Keep the item with filtered children
             processed.push({
               ...item,
-              children: filteredChildren,
+              children: filteredChildren
             });
           }
         }
@@ -439,7 +439,7 @@ const { data: navigation } = await useAsyncData(
     }
   },
   {
-    watch: [locale],
+    watch: [locale]
   }
 );
 
@@ -579,8 +579,8 @@ const breadcrumbs = computed(() => {
   const crumbs = [
     {
       label: t("docs.breadcrumb.home"),
-      to: "/",
-    },
+      to: "/"
+    }
   ];
 
   // 如果是首页，只返回首页
@@ -597,7 +597,7 @@ const breadcrumbs = computed(() => {
       if (index < segments.length - 1) {
         crumbs.push({
           label: segment,
-          to: path,
+          to: path
         });
       }
     });
@@ -618,7 +618,7 @@ const breadcrumbs = computed(() => {
       if (item?.path && item?.title) {
         crumbs.push({
           label: item.title,
-          to: item.path,
+          to: item.path
         });
       }
     }
@@ -637,13 +637,13 @@ const breadcrumbs = computed(() => {
       if (navItem && navItem.title) {
         crumbs.push({
           label: navItem.title,
-          to: currentPath,
+          to: currentPath
         });
       } else {
         // 如果找不到对应的导航项，使用路径段作为标签
         crumbs.push({
           label: segments[i] ?? "",
-          to: currentPath,
+          to: currentPath
         });
       }
     }
@@ -655,7 +655,7 @@ const breadcrumbs = computed(() => {
 // SEO meta
 useSeoMeta({
   title: pageTitle,
-  description: pageDescription,
+  description: pageDescription
 });
 
 // Home page sections data
@@ -663,18 +663,18 @@ const homeSections = computed(() => [
   {
     title: t("docs.sections.getStarted.title"),
     description: t("docs.sections.getStarted.description"),
-    to: "/get-started",
+    to: "/get-started"
   },
   {
     title: t("docs.sections.payments.title"),
     description: t("docs.sections.payments.description"),
-    to: "/payments",
+    to: "/payments"
   },
   {
     title: t("docs.sections.payouts.title"),
     description: t("docs.sections.payouts.description"),
-    to: "/payouts",
-  },
+    to: "/payouts"
+  }
 ]);
 
 // Check if we're on the home page

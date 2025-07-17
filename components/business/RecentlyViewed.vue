@@ -9,7 +9,7 @@ const {
   getPageTitle,
   getPageDescription,
   removeRecentPage,
-  clearRecentPages,
+  clearRecentPages
 } = useRecentPages();
 
 // Performance optimization: use computed data to avoid repeated calculations
@@ -23,7 +23,7 @@ const displayData = computed(() => {
     icon: getPageIcon(page.path),
     iconColor: getPageIconColor(page.path),
     timeColor: getTimeColor(page.timestamp),
-    formattedTime: formatTimeI18n(page.timestamp),
+    formattedTime: formatTimeI18n(page.timestamp)
   }));
 });
 
@@ -48,7 +48,7 @@ const handleClearAll = () => {
       root: 'divide-none',
       header: 'p-4 sm:px-6 sm:pb-0',
       body: 'p-4 sm:p-6 sm:pb-0',
-      footer: 'p-4 sm:px-6 sm:pt-0',
+      footer: 'p-4 sm:px-6 sm:pt-0'
     }">
     <!-- 标题 -->
     <template #header>
@@ -106,7 +106,7 @@ const handleClearAll = () => {
                 mode="hover"
                 :content="{
                   side: 'right',
-                  sideOffset: 30,
+                  sideOffset: 30
                 }">
                 <div>
                   <div class="flex items-center gap-1">
@@ -210,7 +210,7 @@ const handleClearAll = () => {
     :ui="{
       root: 'divide-none',
       header: 'p-4 sm:px-6 sm:pb-0',
-      body: 'p-2 sm:p-2',
+      body: 'p-2 sm:p-2'
     }">
     <!-- 标题 -->
     <template #header>

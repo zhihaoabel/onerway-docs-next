@@ -17,26 +17,26 @@ export default defineNuxtConfig({
     "@nuxt/test-utils",
     "@nuxtjs/google-fonts",
     "@nuxtjs/i18n",
-    "@vueuse/nuxt",
+    "@vueuse/nuxt"
   ],
 
   // css
   css: [
     "~/assets/css/main.css",
-    "~/assets/css/scrollbar.css",
+    "~/assets/css/scrollbar.css"
   ],
 
   // components
   components: [
     {
       path: "~/components",
-      pathPrefix: false,
-    },
+      pathPrefix: false
+    }
   ],
 
   // Nuxt UI 组件
   ui: {
-    fonts: false, // 启用字体支持
+    fonts: false // 启用字体支持
   },
 
   // Icon configuration for production builds
@@ -77,20 +77,20 @@ export default defineNuxtConfig({
         "i-heroicons-chevron-up",
         "i-heroicons-chevron-down",
         "i-heroicons-check",
-        "i-heroicons-clipboard-document",
-      ],
+        "i-heroicons-clipboard-document"
+      ]
     },
     serverBundle: {
       // Server-side bundle for dynamic icons and SSR support
-      collections: ["heroicons"],
+      collections: ["heroicons"]
     },
-    provider: "iconify",
+    provider: "iconify"
   },
 
   // typescript
   typescript: {
     typeCheck: true,
-    strict: true,
+    strict: true
   },
 
   // i18n
@@ -102,28 +102,28 @@ export default defineNuxtConfig({
       {
         code: "zh-CN",
         name: "简体中文",
-        files: ["zh-cn/common.json"],
+        files: ["zh-cn/common.json"]
       },
       {
         code: "en",
         name: "English",
-        files: ["en/common.json"],
+        files: ["en/common.json"]
       },
       {
         code: "zh-TW",
         name: "繁體中文",
-        files: ["zh-tw/common.json"],
-      },
+        files: ["zh-tw/common.json"]
+      }
     ],
     defaultLocale: "zh-CN",
     detectBrowserLanguage: {
       useCookie: true,
       fallbackLocale: "zh-CN",
-      redirectOn: "root", // recommended
+      redirectOn: "root" // recommended
     },
     bundle: {
-      optimizeTranslationDirective: false,
-    },
+      optimizeTranslationDirective: false
+    }
   },
 
   // google fonts
@@ -140,7 +140,7 @@ export default defineNuxtConfig({
       "Source Han Sans": [400, 500, 700], // 思源黑体
 
       // Emoji 和符号字体支持
-      "Noto Color Emoji": true, // Emoji 字体
+      "Noto Color Emoji": true // Emoji 字体
     },
     // 字体显示策略
     display: "swap",
@@ -151,26 +151,26 @@ export default defineNuxtConfig({
       "latin",
       "latin-ext",
       "chinese-simplified",
-      "chinese-traditional",
-    ],
+      "chinese-traditional"
+    ]
   },
 
   experimental: {
-    payloadExtraction: false,
+    payloadExtraction: false
   },
 
   // nitro 配置
   nitro: {
     prerender: {
       // 排除无效的路由，避免预渲染错误
-    },
+    }
   },
 
   // content
   content: {
     experimental: { nativeSqlite: true },
     preview: {
-      api: "https://api.nuxt.studio",
+      api: "https://api.nuxt.studio"
     },
     build: {
       markdown: {
@@ -185,60 +185,60 @@ export default defineNuxtConfig({
             "yml",
             "css",
             "mdc",
-            "md",
+            "md"
           ],
           theme: {
             default: "catppuccin-latte",
             dark: "dracula",
-            light: "catppuccin-latte",
-          },
-        },
-      },
-    },
+            light: "catppuccin-latte"
+          }
+        }
+      }
+    }
   },
 
   mdc: {
     highlight: {
-      noApiRoute: false,
-    },
+      noApiRoute: false
+    }
   },
 
   future: {
-    compatibilityVersion: 4,
+    compatibilityVersion: 4
   },
 
   // eslint
   eslint: {
     config: {
       stylistic: false,
-      standalone: false, // `standalone` 为 `false` 时，eslint 会自动检测项目中的 `eslint.config.mjs` 文件，并使用该文件作为 eslint 的配置文件。
-    },
+      standalone: false // `standalone` 为 `false` 时，eslint 会自动检测项目中的 `eslint.config.mjs` 文件，并使用该文件作为 eslint 的配置文件。
+    }
   },
 
   // hooks
   hooks: {
     "build:before": function () {
       execSync("node scripts/generate-missing-content.js", {
-        stdio: "inherit",
+        stdio: "inherit"
       });
-    },
+    }
   },
 
   // 生产环境优化
   vite: {
     optimizeDeps: {
-      include: ["three"],
+      include: ["three"]
     },
     build: {
       minify: "terser",
       terserOptions: {
         compress: {
           drop_console: false, // 保留 console，只去除注释
-          drop_debugger: true,
+          drop_debugger: true
         },
         format: {
-          comments: false, // 去除所有注释
-        },
+          comments: false // 去除所有注释
+        }
       },
       cssMinify: true,
       rollupOptions: {
@@ -249,15 +249,15 @@ export default defineNuxtConfig({
             // eslint-disable-next-line node/prefer-global/process
             process.env.NODE_ENV === "production"
           );
-        },
-      },
+        }
+      }
     },
     css: {
       postcss: {
         plugins: [
           // CSS 注释处理
-        ],
-      },
-    },
-  },
+        ]
+      }
+    }
+  }
 });

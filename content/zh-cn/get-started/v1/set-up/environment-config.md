@@ -70,11 +70,11 @@ app.post("/create-payment", async (req, res) => {
       await onerway.paymentIntents.create({
         amount,
         currency,
-        description: "来自您应用的支付",
+        description: "来自您应用的支付"
       });
 
     res.json({
-      client_secret: paymentIntent.client_secret,
+      client_secret: paymentIntent.client_secret
     });
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -109,8 +109,8 @@ function PaymentForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           amount: 1000,
-          currency: "usd",
-        }),
+          currency: "usd"
+        })
       });
 
       const { client_secret } = await response.json();
@@ -119,8 +119,8 @@ function PaymentForm() {
       const result = await onerway.confirmPayment({
         elements, // 您的支付元素
         confirmParams: {
-          return_url: "https://yoursite.com/success",
-        },
+          return_url: "https://yoursite.com/success"
+        }
       });
 
       if (result.error) {

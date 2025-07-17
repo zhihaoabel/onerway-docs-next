@@ -1,7 +1,7 @@
 import type { ParsedPath, PathConfig } from "../types";
 import {
   PATH_CONFIGS,
-  VERSION_PATTERN,
+  VERSION_PATTERN
 } from "../constants";
 import { logPathWarning } from "../utils";
 
@@ -28,7 +28,7 @@ export class PathParser {
         logPathWarning({
           type: "MISSING_CONFIG",
           path: config.pattern,
-          message: `Duplicate path pattern: ${config.pattern}`,
+          message: `Duplicate path pattern: ${config.pattern}`
         });
       }
       patterns.add(config.pattern);
@@ -37,7 +37,7 @@ export class PathParser {
         logPathWarning({
           type: "MISSING_CONFIG",
           path: config.pattern,
-          message: `Duplicate category: ${config.category}`,
+          message: `Duplicate category: ${config.category}`
         });
       }
       categories.add(config.category);
@@ -52,8 +52,8 @@ export class PathParser {
           path: config.pattern,
           message: `Incomplete configuration for ${config.pattern}`,
           suggestions: [
-            "Check titleKey, descriptionKey, and icon fields",
-          ],
+            "Check titleKey, descriptionKey, and icon fields"
+          ]
         });
       }
 
@@ -67,8 +67,8 @@ export class PathParser {
             path: config.pattern,
             message: `Missing ${lang} translation for ${config.pattern}`,
             suggestions: [
-              `Add ${lang} translation to titleKey and descriptionKey`,
-            ],
+              `Add ${lang} translation to titleKey and descriptionKey`
+            ]
           });
         }
       }
@@ -80,7 +80,7 @@ export class PathParser {
     const result: ParsedPath = {
       category: "",
       isMatched: false,
-      rawSegments: segments,
+      rawSegments: segments
     };
 
     if (segments.length === 0) {
@@ -99,7 +99,7 @@ export class PathParser {
         message: `No configuration found for path: ${path}`,
         suggestions: PATH_CONFIGS.map(
           (config) => `Try: ${config.pattern}`
-        ),
+        )
       });
       return result;
     }
@@ -126,8 +126,8 @@ export class PathParser {
             path,
             message: `Version ${versionCandidate} not supported for ${matchingConfig.pattern}`,
             suggestions: [
-              `Remove version from path: ${matchingConfig.pattern}`,
-            ],
+              `Remove version from path: ${matchingConfig.pattern}`
+            ]
           });
         }
       } else {
@@ -138,8 +138,8 @@ export class PathParser {
             path,
             message: `Invalid version format: ${versionCandidate}`,
             suggestions: [
-              "Use format: v1, v2, v1.0, v2.1, etc.",
-            ],
+              "Use format: v1, v2, v1.0, v2.1, etc."
+            ]
           });
         }
       }

@@ -10,18 +10,18 @@ const items = computed<NavigationMenuItem[][]>(() => [
     {
       label: t("header.getStarted"),
       to: "/get-started",
-      active: route.path.startsWith("/get-started"),
+      active: route.path.startsWith("/get-started")
     },
     {
       label: t("header.payments"),
       to: "/payments",
-      active: route.path.startsWith("/payments"),
+      active: route.path.startsWith("/payments")
     },
     {
       label: t("header.payout"),
       to: "/payouts",
-      active: route.path.startsWith("/payouts"),
-    },
+      active: route.path.startsWith("/payouts")
+    }
   ],
   [
     {
@@ -32,14 +32,14 @@ const items = computed<NavigationMenuItem[][]>(() => [
         {
           label: t("header.payments"),
           to: "https://docs.onerway.com/apis/zh/",
-          target: "_blank",
+          target: "_blank"
         },
         {
           label: t("header.payout"),
           to: "https://docs.onerway.com/apis/payout/",
-          target: "_blank",
-        },
-      ],
+          target: "_blank"
+        }
+      ]
     },
     {
       label: t("header.help"),
@@ -49,16 +49,16 @@ const items = computed<NavigationMenuItem[][]>(() => [
         {
           label: t("header.support"),
           to: "https://docs.onerway.com/",
-          target: "_blank",
+          target: "_blank"
         },
         {
           label: t("header.contactUs"),
           to: "https://docs.onerway.com/",
-          target: "_blank",
-        },
-      ],
-    },
-  ],
+          target: "_blank"
+        }
+      ]
+    }
+  ]
 ]);
 
 // 当前语言标签
@@ -92,9 +92,9 @@ const languageItems = computed(() => [
         localeItem.code === locale.value
           ? "i-heroicons-check-circle"
           : unselectedIcon,
-      onSelect: () => setLocale(localeItem.code),
+      onSelect: () => setLocale(localeItem.code)
     };
-  }),
+  })
 ]);
 </script>
 
@@ -104,12 +104,12 @@ const languageItems = computed(() => [
     <UHeader
       :ui="{
         root: 'border-none bg-muted backdrop-blur',
-        container: 'max-w-full mx-auto',
+        container: 'max-w-full mx-auto'
       }"
       toggle-side="right"
       :toggle="{
         color: 'primary',
-        variant: 'ghost',
+        variant: 'ghost'
       }">
       <!-- Logo 和品牌名 -->
       <template #left>
@@ -135,7 +135,7 @@ const languageItems = computed(() => [
           <UDropdownMenu
             :items="languageItems"
             :ui="{
-              item: 'cursor-pointer',
+              item: 'cursor-pointer'
             }">
             <UButton
               icon="i-heroicons-language"

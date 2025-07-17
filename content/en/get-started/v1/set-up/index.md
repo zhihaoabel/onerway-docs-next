@@ -103,7 +103,7 @@ async function createPayment() {
       await onerway.paymentIntents.create({
         amount: 1000, // $10.00 in cents
         currency: "usd",
-        description: "Test payment",
+        description: "Test payment"
       });
 
     console.log("Success!", paymentIntent.id);

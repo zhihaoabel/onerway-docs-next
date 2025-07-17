@@ -72,11 +72,11 @@ app.post("/create-payment", async (req, res) => {
       await onerway.paymentIntents.create({
         amount,
         currency,
-        description: "Payment from your app",
+        description: "Payment from your app"
       });
 
     res.json({
-      client_secret: paymentIntent.client_secret,
+      client_secret: paymentIntent.client_secret
     });
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -111,8 +111,8 @@ function PaymentForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           amount: 1000,
-          currency: "usd",
-        }),
+          currency: "usd"
+        })
       });
 
       const { client_secret } = await response.json();
@@ -121,8 +121,8 @@ function PaymentForm() {
       const result = await onerway.confirmPayment({
         elements, // Your payment elements
         confirmParams: {
-          return_url: "https://yoursite.com/success",
-        },
+          return_url: "https://yoursite.com/success"
+        }
       });
 
       if (result.error) {
