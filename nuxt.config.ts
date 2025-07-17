@@ -39,6 +39,66 @@ export default defineNuxtConfig({
     fonts: false, // 启用字体支持
   },
 
+  // Icon configuration for production builds
+  icon: {
+    clientBundle: {
+      // Pre-bundle commonly used heroicons for SSR compatibility
+      icons: [
+        "i-heroicons-clipboard-document-list",
+        "i-heroicons-check-circle",
+        "i-heroicons-x-circle",
+        "i-heroicons-exclamation-triangle",
+        "i-heroicons-document",
+        "i-heroicons-credit-card",
+        "i-heroicons-building-storefront",
+        "i-heroicons-code-bracket",
+        "i-heroicons-rocket-launch",
+        "i-heroicons-clock",
+        "i-heroicons-arrow-right",
+        "i-heroicons-language",
+        "i-heroicons-globe-alt",
+        "i-heroicons-academic-cap",
+        "i-heroicons-x-mark",
+        "i-heroicons-information-circle",
+        "i-heroicons-chevron-right",
+        "i-heroicons-document-text",
+        "i-heroicons-arrow-top-right-on-square",
+        "i-heroicons-envelope",
+        "i-heroicons-paper-airplane",
+        "i-heroicons-magnifying-glass",
+        "i-heroicons-home",
+        "i-heroicons-arrow-left",
+        "i-heroicons-light-bulb",
+        "i-heroicons-play",
+        "i-heroicons-pause",
+        "i-heroicons-chevron-up",
+        "i-heroicons-chevron-down",
+        "i-heroicons-check",
+        "i-heroicons-clipboard-document",
+        "i-heroicons-device-phone-mobile",
+        "i-heroicons-cloud",
+        "i-heroicons-chart-bar",
+        "i-heroicons-shield-check",
+        "i-heroicons-arrow-path",
+        "i-heroicons-book-open",
+        "i-heroicons-cube",
+        "i-heroicons-beaker",
+        "i-heroicons-wrench-screwdriver",
+        "i-heroicons-question-mark-circle",
+        "i-heroicons-signal",
+        "i-heroicons-user-group",
+        "i-heroicons-calendar-days",
+        "i-heroicons-scale",
+        "i-heroicons-key",
+        "i-heroicons-banknotes",
+      ],
+    },
+    serverBundle: {
+      // Server-side bundle for dynamic icons
+      collections: ["heroicons"],
+    },
+  },
+
   // typescript
   typescript: {
     typeCheck: true,
