@@ -2,7 +2,6 @@
 const { t } = useI18n();
 const {
   recentThreePages,
-  initialize,
   formatTimeI18n,
   getPageIcon,
   getPageIconColor,
@@ -11,14 +10,16 @@ const {
   getPageDescription,
   removeRecentPage,
   clearRecentPages,
-} = useRecentPagesWithI18n();
+} = useRecentPages();
 
-// 性能优化：避免重复计算
+// Performance optimization: use computed data to avoid repeated calculations
 const displayData = computed(() => {
   return recentThreePages.value.map((page) => ({
     ...page,
-    displayTitle: getPageTitle(page.path),
-    displayDescription: getPageDescription(page.path),
+    // 优先使用已存储的标题和描述，避免重复计算
+    displayTitle: page.title || getPageTitle(page.path),
+    displayDescription:
+      page.description || getPageDescription(page.path),
     icon: getPageIcon(page.path),
     iconColor: getPageIconColor(page.path),
     timeColor: getTimeColor(page.timestamp),
@@ -26,7 +27,7 @@ const displayData = computed(() => {
   }));
 });
 
-// 事件处理
+// Event handlers
 const handleRemovePage = (path: string) => {
   removeRecentPage(path);
 };
@@ -34,11 +35,6 @@ const handleRemovePage = (path: string) => {
 const handleClearAll = () => {
   clearRecentPages();
 };
-
-// 初始化
-onMounted(() => {
-  initialize();
-});
 </script>
 
 <template>
@@ -53,15 +49,13 @@ onMounted(() => {
       header: 'p-4 sm:px-6 sm:pb-0',
       body: 'p-4 sm:p-6 sm:pb-0',
       footer: 'p-4 sm:px-6 sm:pt-0',
-    }"
-  >
+    }">
     <!-- 标题 -->
     <template #header>
       <div class="flex items-center justify-between">
         <h3
           id="recent-pages-title"
-          class="text-md font-semibold bg-clip-text text-default"
-        >
+          class="text-md font-semibold bg-clip-text text-default">
           {{ t("recentlyViewed.title") }}
         </h3>
         <!-- 清除所有按钮 -->
@@ -72,8 +66,7 @@ onMounted(() => {
           :aria-label="t('recentlyViewed.clearAll')"
           :title="t('recentlyViewed.clearAll')"
           class="opacity-60 hover:opacity-100 transition-opacity"
-          @click="handleClearAll"
-        />
+          @click="handleClearAll" />
       </div>
     </template>
 
@@ -83,14 +76,12 @@ onMounted(() => {
         <div
           v-for="item in displayData"
           :key="item.path"
-          class="group relative"
-        >
+          class="group relative">
           <NuxtLink
             :to="item.path"
             :aria-label="`${t('recentlyViewed.visitPage')}: ${item.displayTitle} - ${item.displayDescription}`"
             tabindex="0"
-            class="flex items-start space-x-3 p-2 -mx-2 rounded-lg transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-800/50 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:bg-gray-50 dark:focus:bg-gray-800/50"
-          >
+            class="flex items-start space-x-3 p-2 -mx-2 rounded-lg transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-800/50 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:bg-gray-50 dark:focus:bg-gray-800/50">
             <!-- 图标容器 -->
             <div class="flex-shrink-0 mt-0.5">
               <div class="relative">
@@ -98,49 +89,82 @@ onMounted(() => {
                   :name="item.icon"
                   class="size-4 transition-all duration-200 group-hover:scale-110"
                   :class="item.iconColor"
-                  aria-hidden="true"
-                />
+                  aria-hidden="true" />
                 <!-- 图标背景光晕效果 -->
                 <div
                   class="absolute inset-0 rounded-full opacity-0 group-hover:opacity-20 transition-opacity duration-200 blur-sm -z-10"
                   :class="
                     item.iconColor.replace('text-', 'bg-')
-                  "
-                />
+                  " />
               </div>
             </div>
 
             <!-- 内容区域 -->
             <div class="flex-1 min-w-0">
-              <h4
-                class="text-sm font-medium text-primary/90 group-hover:text-highlighted transition-colors duration-200 truncate"
-              >
-                {{ item.displayTitle }}
-              </h4>
-              <p
-                class="text-xs mt-1 font-medium transition-colors duration-200 group-hover:opacity-80"
-                :class="item.timeColor"
-                :aria-label="`${t('recentlyViewed.lastVisited')}: ${item.formattedTime}`"
-              >
-                {{ item.formattedTime }}
-              </p>
-              <!-- 页面描述 -->
-              <p
-                class="text-xs text-gray-500 dark:text-gray-400 mt-0.5 truncate opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-              >
-                {{ item.displayDescription }}
-              </p>
+              <UPopover
+                v-if="item.displayDescription"
+                mode="hover"
+                :content="{
+                  side: 'right',
+                  sideOffset: 30,
+                }">
+                <div>
+                  <div class="flex items-center gap-1">
+                    <h4
+                      class="text-sm font-medium text-primary/90 group-hover:text-highlighted transition-colors duration-200 truncate">
+                      {{ item.displayTitle }}
+                    </h4>
+                    <!-- 页面描述图标 - 仅作为视觉提示 -->
+                    <UIcon
+                      name="i-heroicons-information-circle"
+                      class="size-3 text-gray-400 hover:text-primary transition-colors duration-200 flex-shrink-0 opacity-60 group-hover:opacity-100"
+                      :aria-label="
+                        t('recentlyViewed.showDescription')
+                      "
+                      aria-hidden="true" />
+                  </div>
+                  <p
+                    class="text-xs mt-1 font-medium transition-colors duration-200 group-hover:opacity-80"
+                    :class="item.timeColor"
+                    :aria-label="`${t('recentlyViewed.lastVisited')}: ${item.formattedTime}`">
+                    {{ item.formattedTime }}
+                  </p>
+                </div>
+
+                <template #content>
+                  <div
+                    class="p-3 max-w-xs"
+                    role="tooltip">
+                    <p
+                      class="text-sm text-gray-700 dark:text-gray-300">
+                      {{ item.displayDescription }}
+                    </p>
+                  </div>
+                </template>
+              </UPopover>
+
+              <!-- 没有描述时的内容 -->
+              <div v-else>
+                <h4
+                  class="text-sm font-medium text-primary/90 group-hover:text-highlighted transition-colors duration-200 truncate">
+                  {{ item.displayTitle }}
+                </h4>
+                <p
+                  class="text-xs mt-1 font-medium transition-colors duration-200 group-hover:opacity-80"
+                  :class="item.timeColor"
+                  :aria-label="`${t('recentlyViewed.lastVisited')}: ${item.formattedTime}`">
+                  {{ item.formattedTime }}
+                </p>
+              </div>
             </div>
 
             <!-- 右侧箭头指示器 -->
             <div
-              class="flex-shrink-0 self-center opacity-0 group-hover:opacity-100 transition-all duration-200 transform translate-x-1 group-hover:translate-x-0"
-            >
+              class="flex-shrink-0 self-center opacity-0 group-hover:opacity-100 transition-all duration-200 transform translate-x-1 group-hover:translate-x-0">
               <UIcon
                 name="i-heroicons-chevron-right"
                 class="size-3 text-gray-400 dark:text-gray-500"
-                aria-hidden="true"
-              />
+                aria-hidden="true" />
             </div>
           </NuxtLink>
 
@@ -150,10 +174,9 @@ onMounted(() => {
             size="xs"
             icon="i-heroicons-x-mark"
             :aria-label="`${t('recentlyViewed.remove')}: ${item.displayTitle}`"
-            class="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity size-6 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+            class="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity size-6 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:cursor-pointer"
             :title="t('recentlyViewed.remove')"
-            @click.stop="handleRemovePage(item.path)"
-          />
+            @click.stop="handleRemovePage(item.path)" />
         </div>
       </div>
     </template>
@@ -169,8 +192,7 @@ onMounted(() => {
             variant="link"
             size="xs"
             class="text-xs p-0 h-auto font-semibold hover:text-gray-900"
-            :aria-label="t('recentlyViewed.footer.signIn')"
-          >
+            :aria-label="t('recentlyViewed.footer.signIn')">
             {{ t("recentlyViewed.footer.signIn") }}
           </UButton>
           {{ t("recentlyViewed.footer.loadKeys") }}
@@ -188,16 +210,14 @@ onMounted(() => {
     :ui="{
       root: 'divide-none',
       header: 'p-4 sm:px-6 sm:pb-0',
-      body: 'p-4 sm:p-6',
-    }"
-  >
+      body: 'p-2 sm:p-2',
+    }">
     <!-- 标题 -->
     <template #header>
       <div class="flex items-center justify-between">
         <h3
           id="recent-pages-title"
-          class="text-md font-semibold bg-clip-text text-default"
-        >
+          class="text-md font-semibold bg-clip-text text-default">
           {{ t("recentlyViewed.title") }}
         </h3>
       </div>
@@ -205,26 +225,11 @@ onMounted(() => {
 
     <!-- 空状态内容 -->
     <template #default>
-      <div class="text-center py-6">
-        <div
-          class="mx-auto flex items-center justify-center w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-full mb-4"
-        >
-          <UIcon
-            name="i-heroicons-clock"
-            class="w-6 h-6 text-gray-400 dark:text-gray-500"
-            aria-hidden="true"
-          />
-        </div>
-        <h4
-          class="text-sm font-medium text-gray-900 dark:text-gray-100 mb-2"
-        >
-          {{ t("recentlyViewed.empty.title") }}
-        </h4>
-        <p
-          class="text-sm text-gray-500 dark:text-gray-400 max-w-sm mx-auto"
-        >
-          {{ t("recentlyViewed.empty.description") }}
-        </p>
+      <div class="text-center">
+        <UIcon
+          name="hugeicons:file-empty-02"
+          class="size-10 text-gray-400 dark:text-gray-500"
+          aria-hidden="true" />
       </div>
     </template>
 
@@ -239,8 +244,7 @@ onMounted(() => {
             variant="link"
             size="xs"
             class="text-xs p-0 h-auto font-semibold hover:text-gray-900"
-            :aria-label="t('recentlyViewed.footer.signIn')"
-          >
+            :aria-label="t('recentlyViewed.footer.signIn')">
             {{ t("recentlyViewed.footer.signIn") }}
           </UButton>
           {{ t("recentlyViewed.footer.loadKeys") }}

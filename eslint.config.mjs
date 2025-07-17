@@ -26,6 +26,8 @@ export default withNuxt(
       ".idea/**",
       ".DS_Store",
       "Thumbs.db",
+      "*.md",
+      "**/*.md",
     ],
   },
 

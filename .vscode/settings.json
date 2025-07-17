@@ -56,5 +56,9 @@
   "i18n-ally.defaultLocale": "en",
   "i18n-ally.supportedLocales": ["en", "zh-cn", "zh-tw"],
   "i18n-ally.autoImport": true,
-  "i18n-ally.keystyle": "nested"
+  "i18n-ally.keystyle": "nested",
+  "window.autoDetectColorScheme": true,
+  "[mdc]": {
+    "editor.defaultFormatter": "Nuxt.mdc"
+  }
 }

@@ -1,26 +1,43 @@
 ---
-title: "Get Started"
-description:
-  "Welcome to our documentation! This guide will help you
-  get started quickly."
-version: "v1"
-category: "overview"
-lastUpdated: "2024-01-15"
+title: Overview
+description: Welcome to Onerway Payment Documentation
 order: 1
+showToc: true
+showNavigation: true
 ---
 
-# Get Started
+# Getting Started
 
-Welcome to our documentation! This guide will help you get
-started quickly.
+Welcome to the Onerway Payment Platform documentation. This
+guide will help you integrate our payment solutions quickly
+and efficiently.
 
-## Quick Start
+## What You'll Learn
 
-1. Sign up for an account
-2. Get your API keys
-3. Make your first API call
+In this section, you'll discover:
 
-## Next Steps
+- **Quick Overview** - Understanding our platform
+  capabilities
+- **Product Exploration** - Overview of all available
+  products
+- **Setup Guide** - Complete installation and configuration
+- **API Integration** - How to connect with our services
 
-- [Installation Guide](./installation)
-- [Basic Concepts](./concepts)
+## Quick Start Path
+
+Follow this recommended learning path:
+
+1. 📖 **Read the Overview** - Understand what we offer
+2. 🛍️ **Explore Products** - Choose the right solution for
+   you
+3. ⚙️ **Setup Environment** - Configure your development
+   environment
+4. 🚀 **Make Your First Call** - Test the integration
+
+## Need Help?
+
+- 📚 **Documentation** - Comprehensive guides and references
+- 💬 **Support** - Contact our technical support team
+- 🌐 **Community** - Join our developer community
+
+Let's get started with your integration journey!

@@ -14,7 +14,7 @@ const config = {
   bracketSpacing: true, // 对象括号内加空格 { foo: bar }
   objectWrap: "preserve", // 对象换行
   embeddedLanguageFormatting: "auto", // 嵌入式语言格式化
-  bracketSameLine: false, // 多行元素的 > 换行
+  bracketSameLine: true, // 多行元素的 > 换行
 };
 
 export default config;

@@ -70,38 +70,56 @@ const currentLocaleLabel = computed(() => {
 
 // 语言切换菜单项
 const languageItems = computed(() => [
-  locales.value.map((localeItem) => ({
-    label: localeItem.name,
-    onSelect: () => setLocale(localeItem.code),
-  })),
+  locales.value.map((localeItem) => {
+    // 为不同语言分配特定图标
+    let unselectedIcon = "i-heroicons-language"; // 默认图标
+
+    switch (localeItem.code) {
+      case "zh-CN":
+        unselectedIcon = "i-heroicons-language"; // 简体中文
+        break;
+      case "en":
+        unselectedIcon = "i-heroicons-globe-alt"; // 英语
+        break;
+      case "zh-TW":
+        unselectedIcon = "i-heroicons-academic-cap"; // 繁体中文
+        break;
+    }
+
+    return {
+      label: localeItem.name,
+      icon:
+        localeItem.code === locale.value
+          ? "i-heroicons-check-circle"
+          : unselectedIcon,
+      onSelect: () => setLocale(localeItem.code),
+    };
+  }),
 ]);
 </script>
 
 <template>
   <div
-    class="sticky top-0 z-50 h-[var(--ui-header-height)]"
-  >
+    class="sticky top-0 z-50 h-[var(--ui-header-height)]">
     <UHeader
       :ui="{
         root: 'border-none bg-muted backdrop-blur',
         container: 'max-w-full mx-auto',
       }"
+      toggle-side="right"
       :toggle="{
         color: 'primary',
-        variant: 'subtle',
-      }"
-    >
+        variant: 'ghost',
+      }">
+      <!-- Logo 和品牌名 -->
       <template #left>
-        <!-- Logo 和品牌名 -->
         <NuxtLink
           to="/"
-          class="flex items-center gap-2 text-xl font-bold text-center"
-        >
+          class="flex items-center gap-2 text-xl font-bold text-center">
           <img
             src="/favicon.ico"
             alt="Onerway Docs"
-            class="size-10"
-          />
+            class="size-10" />
           <Logo class="text-highlighted" />
         </NuxtLink>
       </template>
@@ -109,23 +127,26 @@ const languageItems = computed(() => [
       <!-- 搜索按钮 -->
       <UContentSearchButton
         :collapsed="false"
-        shortcut="meta_k"
-      />
+        shortcut="meta_k" />
 
       <template #right>
         <div class="flex items-center gap-2">
           <!-- 语言切换 -->
-          <UDropdownMenu :items="languageItems">
+          <UDropdownMenu
+            :items="languageItems"
+            :ui="{
+              item: 'cursor-pointer',
+            }">
             <UButton
               icon="i-heroicons-language"
               variant="ghost"
               color="primary"
-              :label="currentLocaleLabel"
-            />
+              class="cursor-pointer"
+              :label="currentLocaleLabel" />
           </UDropdownMenu>
 
           <!-- 主题切换 -->
-          <UColorModeButton />
+          <ThemeToggle />
         </div>
       </template>
 
@@ -134,8 +155,8 @@ const languageItems = computed(() => [
           <UNavigationMenu
             :items="items"
             highlight
-            class="flex-1"
-          />
+            orientation="vertical"
+            class="flex-1" />
         </UDashboardToolbar>
       </template>
 
@@ -144,8 +165,7 @@ const languageItems = computed(() => [
           :items="items"
           content-orientation="vertical"
           collapsed
-          class="px-4 sm:px-6 bg-muted backdrop-blur max-sm:hidden border-b border-muted"
-        />
+          class="px-4 sm:px-6 bg-muted backdrop-blur max-sm:hidden border-b border-muted" />
       </template>
     </UHeader>
   </div>

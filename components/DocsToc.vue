@@ -19,7 +19,6 @@ defineProps<Props>();
   <UPage>
     <UContentToc
       :links="links"
-      :title="$t('toc.title')"
-    />
+      :title="$t('toc.title')" />
   </UPage>
 </template>

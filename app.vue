@@ -16,7 +16,7 @@ const links = [
   {
     label: "Docs",
     icon: "i-lucide-book",
-    to: "/getting-started",
+    to: "/get-started",
   },
   {
     label: "Payments",
@@ -31,22 +31,47 @@ const links = [
 ];
 
 const { locale } = useI18n();
+const { initialize } = useRecentPages();
+
+// 计算当前语言环境的 UI 配置
+const currentUILocale = computed(() => {
+  // 根据 Nuxt UI Pro 文档，locale code 映射如下:
+  // zh-CN -> zh-CN (简体中文)
+  // zh-TW -> zh-TW (繁体中文)
+  // en -> en (英文)
+  const localeMap = {
+    "zh-CN": "zh-CN",
+    "zh-TW": "zh-TW",
+    en: "en",
+  } as const;
+
+  const mappedLocale =
+    localeMap[locale.value as keyof typeof localeMap] ||
+    "en";
+  return (
+    locales[mappedLocale as keyof typeof locales] ||
+    locales.en
+  );
+});
+
+onMounted(() => {
+  nextTick(() => {
+    initialize();
+  });
+});
 </script>
 
 <template>
   <Html :lang="locale">
     <Body>
-      <UApp
-        :locale="locales[locale as keyof typeof locales]"
-      >
+      <UApp :locale="currentUILocale">
         <ClientOnly>
           <LazyUContentSearch
             v-model:search-term="searchTerm"
             :files="files"
             shortcut="meta_k"
             :links="links"
-            :fuse="{ resultLimit: 42 }"
-          />
+            :fuse="{ resultLimit: 42 }" />
         </ClientOnly>
         <NuxtLayout>
           <NuxtRouteAnnouncer />

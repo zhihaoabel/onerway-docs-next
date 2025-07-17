@@ -127,6 +127,18 @@ export default defineNuxtConfig({
     build: {
       markdown: {
         highlight: {
+          langs: [
+            "bash",
+            "ts",
+            "typescript",
+            "diff",
+            "vue",
+            "json",
+            "yml",
+            "css",
+            "mdc",
+            "md",
+          ],
           theme: {
             default: "catppuccin-latte",
             dark: "dracula",
@@ -135,6 +147,16 @@ export default defineNuxtConfig({
         },
       },
     },
+  },
+
+  mdc: {
+    highlight: {
+      noApiRoute: false,
+    },
+  },
+
+  future: {
+    compatibilityVersion: 4,
   },
 
   // eslint

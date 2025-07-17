@@ -287,6 +287,7 @@
     "remove": "從瀏覽記錄中移除",
     "visitPage": "訪問頁面",
     "lastVisited": "最後訪問",
+    "showDescription": "顯示頁面描述",
     "empty": {
       "title": "暫無瀏覽記錄",
       "description": "開始探索我們的文件，您最近查看的頁面將顯示在這裡。"
@@ -329,12 +330,22 @@
     "copiedLabel": "測試卡號已複製到剪貼簿"
   },
   "productCard": {
+    "clickToView": "點擊查看",
+    "productInfo": "產品資訊",
+    "statistics": "產品統計",
     "status": {
+      "label": "狀態",
       "new": "新功能",
       "beta": "測試版",
       "updated": "已更新"
     },
-    "docsCount": "{count} 個文件"
+    "docsCount": "{count} 個文件",
+    "tags": {
+      "label": "標籤",
+      "item": "標籤",
+      "additional": "還有 {count} 個標籤"
+    },
+    "additionalTags": "更多標籤"
   },
   "tags": {
     "frontend": "前端",
@@ -356,5 +367,85 @@
     "development": "開發",
     "tools": "工具",
     "cli": "命令列"
+  },
+  "theme": {
+    "switchToLight": "切換到淺色模式",
+    "switchToDark": "切換到深色模式"
+  },
+  "buttons": {
+    "save": "儲存",
+    "cancel": "取消",
+    "submit": "提交",
+    "loadUser": "載入使用者",
+    "action": "操作",
+    "close": "關閉",
+    "open": "開啟",
+    "edit": "編輯",
+    "delete": "刪除",
+    "confirm": "確認"
+  },
+  "forms": {
+    "email": "信箱",
+    "password": "密碼",
+    "confirmPassword": "確認密碼",
+    "username": "使用者名稱",
+    "firstName": "名",
+    "lastName": "姓",
+    "required": "必填",
+    "optional": "可選",
+    "emailHelp": "我們絕不會與他人分享您的信箱。",
+    "passwordHelp": "請選擇至少8位字元的強密碼。"
+  },
+  "a11y": {
+    "closeModal": "關閉對話框",
+    "openMenu": "開啟導覽選單",
+    "closeMenu": "關閉導覽選單",
+    "previousPage": "前往上一頁",
+    "nextPage": "前往下一頁",
+    "loading": "載入內容中",
+    "required": "必填項",
+    "primaryAction": "主要操作",
+    "expandSection": "展開部分",
+    "collapseSection": "收起部分",
+    "sortAscending": "升序排列",
+    "sortDescending": "降序排列",
+    "searchInput": "搜尋輸入框",
+    "toggleTheme": "切換主題模式"
+  },
+  "docs": {
+    "navigation": {
+      "title": "導覽",
+      "noNavigation": "暫無 {domain} 導覽",
+      "homeNavigation": "首頁導覽"
+    },
+    "breadcrumb": {
+      "home": "首頁",
+      "ariaLabel": "麵包屑導覽"
+    },
+    "content": {
+      "notFound": "頁面未找到",
+      "notFoundDescription": "抱歉，我們找不到您要訪問的頁面。",
+      "tryingToAccess": "嘗試訪問的路徑",
+      "collectionName": "集合名稱",
+      "backToHome": "返回首頁"
+    },
+    "sections": {
+      "getStarted": {
+        "title": "快速開始",
+        "description": "快速開始使用我們的服務"
+      },
+      "payments": {
+        "title": "支付",
+        "description": "支付文件和指南"
+      },
+      "payouts": {
+        "title": "轉帳",
+        "description": "轉帳和提現功能"
+      }
+    },
+    "meta": {
+      "defaultTitle": "文件中心",
+      "defaultDescription": "Onerway 整合的全面指南和範例。"
+    }
   }
 }

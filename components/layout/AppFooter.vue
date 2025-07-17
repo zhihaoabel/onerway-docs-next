@@ -167,17 +167,14 @@ const socialLinks = computed(() => [
 
 <template>
   <footer
-    class="bg-gradient-to-b from-gray-50 to-white border-t border-gray-200 dark:from-gray-900 dark:to-slate-900 dark:border-gray-700"
-  >
+    class="bg-gradient-to-b from-gray-50 to-white border-t border-gray-200 dark:from-gray-900 dark:to-slate-900 dark:border-gray-700">
     <!-- 主要内容区域 -->
     <div
       v-show="false"
-      class="py-12 pb-8"
-    >
+      class="py-12 pb-8">
       <UContainer>
         <div
-          class="grid grid-cols-1 lg:grid-cols-[1fr_2fr_1fr] gap-8 lg:gap-12 items-start"
-        >
+          class="grid grid-cols-1 lg:grid-cols-[1fr_2fr_1fr] gap-8 lg:gap-12 items-start">
           <!-- 品牌区域 -->
           <div class="max-w-80">
             <!-- Logo 和品牌名 -->
@@ -185,8 +182,7 @@ const socialLinks = computed(() => [
               <div class="flex items-center gap-2">
                 <UIcon
                   name="i-heroicons-credit-card"
-                  class="h-7 w-7 text-blue-500"
-                />
+                  class="h-7 w-7 text-blue-500" />
                 <span
                   class="text-2xl font-bold text-primary"
                   >Onerway</span
@@ -196,26 +192,22 @@ const socialLinks = computed(() => [
                 variant="subtle"
                 color="primary"
                 size="xs"
-                class="ml-2"
-              >
+                class="ml-2">
                 Docs
               </UBadge>
             </div>
 
             <!-- 品牌描述 -->
             <p
-              class="text-gray-600 dark:text-gray-400 leading-relaxed mb-6"
-            >
+              class="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
               {{ $t("footer.brandDescription") }}
             </p>
 
             <!-- 快速状态指示器 -->
             <div
-              class="flex items-center gap-2 mb-6 p-2 px-3 bg-green-50 border border-green-200 rounded-lg dark:bg-green-900/10 dark:border-green-800/20"
-            >
+              class="flex items-center gap-2 mb-6 p-2 px-3 bg-green-50 border border-green-200 rounded-lg dark:bg-green-900/10 dark:border-green-800/20">
               <div
-                class="w-2 h-2 bg-green-500 rounded-full animate-pulse"
-              ></div>
+                class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
               <span
                 class="text-sm text-green-700 dark:text-green-400 font-medium"
                 >{{
@@ -241,47 +233,39 @@ const socialLinks = computed(() => [
                   size="sm"
                   :class="social.hoverColor"
                   :aria-label="social.name"
-                  class="transition-all duration-200 hover:-translate-y-0.5"
-                />
+                  class="transition-all duration-200 hover:-translate-y-0.5" />
               </div>
             </div>
           </div>
 
           <!-- 链接列 -->
           <div
-            class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-8"
-          >
+            class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-8">
             <div
               v-for="section in quickLinks"
               :key="section.label"
-              class="min-w-0"
-            >
+              class="min-w-0">
               <h3
-                class="text-sm font-semibold text-gray-900 dark:text-white mb-4 uppercase tracking-wide"
-              >
+                class="text-sm font-semibold text-gray-900 dark:text-white mb-4 uppercase tracking-wide">
                 {{ $t(section.label) }}
               </h3>
               <ul class="list-none p-0 m-0 space-y-2">
                 <li
                   v-for="link in section.children"
                   :key="link.label"
-                  class="mb-2"
-                >
+                  class="mb-2">
                   <NuxtLink
                     :to="link.to"
                     :target="link.target"
-                    class="flex items-center gap-2 py-1 text-gray-600 dark:text-gray-400 text-sm transition-all duration-200 hover:text-blue-600 hover:translate-x-0.5 dark:hover:text-blue-400 no-underline"
-                  >
+                    class="flex items-center gap-2 py-1 text-gray-600 dark:text-gray-400 text-sm transition-all duration-200 hover:text-blue-600 hover:translate-x-0.5 dark:hover:text-blue-400 no-underline">
                     <UIcon
                       :name="link.icon"
-                      class="h-4 w-4 opacity-70"
-                    />
+                      class="h-4 w-4 opacity-70" />
                     {{ $t(link.label) }}
                     <UIcon
                       v-if="link.target === '_blank'"
                       name="i-heroicons-arrow-top-right-on-square"
-                      class="h-3 w-3 opacity-50 ml-auto"
-                    />
+                      class="h-3 w-3 opacity-50 ml-auto" />
                   </NuxtLink>
                 </li>
               </ul>
@@ -291,21 +275,18 @@ const socialLinks = computed(() => [
           <!-- 订阅区域 -->
           <div class="max-w-80">
             <h3
-              class="text-sm font-semibold text-gray-900 dark:text-white mb-4 uppercase tracking-wide"
-            >
+              class="text-sm font-semibold text-gray-900 dark:text-white mb-4 uppercase tracking-wide">
               {{ $t("footer.stayUpdated") }}
             </h3>
             <p
-              class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-6"
-            >
+              class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-6">
               {{ $t("footer.newsletterDescription") }}
             </p>
 
             <!-- 邮件订阅表单 -->
             <form
               class="mb-4"
-              @submit.prevent
-            >
+              @submit.prevent>
               <div class="flex flex-col gap-3">
                 <UInput
                   type="email"
@@ -314,15 +295,13 @@ const socialLinks = computed(() => [
                   "
                   icon="i-heroicons-envelope"
                   size="md"
-                  class="flex-1"
-                />
+                  class="flex-1" />
                 <UButton
                   type="submit"
                   color="primary"
                   size="md"
                   icon="i-heroicons-paper-airplane"
-                  class="w-full"
-                >
+                  class="w-full">
                   {{ $t("footer.subscribe") }}
                 </UButton>
               </div>
@@ -330,15 +309,13 @@ const socialLinks = computed(() => [
 
             <!-- 订阅说明 -->
             <p
-              class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed mb-6"
-            >
+              class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
               {{ $t("footer.subscribeNote") }}
             </p>
 
             <!-- 快速访问 -->
             <div
-              class="pt-6 border-t border-gray-200 dark:border-gray-700"
-            >
+              class="pt-6 border-t border-gray-200 dark:border-gray-700">
               <h4
                 class="text-sm font-semibold text-gray-900 dark:text-white mb-3"
                 >{{ $t("footer.quickAccess") }}</h4
@@ -348,16 +325,14 @@ const socialLinks = computed(() => [
                   to="/get-started"
                   variant="outline"
                   size="sm"
-                  icon="i-heroicons-rocket-launch"
-                >
+                  icon="i-heroicons-rocket-launch">
                   {{ $t("footer.getStarted") }}
                 </UButton>
                 <UButton
                   to="/payments"
                   variant="outline"
                   size="sm"
-                  icon="i-heroicons-code-bracket"
-                >
+                  icon="i-heroicons-code-bracket">
                   {{ $t("footer.apiDocs") }}
                 </UButton>
               </div>
@@ -369,13 +344,11 @@ const socialLinks = computed(() => [
 
     <!-- 底部区域 -->
     <div
-      class="bg-gray-50 dark:bg-slate-900 border-t border-gray-200 dark:border-gray-700 py-6 flex items-center"
-    >
+      class="bg-gray-50 dark:bg-slate-900 border-t border-gray-200 dark:border-gray-700 py-6 flex items-center">
       <!-- 版权信息 -->
       <div class="flex items-center gap-3 mx-auto">
         <span
-          class="text-sm text-gray-600 dark:text-gray-400"
-        >
+          class="text-sm text-gray-600 dark:text-gray-400">
           © {{ currentYear }} Onerway.
           {{ $t("footer.rights") }}
         </span>

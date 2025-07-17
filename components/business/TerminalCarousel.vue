@@ -1,4 +1,14 @@
 <script setup lang="ts">
+interface Props {
+  items?: CarouselItem[];
+  autoplayDuration?: number;
+  pauseOnManualStop?: number;
+  showPlayButton?: boolean;
+  showCopyButton?: boolean;
+  height?: string;
+  variant?: string;
+}
+
 const props = withDefaults(defineProps<Props>(), {
   autoplayDuration: 4000,
   pauseOnManualStop: 6000,
@@ -9,12 +19,13 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const { t } = useI18n();
+const { copy } = useClipboard();
 
 interface CarouselItem {
   label: string;
   command: string;
   content: string;
-  contentFull?: string; // 完整内容，用于展开显示
+  contentFull?: string; // Full content for expanded display
   slotKey?: string;
   category?:
     | "payment"
@@ -57,16 +68,6 @@ interface CarouselItem {
   };
 }
 
-interface Props {
-  items?: CarouselItem[];
-  autoplayDuration?: number;
-  pauseOnManualStop?: number;
-  showPlayButton?: boolean;
-  showCopyButton?: boolean;
-  height?: string;
-  variant?: "default" | "compact" | "detailed";
-}
-
 // Simple JSON syntax highlighting
 const highlightJson = (jsonString: string): string => {
   if (!jsonString) return "";
@@ -106,16 +107,10 @@ const highlightJson = (jsonString: string): string => {
   );
 };
 
-// Toast notification for copy feedback
-const toast = useToast?.() || {
-  add: (notification: any) =>
-    console.log("Toast:", notification),
-};
-
 // Category icons mapping
-const categoryIcons = {
+const categoryIcons: Record<string, string> = {
   payment: "i-heroicons-credit-card",
-  subscription: "i-heroicons-arrow-path",
+  subscription: "i-heroicons-calendar-days",
   reconciliation: "i-heroicons-scale",
   product: "i-heroicons-cube",
   tokenization: "i-heroicons-key",
@@ -228,7 +223,7 @@ const defaultItems = computed<CarouselItem[]>(() => [
     label: t("home.tryItOut.carousel.storingPayment"),
     command: "onerway tokenization create",
     category: "tokenization",
-    icon: "i-heroicons-arrow-path",
+    icon: "i-heroicons-key",
     description: t("home.tryItOut.carousel.storingPayment"),
     content: `{
     "appId": "...",
@@ -279,7 +274,7 @@ const defaultItems = computed<CarouselItem[]>(() => [
     label: t("home.tryItOut.carousel.subscriptions"),
     command: "onerway subscriptions create",
     category: "subscription",
-    icon: "i-heroicons-arrow-path",
+    icon: "i-heroicons-calendar-days",
     description: t("home.tryItOut.carousel.subscriptions"),
     content: `{
     "subscription": {
@@ -400,6 +395,10 @@ const userManuallyStopped = ref(false);
 const copySuccess = ref(false);
 const isContentExpanded = ref(false); // 控制内容展开状态
 
+// 进度条相关状态
+const progressPercentage = ref(0);
+const progressInterval = ref<NodeJS.Timeout | null>(null);
+
 // Computed properties
 const carouselItems = computed(
   () => props.items || defaultItems.value
@@ -428,6 +427,15 @@ const hasExpandableContent = computed(() => {
   );
 });
 
+// 是否应该显示进度条
+const shouldShowProgress = computed(() => {
+  return (
+    isAutoPlaying.value &&
+    !userManuallyStopped.value &&
+    progressPercentage.value > 0
+  );
+});
+
 // Theme-aware classes
 const themeClasses = computed(() => ({
   container: [
@@ -448,7 +456,7 @@ const themeClasses = computed(() => ({
   ],
   navigationItem: (isActive: boolean) => [
     "group/item relative w-full transition-all duration-200",
-    "rounded-lg border border-transparent",
+    "rounded-lg border border-transparent hover:cursor-pointer",
     isActive
       ? [
           "bg-gradient-to-r from-primary-500/10 to-primary-600/5",
@@ -470,45 +478,39 @@ const themeClasses = computed(() => ({
     "shadow-xl dark:shadow-2xl",
   ],
   codeHeader: [
-    "flex items-center justify-between px-4 py-3",
+    "flex items-center justify-between px-4 py-3 rounded-t-lg",
     "bg-gradient-to-r from-gray-800/90 to-gray-700/90",
     "border-b border-gray-600/50",
     "backdrop-blur-sm",
   ],
 }));
 
-// Enhanced copy to clipboard with feedback
+// Enhanced copy to clipboard using useClipboard composable
 const copyToClipboard = async () => {
-  try {
-    await navigator.clipboard.writeText(
-      currentDisplayContent.value
-    );
-    copySuccess.value = true;
+  const success = await copy(currentDisplayContent.value, {
+    successTitle: t(
+      "home.tryItOut.carousel.feedback.copySuccess"
+    ),
+    successDesc: t(
+      "home.tryItOut.carousel.feedback.copySuccessDesc"
+    ),
+    errorTitle: t(
+      "home.tryItOut.carousel.feedback.copyError"
+    ),
+    errorDesc: t(
+      "home.tryItOut.carousel.feedback.copyErrorDesc"
+    ),
+    duration: 3000,
+    resetDelay: 2000,
+  });
 
-    toast.add({
-      title: t(
-        "home.tryItOut.carousel.feedback.copySuccess"
-      ),
-      description: t(
-        "home.tryItOut.carousel.feedback.copySuccessDesc"
-      ),
-      icon: "i-heroicons-check-circle",
-      color: "success",
-    });
+  // Update local state based on composable result
+  copySuccess.value = success;
 
+  if (success) {
     setTimeout(() => {
       copySuccess.value = false;
     }, 2000);
-  } catch (err) {
-    console.error("Copy failed:", err);
-    toast.add({
-      title: t("home.tryItOut.carousel.feedback.copyError"),
-      description: t(
-        "home.tryItOut.carousel.feedback.copyErrorDesc"
-      ),
-      icon: "i-heroicons-exclamation-triangle",
-      color: "error",
-    });
   }
 };
 
@@ -517,23 +519,69 @@ const toggleContentExpansion = () => {
   isContentExpanded.value = !isContentExpanded.value;
 };
 
-// Auto-play logic with better control
-const startAutoPlay = () => {
-  if (autoPlayInterval.value) {
-    clearInterval(autoPlayInterval.value);
+// 进度条管理函数
+const resetProgress = () => {
+  progressPercentage.value = 0;
+  if (progressInterval.value) {
+    clearInterval(progressInterval.value);
+    progressInterval.value = null;
+  }
+};
+
+const stopProgress = () => {
+  if (progressInterval.value) {
+    clearInterval(progressInterval.value);
+    progressInterval.value = null;
+  }
+};
+
+const startProgress = () => {
+  if (progressInterval.value) {
+    clearInterval(progressInterval.value);
   }
 
-  autoPlayInterval.value = setInterval(() => {
+  progressInterval.value = setInterval(() => {
     if (
       isAutoPlaying.value &&
       !isHovering.value &&
       !userManuallyStopped.value
     ) {
-      currentActiveIndex.value =
-        (currentActiveIndex.value + 1) %
-        carouselItems.value.length;
+      const increment = 100 / (props.autoplayDuration / 50); // 每50ms更新一次
+      progressPercentage.value += increment;
+
+      if (progressPercentage.value >= 100) {
+        progressPercentage.value = 100;
+        // 立即停止当前进度条，防止重复触发
+        stopProgress();
+
+        // 进度完成，切换到下一个item
+        setTimeout(() => {
+          const nextIndex =
+            (currentActiveIndex.value + 1) %
+            carouselItems.value.length;
+          currentActiveIndex.value = nextIndex;
+          resetProgress();
+          if (
+            isAutoPlaying.value &&
+            !isHovering.value &&
+            !userManuallyStopped.value
+          ) {
+            startProgress();
+          }
+        }, 100);
+      }
     }
-  }, props.autoplayDuration);
+  }, 50);
+};
+
+// Auto-play logic with better control
+const startAutoPlay = () => {
+  if (autoPlayInterval.value) {
+    clearInterval(autoPlayInterval.value);
+  }
+  // 使用进度条代替原有的定时器
+  resetProgress();
+  startProgress();
 };
 
 const stopAutoPlay = () => {
@@ -541,6 +589,7 @@ const stopAutoPlay = () => {
     clearInterval(autoPlayInterval.value);
     autoPlayInterval.value = null;
   }
+  stopProgress();
 };
 
 const toggleAutoPlay = () => {
@@ -560,6 +609,9 @@ const setActiveContent = (index: number) => {
   // 切换内容时重置展开状态
   isContentExpanded.value = false;
 
+  // 重置进度条
+  resetProgress();
+
   if (isAutoPlaying.value) {
     stopAutoPlay();
     setTimeout(() => {
@@ -576,13 +628,12 @@ const setActiveContent = (index: number) => {
 // Mouse interaction handlers
 const handleMouseEnter = () => {
   isHovering.value = true;
+  // 鼠标悬停时暂停进度条但保持当前进度
 };
 
 const handleMouseLeave = () => {
   isHovering.value = false;
-  if (isAutoPlaying.value && !userManuallyStopped.value) {
-    startAutoPlay();
-  }
+  // 鼠标离开时恢复进度条
 };
 
 // Keyboard navigation
@@ -618,8 +669,10 @@ onMounted(() => {
   document.addEventListener("keydown", handleKeydown);
 });
 
+// 在组件卸载时清理定时器和事件监听器
 onUnmounted(() => {
   stopAutoPlay();
+  stopProgress();
   document.removeEventListener("keydown", handleKeydown);
 });
 
@@ -646,25 +699,20 @@ watch(
     :aria-label="t('home.tryItOut.carousel.ariaLabel')"
     tabindex="0"
     @mouseenter="handleMouseEnter"
-    @mouseleave="handleMouseLeave"
-  >
+    @mouseleave="handleMouseLeave">
     <!-- Enhanced Left Navigation Panel -->
     <div
-      class="flex-none w-full lg:w-80 xl:w-96 p-4"
-      :class="[themeClasses.navigationPanel]"
-    >
+      class="flex flex-col justify-around w-full lg:w-80 xl:w-96 p-4"
+      :class="[themeClasses.navigationPanel]">
       <!-- Panel Header -->
       <div
-        class="mb-4 pb-3 border-b border-gray-200/60 dark:border-gray-700/60"
-      >
+        class="mb-4 pb-3 border-b border-gray-200/60 dark:border-gray-700/60">
         <h3
-          class="text-lg font-semibold text-gray-900 dark:text-white"
-        >
+          class="text-lg font-semibold text-gray-900 dark:text-white">
           {{ t("home.tryItOut.carousel.navigation.title") }}
         </h3>
         <p
-          class="text-sm text-gray-600 dark:text-gray-400 mt-1"
-        >
+          class="text-sm text-gray-600 dark:text-gray-400 mt-1">
           {{
             t("home.tryItOut.carousel.navigation.subtitle")
           }}
@@ -676,8 +724,7 @@ watch(
         <div
           v-for="(item, index) in carouselItems"
           :key="index"
-          class="relative group/container"
-        >
+          class="relative group/container">
           <button
             :class="
               themeClasses.navigationItem(
@@ -686,8 +733,7 @@ watch(
             "
             :aria-pressed="currentActiveIndex === index"
             :aria-label="`${t('home.tryItOut.carousel.navigation.selectItem')} ${item.label}`"
-            @click="setActiveContent(index)"
-          >
+            @click="setActiveContent(index)">
             <div class="flex items-start gap-3 p-3">
               <!-- Category Icon -->
               <div class="flex-shrink-0 mt-0.5">
@@ -696,15 +742,22 @@ watch(
                     item.icon ||
                     categoryIcons[
                       item.category || 'default'
-                    ]
+                    ] ||
+                    categoryIcons.default ||
+                    ''
                   "
                   class="w-5 h-5 transition-all duration-200"
                   :class="[
                     currentActiveIndex === index
-                      ? 'text-primary-600 dark:text-primary-400 group-hover/item:scale-110'
+                      ? [
+                          'text-primary-600 dark:text-primary-400 group-hover/item:scale-110',
+                          // 为 subscription 使用特殊的脉冲动画，其他保持旋转
+                          item.category === 'subscription'
+                            ? 'animate-subscription-pulse'
+                            : 'animate-spin-slow',
+                        ]
                       : 'text-gray-500 dark:text-gray-400 group-hover/item:text-primary-500 group-hover/item:scale-105',
-                  ]"
-                />
+                  ]" />
               </div>
 
               <!-- Content -->
@@ -717,8 +770,7 @@ watch(
                     item.description &&
                     variant === 'detailed'
                   "
-                  class="text-xs mt-1 opacity-75 line-clamp-2"
-                >
+                  class="text-xs mt-1 opacity-75 line-clamp-2">
                   {{ item.description }}
                 </div>
               </div>
@@ -726,57 +778,85 @@ watch(
               <!-- Active Indicator -->
               <div
                 v-if="currentActiveIndex === index"
-                class="flex-shrink-0 w-2 h-2 rounded-full bg-primary-500 animate-pulse"
-              />
+                class="flex-shrink-0 w-2 h-2 rounded-full bg-primary-500 animate-pulse" />
             </div>
           </button>
 
+          <!-- Progress Bar for Active Item -->
+          <Transition
+            enter-active-class="transition-all duration-300 ease-out"
+            leave-active-class="transition-all duration-200 ease-in"
+            enter-from-class="opacity-0 scale-y-0"
+            enter-to-class="opacity-100 scale-y-100"
+            leave-from-class="opacity-100 scale-y-100"
+            leave-to-class="opacity-0 scale-y-0">
+            <div
+              v-if="
+                currentActiveIndex === index &&
+                shouldShowProgress
+              "
+              class="absolute bottom-0 left-0 right-0 h-1 bg-gray-200/60 dark:bg-gray-700/60 rounded-b-lg overflow-hidden origin-bottom">
+              <div
+                class="h-full bg-gradient-to-r from-primary-500 via-primary-600 to-primary-500 transition-all duration-75 ease-linear shadow-sm relative"
+                :class="{
+                  'animate-pulse': isHovering,
+                }"
+                :style="{
+                  width: `${progressPercentage}%`,
+                }">
+                <!-- Progress glow effect -->
+                <div
+                  class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                  :class="{
+                    'animate-pulse': !isHovering,
+                    'opacity-50': isHovering,
+                  }" />
+              </div>
+            </div>
+          </Transition>
+
           <!-- Play/Pause Button - Enhanced positioning -->
           <Transition
-            enter-active-class="transition-all duration-200 ease-out"
-            enter-from-class="opacity-0 scale-90 translate-y-1"
-            enter-to-class="opacity-100 scale-100 translate-y-0"
+            enter-active-class="transition-all duration-300 ease-out"
             leave-active-class="transition-all duration-150 ease-in"
-            leave-from-class="opacity-100 scale-100 translate-y-0"
-            leave-to-class="opacity-0 scale-90 translate-y-1"
-          >
-            <UButton
+            mode="out-in">
+            <div
               v-if="
                 props.showPlayButton &&
                 currentActiveIndex === index &&
                 (isHovering || !isAutoPlaying)
               "
-              :icon="
-                isAutoPlaying
-                  ? 'i-heroicons-pause'
-                  : 'i-heroicons-play'
-              "
-              size="xs"
-              color="primary"
-              variant="soft"
-              class="absolute right-2 top-1/2 -translate-y-1/2 shadow-lg"
-              :title="
-                isAutoPlaying
-                  ? t(
-                      'home.tryItOut.carousel.controls.pause'
-                    )
-                  : t(
-                      'home.tryItOut.carousel.controls.play'
-                    )
-              "
-              @click.stop="toggleAutoPlay"
-            />
+              class="absolute right-2 top-1/2 -translate-y-1/2">
+              <UButton
+                :icon="
+                  isAutoPlaying
+                    ? 'i-heroicons-pause'
+                    : 'i-heroicons-play'
+                "
+                size="xs"
+                color="primary"
+                variant="soft"
+                class="shadow-lg hover:cursor-pointer"
+                :title="
+                  isAutoPlaying
+                    ? t(
+                        'home.tryItOut.carousel.controls.pause'
+                      )
+                    : t(
+                        'home.tryItOut.carousel.controls.play'
+                      )
+                "
+                @click.stop="toggleAutoPlay" />
+            </div>
           </Transition>
         </div>
       </div>
 
       <!-- Auto-play Status -->
       <div
-        class="mt-4 pt-3 border-t border-gray-200/60 dark:border-gray-700/60"
-      >
+        class="pt-3 border-t border-gray-200/60 dark:border-gray-700/60">
         <div
-          class="flex items-center justify-between text-xs"
-        >
+          class="flex items-center justify-between text-xs">
           <span class="text-gray-600 dark:text-gray-400">
             {{
               t("home.tryItOut.carousel.status.autoPlay")
@@ -789,15 +869,13 @@ watch(
                 isAutoPlaying
                   ? 'bg-green-500 animate-pulse'
                   : 'bg-gray-400',
-              ]"
-            />
+              ]" />
             <span
               :class="
                 isAutoPlaying
                   ? 'text-green-600 dark:text-green-400'
                   : 'text-gray-500'
-              "
-            >
+              ">
               {{
                 isAutoPlaying
                   ? t(
@@ -817,37 +895,31 @@ watch(
     <div class="flex-1 min-w-0 flex flex-col h-full">
       <div
         class="h-full flex flex-col"
-        :class="[themeClasses.codePanel]"
-      >
+        :class="[themeClasses.codePanel]">
         <!-- Code Header - Enhanced -->
         <div :class="themeClasses.codeHeader">
           <div
-            class="flex items-center gap-3 min-w-0 flex-1"
-          >
+            class="flex items-center gap-3 min-w-0 flex-1">
             <!-- Terminal Indicator -->
             <div class="flex items-center gap-1.5">
               <div
-                class="w-3 h-3 rounded-full bg-red-500"
-              ></div>
+                class="w-3 h-3 rounded-full bg-red-500"></div>
               <div
-                class="w-3 h-3 rounded-full bg-yellow-500"
-              ></div>
+                class="w-3 h-3 rounded-full bg-yellow-500"></div>
               <div
-                class="w-3 h-3 rounded-full bg-green-500"
-              ></div>
+                class="w-3 h-3 rounded-full bg-green-500"></div>
             </div>
 
             <!-- Command -->
             <div
-              class="flex items-center gap-2 min-w-0 flex-1"
-            >
+              class="flex items-center gap-2 min-w-0 flex-1">
               <span
                 class="text-green-400 font-mono text-sm flex-shrink-0"
                 >$</span
               >
               <span
                 class="text-white font-mono text-sm truncate"
-                >{{ currentItem.command }}</span
+                >{{ currentItem?.command }}</span
               >
             </div>
           </div>
@@ -875,8 +947,7 @@ watch(
                       'home.tryItOut.carousel.actions.expand'
                     )
               "
-              @click="toggleContentExpansion"
-            />
+              @click="toggleContentExpansion" />
 
             <!-- Copy Button -->
             <UButton
@@ -889,7 +960,7 @@ watch(
               size="xs"
               :color="copySuccess ? 'success' : 'neutral'"
               variant="ghost"
-              class="transition-all duration-200"
+              class="transition-all duration-200 hover:cursor-pointer"
               :class="[
                 copySuccess
                   ? 'text-green-400'
@@ -898,8 +969,7 @@ watch(
               :title="
                 t('home.tryItOut.carousel.actions.copy')
               "
-              @click="copyToClipboard"
-            />
+              @click="copyToClipboard" />
           </div>
         </div>
 
@@ -910,39 +980,36 @@ watch(
             style="
               scrollbar-width: thin;
               scrollbar-color: #4b5563 #1f2937;
-            "
-          >
+            ">
             <Transition
               enter-active-class="transition-all duration-300 ease-out"
               leave-active-class="transition-all duration-300 ease-in"
-              enter-from-class="opacity-0 transform scale-95"
-              enter-to-class="opacity-100 transform scale-100"
-              leave-from-class="opacity-100 transform scale-100"
-              leave-to-class="opacity-0 transform scale-95"
-              mode="out-in"
-            >
-              <pre
-                v-if="currentDisplayContent"
-                :key="`${currentActiveIndex}-${isContentExpanded}`"
-                class="text-gray-200 whitespace-pre-wrap break-words leading-relaxed"
-                v-html="
-                  highlightJson(currentDisplayContent)
-                "
-              />
+              mode="out-in">
               <div
-                v-else
-                class="h-full flex items-center justify-center text-gray-500"
-              >
-                <div class="text-center">
-                  <UIcon
-                    name="i-heroicons-code-bracket"
-                    class="w-8 h-8 mx-auto mb-2 opacity-50"
-                  />
-                  <p>{{
-                    t(
-                      "home.tryItOut.carousel.content.noContent"
-                    )
-                  }}</p>
+                v-if="true"
+                :key="`${currentActiveIndex}-${isContentExpanded}`">
+                <pre
+                  v-if="currentDisplayContent"
+                  :key="`${currentActiveIndex}-${isContentExpanded}`"
+                  class="text-gray-200 whitespace-pre-wrap break-words leading-relaxed"
+                  v-html="
+                    highlightJson(currentDisplayContent)
+                  " />
+                <div
+                  v-else
+                  class="h-full flex items-center justify-center text-gray-500">
+                  <div class="text-center">
+                    <UIcon
+                      name="i-heroicons-code-bracket"
+                      class="w-8 h-8 mx-auto mb-2 opacity-50" />
+                    <p
+                      >{{
+                        t(
+                          "home.tryItOut.carousel.content.noContent"
+                        )
+                      }}
+                    </p>
+                  </div>
                 </div>
               </div>
             </Transition>
@@ -951,15 +1018,13 @@ watch(
           <!-- 展开状态指示器 -->
           <div
             v-if="hasExpandableContent"
-            class="absolute bottom-4 right-4"
-          >
+            class="absolute bottom-4 right-4">
             <UBadge
               :color="
                 isContentExpanded ? 'primary' : 'neutral'
               "
               variant="soft"
-              class="text-xs"
-            >
+              class="text-xs">
               {{
                 isContentExpanded
                   ? t(
@@ -977,12 +1042,10 @@ watch(
             enter-active-class="transition-opacity duration-200"
             leave-active-class="transition-opacity duration-200"
             enter-from-class="opacity-0"
-            leave-to-class="opacity-0"
-          >
+            leave-to-class="opacity-0">
             <div
               v-if="false"
-              class="absolute inset-0 bg-gray-900/50 flex items-center justify-center"
-            >
+              class="absolute inset-0 bg-gray-900/50 flex items-center justify-center">
               <div class="text-white text-sm">{{
                 t("home.tryItOut.carousel.content.loading")
               }}</div>
@@ -992,21 +1055,18 @@ watch(
 
         <!-- Enhanced Footer -->
         <div
-          class="border-t border-gray-700 bg-gray-800/40 backdrop-blur-sm"
-        >
+          class="border-t border-gray-700 bg-gray-800/40 backdrop-blur-sm rounded-b-lg">
           <!-- Slot Support -->
           <template
             v-if="
-              currentItem.slotKey &&
-              $slots[`footer-${currentItem.slotKey}`]
-            "
-          >
+              currentItem?.slotKey &&
+              $slots[`footer-${currentItem?.slotKey}`]
+            ">
             <div class="p-4">
               <slot
-                :name="`footer-${currentItem.slotKey}`"
+                :name="`footer-${currentItem?.slotKey}`"
                 :item="currentItem"
-                :index="currentActiveIndex"
-              />
+                :index="currentActiveIndex" />
             </div>
           </template>
 
@@ -1015,17 +1075,15 @@ watch(
               <slot
                 name="footer"
                 :item="currentItem"
-                :index="currentActiveIndex"
-              />
+                :index="currentActiveIndex" />
             </div>
           </template>
 
           <!-- Default Footer -->
-          <template v-else-if="currentItem.footer">
-            <div class="p-4">
+          <template v-else-if="currentItem?.footer">
+            <div class="p-4 rounded-b-lg">
               <div
-                class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
-              >
+                class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                 <UButton
                   v-if="currentItem.footer.primaryAction"
                   :color="
@@ -1042,8 +1100,7 @@ watch(
                   class="shadow-lg hover:shadow-xl transition-shadow"
                   @click="
                     currentItem.footer.primaryAction.action?.()
-                  "
-                >
+                  ">
                   {{
                     currentItem.footer.primaryAction.label
                   }}
@@ -1054,8 +1111,7 @@ watch(
                     currentItem.footer.secondaryActions
                       ?.length
                   "
-                  class="flex flex-wrap gap-2"
-                >
+                  class="flex flex-wrap gap-2">
                   <UButton
                     v-for="(action, index) in currentItem
                       .footer.secondaryActions"
@@ -1065,9 +1121,8 @@ watch(
                     size="sm"
                     :trailing-icon="action.trailingIcon"
                     :to="action.to"
-                    class="text-gray-300 hover:text-white"
-                    @click="action.action?.()"
-                  >
+                    class="text-gray-300 hover:text-highlighted hover:cursor-pointer"
+                    @click="action.action?.()">
                     {{ action.label }}
                   </UButton>
                 </div>
@@ -1079,17 +1134,14 @@ watch(
           <template v-else>
             <div class="p-4">
               <div
-                class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
-              >
+                class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                 <UBadge
                   color="primary"
                   variant="soft"
-                  class="text-xs flex items-center gap-1.5"
-                >
+                  class="text-xs flex items-center gap-1.5">
                   <UIcon
                     name="i-heroicons-information-circle"
-                    class="w-3 h-3"
-                  />
+                    class="w-3 h-3" />
                   {{
                     t(
                       "home.tryItOut.carousel.footer.signInPrompt"
@@ -1102,8 +1154,7 @@ watch(
                   variant="ghost"
                   size="xs"
                   trailing-icon="i-heroicons-arrow-top-right-on-square"
-                  class="text-xs text-gray-400 hover:text-gray-200"
-                >
+                  class="text-xs text-gray-400 hover:text-highlighted hover:cursor-pointer">
                   {{
                     t(
                       "home.tryItOut.carousel.footer.learnMore"
@@ -1120,24 +1171,21 @@ watch(
       <div class="mt-4 flex-shrink-0">
         <!-- Desktop Indicators -->
         <div
-          class="hidden lg:flex items-center justify-center gap-3"
-        >
+          class="hidden lg:flex items-center justify-center gap-3">
           <div class="flex gap-2">
             <button
               v-for="(_, index) in carouselItems"
               :key="index"
               class="group relative"
               :aria-label="`${t('home.tryItOut.carousel.indicators.goToSlide')} ${index + 1}`"
-              @click="setActiveContent(index)"
-            >
+              @click="setActiveContent(index)">
               <div
                 class="w-3 h-3 rounded-full transition-all duration-300 cursor-pointer"
                 :class="[
                   currentActiveIndex === index
                     ? 'bg-primary-500 shadow-lg shadow-primary-500/30'
                     : 'bg-gray-300 dark:bg-gray-600 hover:bg-primary-400 hover:scale-110',
-                ]"
-              />
+                ]" />
               <!-- Progress ring for active indicator -->
               <div
                 v-if="
@@ -1150,8 +1198,7 @@ watch(
                     --carousel-duration,
                     4s
                   );
-                "
-              />
+                " />
             </button>
           </div>
 
@@ -1166,6 +1213,7 @@ watch(
               size="xs"
               color="primary"
               variant="soft"
+              class="hover:text-highlighted hover:cursor-pointer"
               :title="
                 isAutoPlaying
                   ? t(
@@ -1175,11 +1223,9 @@ watch(
                       'home.tryItOut.carousel.controls.play'
                     )
               "
-              @click="toggleAutoPlay"
-            />
+              @click="toggleAutoPlay" />
             <span
-              class="text-xs text-gray-500 dark:text-gray-400 ml-2"
-            >
+              class="text-xs text-gray-500 dark:text-gray-400 ml-2">
               {{ currentActiveIndex + 1 }} /
               {{ carouselItems.length }}
             </span>
@@ -1188,8 +1234,7 @@ watch(
 
         <!-- Mobile Indicators -->
         <div
-          class="flex lg:hidden items-center justify-center gap-3"
-        >
+          class="flex lg:hidden items-center justify-center gap-3">
           <div class="flex gap-2">
             <button
               v-for="(_, index) in carouselItems"
@@ -1201,8 +1246,7 @@ watch(
                   : 'bg-gray-300 dark:bg-gray-600 hover:bg-primary-400',
               ]"
               :aria-label="`${t('home.tryItOut.carousel.indicators.goToSlide')} ${index + 1}`"
-              @click="setActiveContent(index)"
-            />
+              @click="setActiveContent(index)" />
           </div>
 
           <UButton
@@ -1219,8 +1263,7 @@ watch(
                 ? t('home.tryItOut.carousel.controls.pause')
                 : t('home.tryItOut.carousel.controls.play')
             "
-            @click="toggleAutoPlay"
-          />
+            @click="toggleAutoPlay" />
         </div>
       </div>
     </div>
@@ -1258,6 +1301,45 @@ watch(
   --carousel-duration: v-bind(
     `${props.autoplayDuration}ms`
   );
+}
+
+/* Custom slow spin animation */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 2.5s linear infinite;
+}
+
+/* Subscription calendar pulse animation */
+@keyframes subscription-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  25% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+  75% {
+    transform: scale(1.15);
+    opacity: 0.7;
+  }
+}
+
+.animate-subscription-pulse {
+  animation: subscription-pulse 2s ease-in-out infinite;
 }
 
 /* Enhanced focus styles for accessibility */

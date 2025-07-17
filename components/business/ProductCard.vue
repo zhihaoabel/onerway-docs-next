@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// 类型定义 - 兼容现有的 paymentCards 结构
+// Type definition - compatible with existing paymentCards structure
 export interface EnhancedProduct {
   id?: string;
   title: string;
@@ -12,7 +12,7 @@ export interface EnhancedProduct {
   status?: "new" | "beta" | "updated";
 }
 
-// Props
+// Props interface
 interface Props {
   product: EnhancedProduct;
   showStats?: boolean;
@@ -35,7 +35,7 @@ const emit = defineEmits<{
   click: [product: EnhancedProduct];
 }>();
 
-// 颜色配置
+// Color configuration
 const colorPalettes = [
   {
     from: "from-blue-400",
@@ -111,29 +111,48 @@ const colorPalettes = [
   },
 ];
 
-// 方法
-const handleClick = () => {
-  if (props.clickable) {
-    emit("click", props.product);
-  }
-};
-
+// Composables
 const { t, locale } = useI18n();
 
-const formatDate = (dateString: string) => {
-  const date = new Date(dateString);
+// Event handlers
+const handleClick = () => {
+  if (!props.clickable) return;
+  emit("click", props.product);
+};
 
-  // 根据语言环境调整日期格式
+const handleKeyDown = (event: KeyboardEvent) => {
+  if (!props.clickable) return;
+  if (event.key !== "Enter" && event.key !== " ") return;
+
+  event.preventDefault();
+  handleClick();
+};
+
+const themeClasses = computed(() => ({
+  card: "bg-white dark:bg-gray-900",
+  cardHover:
+    "hover:shadow-gray-200/50 dark:hover:shadow-gray-700/50",
+  border:
+    "border-gray-200 dark:border-gray-700 hover:border-primary/20",
+  text: {
+    primary: "text-gray-900 dark:text-gray-100",
+    secondary: "text-gray-600 dark:text-gray-400",
+    muted: "text-gray-500 dark:text-gray-500",
+  },
+}));
+
+const formatDate = (dateString: string) => {
+  if (!dateString) return "";
+
+  const date = new Date(dateString);
+  if (Number.isNaN(date.getTime())) return "";
+
   const formatOptions: Intl.DateTimeFormatOptions = {
-    month: "short",
+    month: locale.value.startsWith("zh")
+      ? "2-digit"
+      : "short",
     day: "numeric",
   };
-
-  // 对于中文环境，使用更符合习惯的格式
-  if (locale.value.startsWith("zh")) {
-    formatOptions.month = "2-digit";
-    formatOptions.day = "2-digit";
-  }
 
   return new Intl.DateTimeFormat(
     locale.value,
@@ -141,18 +160,18 @@ const formatDate = (dateString: string) => {
   ).format(date);
 };
 
-// 简单的字符串哈希函数
+// Simple string hash function
 const hashString = (str: string): number => {
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
     const char = str.charCodeAt(i);
     hash = (hash << 5) - hash + char;
-    hash = hash & hash; // 转换为32位整数
+    hash = hash & hash; // Convert to 32-bit integer
   }
   return Math.abs(hash);
 };
 
-// 计算属性
+// Computed properties
 const visibleTags = computed(() => {
   return (props.product.tags || []).slice(0, props.maxTags);
 });
@@ -195,7 +214,6 @@ const statusConfig = computed(() => {
   );
 });
 
-// 根据产品生成颜色
 const iconColorClasses = computed(() => {
   const seed = props.product.id || props.product.title;
   const hash = hashString(seed);
@@ -203,9 +221,9 @@ const iconColorClasses = computed(() => {
   const palette = colorPalettes[colorIndex];
 
   return {
-    gradient: `bg-gradient-to-br ${palette.from} ${palette.to}`,
-    shadow: palette.shadow,
-    glow: palette.glow,
+    gradient: `bg-gradient-to-br ${palette?.from} ${palette?.to}`,
+    shadow: palette?.shadow,
+    glow: palette?.glow,
   };
 });
 </script>
@@ -216,16 +234,26 @@ const iconColorClasses = computed(() => {
     <div
       class="absolute -inset-2 rounded-3xl opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none blur-md"
       :class="`bg-gradient-to-br ${iconColorClasses.glow}`"
-    ></div>
+      aria-hidden="true"></div>
 
     <!-- 卡片主体 -->
     <div
-      class="relative rounded-2xl hover:shadow-xl hover:shadow-gray-200/50 dark:hover:shadow-gray-700/50 transition-all duration-300 border-muted hover:border-primary/20 transform hover:-translate-y-1 p-4 border bg-white dark:bg-gray-900"
-      :class="{
-        'cursor-pointer': clickable,
-      }"
+      class="relative rounded-2xl hover:shadow-xl transition-all duration-300 border transform hover:-translate-y-1 p-4"
+      :class="[
+        themeClasses.card,
+        themeClasses.cardHover,
+        themeClasses.border,
+        { 'cursor-pointer': clickable },
+      ]"
+      :tabindex="clickable ? 0 : -1"
+      :role="clickable ? 'button' : 'article'"
+      :aria-label="
+        clickable
+          ? `${t('productCard.clickToView')} ${product.title}`
+          : `${t('productCard.productInfo')} ${product.title}`
+      "
       @click="handleClick"
-    >
+      @keydown="handleKeyDown">
       <!-- 左右布局容器 -->
       <div class="flex items-center gap-4">
         <!-- 产品图标 -->
@@ -234,12 +262,10 @@ const iconColorClasses = computed(() => {
           :class="[
             iconColorClasses.gradient,
             iconColorClasses.shadow,
-          ]"
-        >
+          ]">
           <UIcon
             :name="product.icon"
-            class="w-6 h-6"
-          />
+            class="w-6 h-6" />
         </div>
 
         <!-- 右侧内容区域 -->
@@ -248,19 +274,17 @@ const iconColorClasses = computed(() => {
           <div class="mb-4">
             <div class="flex items-center mb-2">
               <h3
-                class="text-lg font-semibold group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-200 truncate"
-              >
+                :id="`product-title-${product.id}`"
+                class="text-lg font-semibold group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-200 truncate">
                 {{ product.title }}
               </h3>
-              <!-- Status Badge -->
               <span
                 v-if="
                   showStatus &&
                   product.status &&
                   statusConfig
                 "
-                class="flex-shrink-0 ml-2"
-              >
+                class="flex-shrink-0 ml-2">
                 <UBadge
                   :label="
                     t(
@@ -270,11 +294,13 @@ const iconColorClasses = computed(() => {
                   :variant="statusConfig.variant"
                   :color="statusConfig.color"
                   size="md"
-                />
+                  :aria-label="`${t('productCard.status.label')} ${t(`productCard.status.${product.status}`)}`" />
               </span>
             </div>
 
-            <p class="text-sm line-clamp-2">
+            <p
+              :id="`product-desc-${product.id}`"
+              class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
               {{ product.description }}
             </p>
           </div>
@@ -286,17 +312,22 @@ const iconColorClasses = computed(() => {
               (product.docsCount || product.lastUpdated)
             "
             class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-4"
-          >
+            role="group"
+            :aria-label="t('productCard.statistics')">
             <span
               v-if="product.docsCount"
               class="flex items-center gap-1"
-            >
+              :aria-label="
+                t('productCard.docsCount', {
+                  count: product.docsCount,
+                })
+              ">
               <UIcon
                 name="i-heroicons-document-text"
                 class="w-3 h-3"
-              />
+                :aria-hidden="true" />
               {{
-                $t("productCard.docsCount", {
+                t("productCard.docsCount", {
                   count: product.docsCount,
                 })
               }}
@@ -304,12 +335,12 @@ const iconColorClasses = computed(() => {
             <span
               v-if="product.lastUpdated"
               class="flex items-center gap-1 font-semibold"
-            >
+              :aria-label="`${t('common.updated')} ${formatDate(product.lastUpdated)}`">
               <UIcon
                 name="i-heroicons-clock"
                 class="w-3 h-3"
-              />
-              {{ $t("common.updated") }}
+                :aria-hidden="true" />
+              {{ t("common.updated") }}
               {{ formatDate(product.lastUpdated) }}
             </span>
           </div>
@@ -318,7 +349,8 @@ const iconColorClasses = computed(() => {
           <div
             v-if="showTags && product.tags?.length"
             class="flex flex-wrap gap-1 mb-4"
-          >
+            role="group"
+            :aria-label="t('productCard.tags.label')">
             <UBadge
               v-for="tag in visibleTags"
               :key="tag"
@@ -326,21 +358,31 @@ const iconColorClasses = computed(() => {
               variant="soft"
               size="md"
               class="font-medium"
-            />
+              :aria-label="`${t('productCard.tags.item')} ${tag}`" />
             <UPopover
               v-if="remainingTagsCount > 0"
               mode="hover"
-              :popper="{ placement: 'top' }"
-            >
+              :popper="{ placement: 'top' }">
               <UBadge
                 :label="`+${remainingTagsCount}`"
                 variant="outline"
                 size="md"
-                class="font-medium text-muted hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-              />
+                class="font-medium text-muted hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors cursor-help"
+                :aria-label="
+                  t('productCard.tags.additional', {
+                    count: remainingTagsCount,
+                  })
+                " />
 
               <template #content>
-                <div class="p-2 max-w-xs">
+                <div
+                  class="p-2 max-w-xs"
+                  role="tooltip">
+                  <h3 class="sr-only">{{
+                    t("productCard.tags.additional", {
+                      count: remainingTagsCount,
+                    })
+                  }}</h3>
                   <div class="flex flex-wrap gap-1">
                     <UBadge
                       v-for="tag in hiddenTags"
@@ -348,8 +390,7 @@ const iconColorClasses = computed(() => {
                       :label="tag"
                       variant="soft"
                       size="sm"
-                      class="font-medium"
-                    />
+                      class="font-medium" />
                   </div>
                 </div>
               </template>
@@ -362,11 +403,10 @@ const iconColorClasses = computed(() => {
       <div
         v-if="clickable"
         class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-      >
+        aria-hidden="true">
         <UIcon
           name="i-heroicons-arrow-top-right-on-square"
-          class="w-4 h-4 text-primary-500"
-        />
+          class="w-4 h-4 text-primary-500" />
       </div>
     </div>
   </div>

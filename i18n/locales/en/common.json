@@ -290,6 +290,7 @@
     "remove": "Remove from recent pages",
     "visitPage": "Visit page",
     "lastVisited": "Last visited",
+    "showDescription": "Show page description",
     "empty": {
       "title": "No recent pages",
       "description": "Start exploring our documentation to see your recently viewed pages here."
@@ -332,12 +333,22 @@
     "copiedLabel": "Test card number copied to clipboard"
   },
   "productCard": {
+    "clickToView": "Click to view",
+    "productInfo": "Product information",
+    "statistics": "Product statistics",
     "status": {
+      "label": "Status",
       "new": "New",
       "beta": "Beta",
       "updated": "Updated"
     },
-    "docsCount": "{count} doc | {count} docs"
+    "docsCount": "{count} doc | {count} docs",
+    "tags": {
+      "label": "Tags",
+      "item": "Tag",
+      "additional": "{count} more tag | {count} more tags"
+    },
+    "additionalTags": "Additional tags"
   },
   "tags": {
     "frontend": "Frontend",
@@ -359,5 +370,85 @@
     "development": "Development",
     "tools": "Tools",
     "cli": "CLI"
+  },
+  "theme": {
+    "switchToLight": "Switch to light mode",
+    "switchToDark": "Switch to dark mode"
+  },
+  "buttons": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "loadUser": "Load User",
+    "action": "Action",
+    "close": "Close",
+    "open": "Open",
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirm": "Confirm"
+  },
+  "forms": {
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "username": "Username",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "required": "Required",
+    "optional": "Optional",
+    "emailHelp": "We'll never share your email with anyone else.",
+    "passwordHelp": "Choose a strong password with at least 8 characters."
+  },
+  "a11y": {
+    "closeModal": "Close modal dialog",
+    "openMenu": "Open navigation menu",
+    "closeMenu": "Close navigation menu",
+    "previousPage": "Go to previous page",
+    "nextPage": "Go to next page",
+    "loading": "Loading content",
+    "required": "Required field",
+    "primaryAction": "Primary action",
+    "expandSection": "Expand section",
+    "collapseSection": "Collapse section",
+    "sortAscending": "Sort ascending",
+    "sortDescending": "Sort descending",
+    "searchInput": "Search input field",
+    "toggleTheme": "Toggle theme mode"
+  },
+  "docs": {
+    "navigation": {
+      "title": "Navigation",
+      "noNavigation": "No navigation available for {domain}",
+      "homeNavigation": "Home navigation"
+    },
+    "breadcrumb": {
+      "home": "Home",
+      "ariaLabel": "Breadcrumb navigation"
+    },
+    "content": {
+      "notFound": "Page Not Found",
+      "notFoundDescription": "Sorry, we couldn't find the page you're looking for.",
+      "tryingToAccess": "Trying to access",
+      "collectionName": "Collection name",
+      "backToHome": "Back to Home"
+    },
+    "sections": {
+      "getStarted": {
+        "title": "Get Started",
+        "description": "Quick start using our services"
+      },
+      "payments": {
+        "title": "Payments",
+        "description": "Payment documentation and guides"
+      },
+      "payouts": {
+        "title": "Payouts",
+        "description": "Transfer and withdrawal functionality"
+      }
+    },
+    "meta": {
+      "defaultTitle": "Documentation Center",
+      "defaultDescription": "Comprehensive guides and examples for integrating Onerway."
+    }
   }
 }
