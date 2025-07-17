@@ -28,7 +28,6 @@ export default withNuxt(
       "Thumbs.db",
       "*.md",
       "**/*.md",
-      "missing-content.jsonc",
     ],
   },
 
