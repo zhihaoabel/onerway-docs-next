@@ -27,8 +27,9 @@ export default withNuxt(
       ".DS_Store",
       "Thumbs.db",
       "*.md",
-      "**/*.md"
-    ]
+      "**/*.md",
+      "missing-content.jsonc",
+    ],
   },
 
   // 1. 基础 JavaScript 配置
@@ -38,8 +39,8 @@ export default withNuxt(
   {
     files: ["**/*.{js,mjs,cjs,ts,mts,cts,vue}"],
     languageOptions: {
-      globals: { ...globals.browser, ...globals.node }
-    }
+      globals: { ...globals.browser, ...globals.node },
+    },
   },
 
   // 3. TypeScript 配置
@@ -51,8 +52,8 @@ export default withNuxt(
   {
     files: ["**/*.vue"],
     languageOptions: {
-      parserOptions: { parser: tseslint.parser }
-    }
+      parserOptions: { parser: tseslint.parser },
+    },
   },
 
   // 5. Antfu 配置（禁用格式化规则，保留代码质量规则）
@@ -62,7 +63,7 @@ export default withNuxt(
       css: true,
       html: true,
       markdown: true,
-      prettierOptions: false
+      prettierOptions: false,
     },
     vue: true, // 启用 Vue 支持
     typescript: true, // 启用 TypeScript 支持
@@ -75,8 +76,8 @@ export default withNuxt(
     // 其他可能需要调整的 antfu 规则
     rules: {
       "antfu/top-level-function": "off", // 允许箭头函数作为顶级函数
-      "format/prettier": "off" // 禁用内置的 Prettier 格式化规则
-    }
+      "format/prettier": "off", // 禁用内置的 Prettier 格式化规则
+    },
   }),
 
   // 6. 自定义规则覆盖（在 antfu 之后，可以覆盖其规则）
@@ -96,7 +97,7 @@ export default withNuxt(
       // 块顺序
       "vue/block-order": [
         "warn",
-        { order: ["script", "template", "style"] }
+        { order: ["script", "template", "style"] },
       ],
       // 调整 Vue 属性顺序规则
       "vue/attributes-order": [
@@ -113,10 +114,10 @@ export default withNuxt(
             "OTHER_DIRECTIVES",
             "OTHER_ATTR",
             "EVENTS",
-            "CONTENT"
+            "CONTENT",
           ],
-          alphabetical: false
-        }
+          alphabetical: false,
+        },
       ],
       // 调整第一个属性换行规则
       "vue/first-attribute-linebreak": ["warn"],
@@ -126,9 +127,9 @@ export default withNuxt(
       // 控制台相关规则
       "no-console": [
         "warn",
-        { allow: ["warn", "error", "log"] }
-      ] // 允许所有 console 方法
-    }
+        { allow: ["warn", "error", "log"] },
+      ], // 允许所有 console 方法
+    },
   },
 
   // 7. Prettier 配置（最后）

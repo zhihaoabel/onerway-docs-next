@@ -39,7 +39,7 @@ export function logPathWarning(warning: PathWarning): void {
     console.warn(`[useRecentPages] ${warning.type}:`, {
       path: warning.path,
       message: warning.message,
-      suggestions: warning.suggestions
+      suggestions: warning.suggestions,
     });
   }
 }

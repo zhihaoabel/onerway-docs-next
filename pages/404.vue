@@ -2,7 +2,7 @@
 import { useI18n } from "vue-i18n";
 import {
   type RecentPage,
-  useRecentPages
+  useRecentPages,
 } from "@/composables/useRecentPages";
 
 const { t } = useI18n();
@@ -19,7 +19,7 @@ const {
   getPageDescription,
   getPageIcon,
   getTimeColor,
-  formatTimeI18n
+  formatTimeI18n,
 } = useRecentPages();
 
 // 推荐的页面链接
@@ -30,20 +30,20 @@ const suggestedPages = computed(() => [
       "404.suggestions.getStarted.description"
     ),
     to: "/get-started",
-    icon: "i-heroicons-rocket-launch"
+    icon: "i-heroicons-rocket-launch",
   },
   {
     title: t("404.suggestions.payments.title"),
     description: t("404.suggestions.payments.description"),
     to: "/payments",
-    icon: "i-heroicons-credit-card"
+    icon: "i-heroicons-credit-card",
   },
   {
     title: t("404.suggestions.api.title"),
     description: t("404.suggestions.api.description"),
     to: "/payments",
-    icon: "i-heroicons-code-bracket"
-  }
+    icon: "i-heroicons-code-bracket",
+  },
 ]);
 
 // 计算属性：判断是否有最近访问的页面
@@ -60,7 +60,7 @@ const handleRecentPageClick = async (page: RecentPage) => {
 useSeoMeta({
   title: t("404.seo.title"),
   description: t("404.seo.description"),
-  robots: "noindex, nofollow"
+  robots: "noindex, nofollow",
 });
 
 // 设置404状态码

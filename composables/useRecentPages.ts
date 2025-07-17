@@ -6,5 +6,5 @@ export type {
   ParsedPath,
   PathConfig,
   RecentPage,
-  SupportedLocale
+  SupportedLocale,
 } from "./useRecentPages/types";

@@ -1,7 +1,7 @@
 import type { ParsedPath } from "../types";
 import {
   CACHE_DEBOUNCE_DELAY,
-  STORAGE_KEYS
+  STORAGE_KEYS,
 } from "../constants";
 import { debounce } from "../utils";
 
@@ -89,7 +89,7 @@ export class CacheManager {
     return {
       titleCacheSize: this.titleCache.size,
       descriptionCacheSize: this.descriptionCache.size,
-      pathCacheSize: this.pathCache.size
+      pathCacheSize: this.pathCache.size,
     };
   }
 }

@@ -27,7 +27,7 @@ const props = withDefaults(defineProps<Props>(), {
   showTags: true,
   showStatus: true,
   maxTags: 3,
-  clickable: true
+  clickable: true,
 });
 
 // Emits
@@ -41,74 +41,74 @@ const colorPalettes = [
     from: "from-blue-400",
     to: "to-blue-600",
     shadow: "group-hover:shadow-blue-500/25",
-    glow: "from-blue-500/20 via-blue-400/10 to-purple-500/20"
+    glow: "from-blue-500/20 via-blue-400/10 to-purple-500/20",
   },
   {
     from: "from-purple-400",
     to: "to-purple-600",
     shadow: "group-hover:shadow-purple-500/25",
-    glow: "from-purple-500/20 via-purple-400/10 to-pink-500/20"
+    glow: "from-purple-500/20 via-purple-400/10 to-pink-500/20",
   },
   {
     from: "from-green-400",
     to: "to-green-600",
     shadow: "group-hover:shadow-green-500/25",
-    glow: "from-green-500/20 via-emerald-400/10 to-teal-500/20"
+    glow: "from-green-500/20 via-emerald-400/10 to-teal-500/20",
   },
   {
     from: "from-red-400",
     to: "to-red-600",
     shadow: "group-hover:shadow-red-500/25",
-    glow: "from-red-500/20 via-rose-400/10 to-pink-500/20"
+    glow: "from-red-500/20 via-rose-400/10 to-pink-500/20",
   },
   {
     from: "from-yellow-400",
     to: "to-yellow-600",
     shadow: "group-hover:shadow-yellow-500/25",
-    glow: "from-yellow-500/20 via-amber-400/10 to-orange-500/20"
+    glow: "from-yellow-500/20 via-amber-400/10 to-orange-500/20",
   },
   {
     from: "from-pink-400",
     to: "to-pink-600",
     shadow: "group-hover:shadow-pink-500/25",
-    glow: "from-pink-500/20 via-rose-400/10 to-purple-500/20"
+    glow: "from-pink-500/20 via-rose-400/10 to-purple-500/20",
   },
   {
     from: "from-indigo-400",
     to: "to-indigo-600",
     shadow: "group-hover:shadow-indigo-500/25",
-    glow: "from-indigo-500/20 via-blue-400/10 to-purple-500/20"
+    glow: "from-indigo-500/20 via-blue-400/10 to-purple-500/20",
   },
   {
     from: "from-teal-400",
     to: "to-teal-600",
     shadow: "group-hover:shadow-teal-500/25",
-    glow: "from-teal-500/20 via-cyan-400/10 to-blue-500/20"
+    glow: "from-teal-500/20 via-cyan-400/10 to-blue-500/20",
   },
   {
     from: "from-orange-400",
     to: "to-orange-600",
     shadow: "group-hover:shadow-orange-500/25",
-    glow: "from-orange-500/20 via-amber-400/10 to-red-500/20"
+    glow: "from-orange-500/20 via-amber-400/10 to-red-500/20",
   },
   {
     from: "from-cyan-400",
     to: "to-cyan-600",
     shadow: "group-hover:shadow-cyan-500/25",
-    glow: "from-cyan-500/20 via-blue-400/10 to-teal-500/20"
+    glow: "from-cyan-500/20 via-blue-400/10 to-teal-500/20",
   },
   {
     from: "from-emerald-400",
     to: "to-emerald-600",
     shadow: "group-hover:shadow-emerald-500/25",
-    glow: "from-emerald-500/20 via-green-400/10 to-teal-500/20"
+    glow: "from-emerald-500/20 via-green-400/10 to-teal-500/20",
   },
   {
     from: "from-rose-400",
     to: "to-rose-600",
     shadow: "group-hover:shadow-rose-500/25",
-    glow: "from-rose-500/20 via-pink-400/10 to-red-500/20"
-  }
+    glow: "from-rose-500/20 via-pink-400/10 to-red-500/20",
+  },
 ];
 
 // Composables
@@ -137,8 +137,8 @@ const themeClasses = computed(() => ({
   text: {
     primary: "text-gray-900 dark:text-gray-100",
     secondary: "text-gray-600 dark:text-gray-400",
-    muted: "text-gray-500 dark:text-gray-500"
-  }
+    muted: "text-gray-500 dark:text-gray-500",
+  },
 }));
 
 const formatDate = (dateString: string) => {
@@ -151,7 +151,7 @@ const formatDate = (dateString: string) => {
     month: locale.value.startsWith("zh")
       ? "2-digit"
       : "short",
-    day: "numeric"
+    day: "numeric",
   };
 
   return new Intl.DateTimeFormat(
@@ -194,22 +194,22 @@ const statusConfig = computed(() => {
   const configs = {
     new: {
       variant: "solid" as const,
-      color: "success" as const
+      color: "success" as const,
     },
     beta: {
       variant: "outline" as const,
-      color: "warning" as const
+      color: "warning" as const,
     },
     updated: {
       variant: "soft" as const,
-      color: "info" as const
-    }
+      color: "info" as const,
+    },
   };
 
   return (
     configs[status] || {
       variant: "soft" as const,
-      color: "neutral" as const
+      color: "neutral" as const,
     }
   );
 });
@@ -223,7 +223,7 @@ const iconColorClasses = computed(() => {
   return {
     gradient: `bg-gradient-to-br ${palette?.from} ${palette?.to}`,
     shadow: palette?.shadow,
-    glow: palette?.glow
+    glow: palette?.glow,
   };
 });
 </script>
@@ -243,7 +243,7 @@ const iconColorClasses = computed(() => {
         themeClasses.card,
         themeClasses.cardHover,
         themeClasses.border,
-        { 'cursor-pointer': clickable }
+        { 'cursor-pointer': clickable },
       ]"
       :tabindex="clickable ? 0 : -1"
       :role="clickable ? 'button' : 'article'"
@@ -261,7 +261,7 @@ const iconColorClasses = computed(() => {
           class="flex items-center justify-center size-12 flex-shrink-0 rounded-xl text-white shadow-lg transition-shadow duration-300"
           :class="[
             iconColorClasses.gradient,
-            iconColorClasses.shadow
+            iconColorClasses.shadow,
           ]">
           <UIcon
             :name="product.icon"
@@ -319,7 +319,7 @@ const iconColorClasses = computed(() => {
               class="flex items-center gap-1"
               :aria-label="
                 t('productCard.docsCount', {
-                  count: product.docsCount
+                  count: product.docsCount,
                 })
               ">
               <UIcon
@@ -328,7 +328,7 @@ const iconColorClasses = computed(() => {
                 :aria-hidden="true" />
               {{
                 t("productCard.docsCount", {
-                  count: product.docsCount
+                  count: product.docsCount,
                 })
               }}
             </span>
@@ -370,7 +370,7 @@ const iconColorClasses = computed(() => {
                 class="font-medium text-muted hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors cursor-help"
                 :aria-label="
                   t('productCard.tags.additional', {
-                    count: remainingTagsCount
+                    count: remainingTagsCount,
                   })
                 " />
 
@@ -380,7 +380,7 @@ const iconColorClasses = computed(() => {
                   role="tooltip">
                   <h3 class="sr-only">{{
                     t("productCard.tags.additional", {
-                      count: remainingTagsCount
+                      count: remainingTagsCount,
                     })
                   }}</h3>
                   <div class="flex flex-wrap gap-1">

@@ -8,34 +8,34 @@ const isDark = computed({
   },
   set(_isDark) {
     colorMode.preference = _isDark ? "dark" : "light";
-  }
+  },
 });
 
 // 移动端简化样式：单按钮切换
 const mobileButtonClasses = computed(() => [
   "relative rounded-lg transition-all duration-300 ease-out animate-pulse",
   "hover:scale-105 active:scale-95",
-  isDark.value ? "text-primary" : "text-amber-600"
+  isDark.value ? "text-primary" : "text-amber-600",
 ]);
 
 // 桌面端完整样式
 const desktopContainerClasses = computed(() => [
   "flex items-center gap-2 p-1 rounded-lg transition-colors duration-200",
-  "hover:bg-gray-50/50 dark:hover:bg-gray-800/50"
+  "hover:bg-gray-50/50 dark:hover:bg-gray-800/50",
 ]);
 
 const sunIconClasses = computed(() => [
   "h-4 w-4 sm:h-5 sm:w-5 transition-all duration-500 ease-out",
   isDark.value
     ? "text-gray-400 scale-75 rotate-90 opacity-60"
-    : "text-amber-500 scale-100 rotate-0 opacity-100 drop-shadow-sm"
+    : "text-amber-500 scale-100 rotate-0 opacity-100 drop-shadow-sm",
 ]);
 
 const moonIconClasses = computed(() => [
   "h-4 w-4 sm:h-5 sm:w-5 transition-all duration-500 ease-out",
   isDark.value
     ? "text-blue-400 scale-100 rotate-0 opacity-100 drop-shadow-sm"
-    : "text-gray-400 scale-75 -rotate-90 opacity-60"
+    : "text-gray-400 scale-75 -rotate-90 opacity-60",
 ]);
 
 const switchClasses = computed(() => [
@@ -44,7 +44,7 @@ const switchClasses = computed(() => [
   "shadow-inner border border-opacity-20",
   isDark.value
     ? "bg-gradient-to-r from-blue-600 to-blue-700 focus:ring-blue-400 border-blue-500"
-    : "bg-gradient-to-r from-gray-200 to-gray-300 focus:ring-amber-400 border-gray-300"
+    : "bg-gradient-to-r from-gray-200 to-gray-300 focus:ring-amber-400 border-gray-300",
 ]);
 
 const switchButtonClasses = computed(() => [
@@ -52,7 +52,7 @@ const switchButtonClasses = computed(() => [
   "shadow-md border border-opacity-30",
   isDark.value
     ? "translate-x-5 sm:translate-x-3 bg-gradient-to-br from-white to-blue-50 border-blue-200"
-    : "translate-x-0.5 sm:-translate-x-1.5 bg-gradient-to-br from-white to-amber-50 border-amber-200"
+    : "translate-x-0.5 sm:-translate-x-1.5 bg-gradient-to-br from-white to-amber-50 border-amber-200",
 ]);
 
 const toggleTheme = () => {
@@ -127,7 +127,7 @@ const ariaLabel = computed(() =>
           <div
             class="h-full w-full rounded-full transition-all duration-300"
             :class="[
-              isDark ? 'bg-blue-300' : 'bg-amber-300'
+              isDark ? 'bg-blue-300' : 'bg-amber-300',
             ]" />
         </div>
       </UButton>

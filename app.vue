@@ -6,7 +6,7 @@ const { data: files } = useLazyAsyncData(
   "search",
   () => queryCollectionSearchSections("get_started_en"),
   {
-    server: false
+    server: false,
   }
 );
 
@@ -16,18 +16,18 @@ const links = [
   {
     label: "Docs",
     icon: "i-lucide-book",
-    to: "/get-started"
+    to: "/get-started",
   },
   {
     label: "Payments",
     icon: "i-lucide-box",
-    to: "/payment"
+    to: "/payment",
   },
   {
     label: "Payout",
     icon: "i-lucide-chart-no-axes-gantt",
-    to: "/payouts"
-  }
+    to: "/payouts",
+  },
 ];
 
 const { locale } = useI18n();
@@ -42,7 +42,7 @@ const currentUILocale = computed(() => {
   const localeMap = {
     "zh-CN": "zh-CN",
     "zh-TW": "zh-TW",
-    en: "en"
+    en: "en",
   } as const;
 
   const mappedLocale =

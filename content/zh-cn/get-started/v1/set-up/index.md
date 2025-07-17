@@ -100,7 +100,7 @@ async function createPayment() {
       await onerway.paymentIntents.create({
         amount: 1000, // 10.00 美元，以分为单位
         currency: "usd",
-        description: "测试支付"
+        description: "测试支付",
       });
 
     console.log("成功！", paymentIntent.id);

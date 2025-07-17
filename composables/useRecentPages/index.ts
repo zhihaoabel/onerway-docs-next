@@ -1,6 +1,6 @@
 import type {
   RouteLocationNormalizedLoaded,
-  Router
+  Router,
 } from "vue-router";
 import type { RecentPage } from "./types";
 import { computed, nextTick, readonly, ref } from "vue";
@@ -175,7 +175,7 @@ function createRecentPagesInstance() {
           ),
           path: pathToAdd,
           timestamp: Date.now(),
-          icon: getPageIcon(pathToAdd)
+          icon: getPageIcon(pathToAdd),
         };
 
         storage.addPage(currentPage);
@@ -327,9 +327,9 @@ function createRecentPagesInstance() {
     ...(import.meta.dev
       ? {
           parsePath: parser.parse.bind(parser),
-          debugInfo: cache.getDebugInfo.bind(cache)
+          debugInfo: cache.getDebugInfo.bind(cache),
         }
-      : {})
+      : {}),
   };
 }
 
@@ -351,5 +351,5 @@ export type {
   ParsedPath,
   PathConfig,
   RecentPage,
-  SupportedLocale
+  SupportedLocale,
 } from "./types";

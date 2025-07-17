@@ -54,7 +54,7 @@ API 结构、核心概念以及如何有效使用我们的端点。
 const paymentIntent = await onerway.paymentIntents.create({
   amount: 2000,
   currency: "usd",
-  description: "来自示例商店的购买"
+  description: "来自示例商店的购买",
 });
 ```
 
@@ -66,7 +66,7 @@ const paymentIntent = await onerway.paymentIntents.create({
 // 创建客户
 const customer = await onerway.customers.create({
   email: "customer@example.com",
-  name: "张三"
+  name: "张三",
 });
 ```
 
@@ -82,8 +82,8 @@ const paymentMethod = await onerway.paymentMethods.create({
     number: "4242424242424242",
     exp_month: 12,
     exp_year: 2025,
-    cvc: "123"
-  }
+    cvc: "123",
+  },
 });
 ```
 
@@ -138,7 +138,7 @@ const onerway = Onerway("pk_test_your_publishable_key");
 // 检索带分页的支付
 const payments = await onerway.paymentIntents.list({
   limit: 10,
-  starting_after: "pi_1234567890"
+  starting_after: "pi_1234567890",
 });
 ```
 

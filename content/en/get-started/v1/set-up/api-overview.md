@@ -57,7 +57,7 @@ The primary object for processing payments:
 const paymentIntent = await onerway.paymentIntents.create({
   amount: 2000,
   currency: "usd",
-  description: "Purchase from Example Store"
+  description: "Purchase from Example Store",
 });
 ```
 
@@ -69,7 +69,7 @@ Store customer information for recurring payments:
 // Create a customer
 const customer = await onerway.customers.create({
   email: "customer@example.com",
-  name: "John Doe"
+  name: "John Doe",
 });
 ```
 
@@ -85,8 +85,8 @@ const paymentMethod = await onerway.paymentMethods.create({
     number: "4242424242424242",
     exp_month: 12,
     exp_year: 2025,
-    cvc: "123"
-  }
+    cvc: "123",
+  },
 });
 ```
 
@@ -142,7 +142,7 @@ List endpoints support pagination:
 // Retrieve payments with pagination
 const payments = await onerway.paymentIntents.list({
   limit: 10,
-  starting_after: "pi_1234567890"
+  starting_after: "pi_1234567890",
 });
 ```
 

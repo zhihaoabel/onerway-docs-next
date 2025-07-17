@@ -15,7 +15,7 @@ const props = withDefaults(defineProps<Props>(), {
   showPlayButton: true,
   showCopyButton: true,
   height: "auto",
-  variant: "default"
+  variant: "default",
 });
 
 const { t } = useI18n();
@@ -114,7 +114,7 @@ const categoryIcons: Record<string, string> = {
   reconciliation: "i-heroicons-scale",
   product: "i-heroicons-cube",
   tokenization: "i-heroicons-key",
-  default: "i-heroicons-code-bracket"
+  default: "i-heroicons-code-bracket",
 };
 
 // 默认轮播项目数据 - 完全国际化
@@ -206,7 +206,7 @@ const defaultItems = computed<CarouselItem[]>(() => [
         label: t("home.tryItOut.title"),
         icon: "i-heroicons-play",
         to: "https://postman.onerway.com/",
-        color: "primary"
+        color: "primary",
       },
       secondaryActions: [
         {
@@ -214,10 +214,10 @@ const defaultItems = computed<CarouselItem[]>(() => [
           trailingIcon:
             "i-heroicons-arrow-top-right-on-square",
           color: "neutral",
-          to: "/payments"
-        }
-      ]
-    }
+          to: "/payments",
+        },
+      ],
+    },
   },
   {
     label: t("home.tryItOut.carousel.storingPayment"),
@@ -257,7 +257,7 @@ const defaultItems = computed<CarouselItem[]>(() => [
         label: t("home.tryItOut.title"),
         icon: "i-heroicons-play",
         color: "primary",
-        to: "https://postman.onerway.com/"
+        to: "https://postman.onerway.com/",
       },
       secondaryActions: [
         {
@@ -265,10 +265,10 @@ const defaultItems = computed<CarouselItem[]>(() => [
           trailingIcon:
             "i-heroicons-arrow-top-right-on-square",
           color: "neutral",
-          to: "/tokenization"
-        }
-      ]
-    }
+          to: "/tokenization",
+        },
+      ],
+    },
   },
   {
     label: t("home.tryItOut.carousel.subscriptions"),
@@ -318,7 +318,7 @@ const defaultItems = computed<CarouselItem[]>(() => [
         label: t("home.tryItOut.title"),
         icon: "i-heroicons-play",
         color: "primary",
-        to: "https://postman.onerway.com/"
+        to: "https://postman.onerway.com/",
       },
       secondaryActions: [
         {
@@ -326,10 +326,10 @@ const defaultItems = computed<CarouselItem[]>(() => [
           trailingIcon:
             "i-heroicons-arrow-top-right-on-square",
           color: "neutral",
-          to: "/subscriptions"
-        }
-      ]
-    }
+          to: "/subscriptions",
+        },
+      ],
+    },
   },
   {
     label: t("home.tryItOut.carousel.reconciliation"),
@@ -371,7 +371,7 @@ const defaultItems = computed<CarouselItem[]>(() => [
         label: t("home.tryItOut.title"),
         icon: "i-heroicons-play",
         color: "primary",
-        to: "https://postman.onerway.com/"
+        to: "https://postman.onerway.com/",
       },
       secondaryActions: [
         {
@@ -379,11 +379,11 @@ const defaultItems = computed<CarouselItem[]>(() => [
           trailingIcon:
             "i-heroicons-arrow-top-right-on-square",
           color: "neutral",
-          to: "/reconciliation"
-        }
-      ]
-    }
-  }
+          to: "/reconciliation",
+        },
+      ],
+    },
+  },
 ]);
 
 // Reactive state
@@ -445,14 +445,14 @@ const themeClasses = computed(() => ({
     "border border-gray-200/60 dark:border-gray-700/60",
     "shadow-lg dark:shadow-2xl",
     "hover:shadow-xl dark:hover:shadow-2xl",
-    "hover:border-gray-300/80 dark:hover:border-gray-600/80"
+    "hover:border-gray-300/80 dark:hover:border-gray-600/80",
   ],
   navigationPanel: [
     "relative overflow-hidden rounded-lg",
     "bg-gradient-to-b from-gray-50/80 to-gray-100/60",
     "dark:from-gray-800/60 dark:to-gray-900/80",
     "border border-gray-200/40 dark:border-gray-700/40",
-    "backdrop-blur-sm"
+    "backdrop-blur-sm",
   ],
   navigationItem: (isActive: boolean) => [
     "group/item relative w-full transition-all duration-200",
@@ -462,27 +462,27 @@ const themeClasses = computed(() => ({
           "bg-gradient-to-r from-primary-500/10 to-primary-600/5",
           "dark:from-primary-400/15 dark:to-primary-500/10",
           "border-primary-200/60 dark:border-primary-700/60",
-          "shadow-sm text-primary-700 dark:text-primary-300"
+          "shadow-sm text-primary-700 dark:text-primary-300",
         ]
       : [
           "hover:bg-white/80 dark:hover:bg-gray-800/60",
           "hover:border-gray-200/60 dark:hover:border-gray-600/60",
           "hover:shadow-sm text-gray-600 dark:text-gray-400",
-          "hover:text-gray-900 dark:hover:text-gray-200"
-        ]
+          "hover:text-gray-900 dark:hover:text-gray-200",
+        ],
   ],
   codePanel: [
     "relative overflow-hidden rounded-lg",
     "bg-gradient-to-br from-gray-900 via-gray-900 to-gray-800",
     "border border-gray-700/60 dark:border-gray-600/60",
-    "shadow-xl dark:shadow-2xl"
+    "shadow-xl dark:shadow-2xl",
   ],
   codeHeader: [
     "flex items-center justify-between px-4 py-3 rounded-t-lg",
     "bg-gradient-to-r from-gray-800/90 to-gray-700/90",
     "border-b border-gray-600/50",
-    "backdrop-blur-sm"
-  ]
+    "backdrop-blur-sm",
+  ],
 }));
 
 // Enhanced copy to clipboard using useClipboard composable
@@ -501,7 +501,7 @@ const copyToClipboard = async () => {
       "home.tryItOut.carousel.feedback.copyErrorDesc"
     ),
     duration: 3000,
-    resetDelay: 2000
+    resetDelay: 2000,
   });
 
   // Update local state based on composable result
@@ -693,7 +693,7 @@ watch(
       themeClasses.container,
       props.height !== 'auto'
         ? `h-[${props.height}]`
-        : 'h-[600px] lg:h-[500px]'
+        : 'h-[600px] lg:h-[500px]',
     ]"
     role="region"
     :aria-label="t('home.tryItOut.carousel.ariaLabel')"
@@ -754,9 +754,9 @@ watch(
                           // 为 subscription 使用特殊的脉冲动画，其他保持旋转
                           item.category === 'subscription'
                             ? 'animate-subscription-pulse'
-                            : 'animate-spin-slow'
+                            : 'animate-spin-slow',
                         ]
-                      : 'text-gray-500 dark:text-gray-400 group-hover/item:text-primary-500 group-hover/item:scale-105'
+                      : 'text-gray-500 dark:text-gray-400 group-hover/item:text-primary-500 group-hover/item:scale-105',
                   ]" />
               </div>
 
@@ -799,17 +799,17 @@ watch(
               <div
                 class="h-full bg-gradient-to-r from-primary-500 via-primary-600 to-primary-500 transition-all duration-75 ease-linear shadow-sm relative"
                 :class="{
-                  'animate-pulse': isHovering
+                  'animate-pulse': isHovering,
                 }"
                 :style="{
-                  width: `${progressPercentage}%`
+                  width: `${progressPercentage}%`,
                 }">
                 <!-- Progress glow effect -->
                 <div
                   class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
                   :class="{
                     'animate-pulse': !isHovering,
-                    'opacity-50': isHovering
+                    'opacity-50': isHovering,
                   }" />
               </div>
             </div>
@@ -868,7 +868,7 @@ watch(
               :class="[
                 isAutoPlaying
                   ? 'bg-green-500 animate-pulse'
-                  : 'bg-gray-400'
+                  : 'bg-gray-400',
               ]" />
             <span
               :class="
@@ -964,7 +964,7 @@ watch(
               :class="[
                 copySuccess
                   ? 'text-green-400'
-                  : 'text-gray-400 hover:text-highlighted'
+                  : 'text-gray-400 hover:text-highlighted',
               ]"
               :title="
                 t('home.tryItOut.carousel.actions.copy')
@@ -1184,7 +1184,7 @@ watch(
                 :class="[
                   currentActiveIndex === index
                     ? 'bg-primary-500 shadow-lg shadow-primary-500/30'
-                    : 'bg-gray-300 dark:bg-gray-600 hover:bg-primary-400 hover:scale-110'
+                    : 'bg-gray-300 dark:bg-gray-600 hover:bg-primary-400 hover:scale-110',
                 ]" />
               <!-- Progress ring for active indicator -->
               <div
@@ -1243,7 +1243,7 @@ watch(
               :class="[
                 currentActiveIndex === index
                   ? 'bg-primary-500 scale-125'
-                  : 'bg-gray-300 dark:bg-gray-600 hover:bg-primary-400'
+                  : 'bg-gray-300 dark:bg-gray-600 hover:bg-primary-400',
               ]"
               :aria-label="`${t('home.tryItOut.carousel.indicators.goToSlide')} ${index + 1}`"
               @click="setActiveContent(index)" />

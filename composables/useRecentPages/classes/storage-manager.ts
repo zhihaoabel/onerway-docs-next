@@ -1,7 +1,7 @@
 import type { RecentPage } from "../types";
 import {
   MAX_RECENT_PAGES,
-  STORAGE_KEYS
+  STORAGE_KEYS,
 } from "../constants";
 import { debounce } from "../utils";
 
@@ -62,7 +62,7 @@ export class StorageManager {
   addPage(page: RecentPage): void {
     this.pages = [
       page,
-      ...this.pages.filter((p) => p.path !== page.path)
+      ...this.pages.filter((p) => p.path !== page.path),
     ].slice(0, MAX_RECENT_PAGES);
 
     this.saveDebounced();

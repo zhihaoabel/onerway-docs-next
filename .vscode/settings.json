@@ -60,5 +60,8 @@
   "window.autoDetectColorScheme": true,
   "[mdc]": {
     "editor.defaultFormatter": "Nuxt.mdc"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
   }
 }
