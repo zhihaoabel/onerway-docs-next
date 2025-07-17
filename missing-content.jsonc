@@ -8,7 +8,7 @@
     "version": "v1",
     "file": "api-overview.md",
     "relativePath": "get-started/v1/set-up/api-overview.md",
-    "_path": "/zh-tw/get-started/v1/set-up/api-overview"
+    "_path": "/zh-tw/get-started/v1/set-up/api-overview",
   },
   {
     "lang": "zh-tw",
@@ -16,6 +16,6 @@
     "version": "v1",
     "file": "environment-config.md",
     "relativePath": "get-started/v1/set-up/environment-config.md",
-    "_path": "/zh-tw/get-started/v1/set-up/environment-config"
-  }
+    "_path": "/zh-tw/get-started/v1/set-up/environment-config",
+  },
 ]
